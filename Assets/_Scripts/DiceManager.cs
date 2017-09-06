@@ -3,31 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//骰子控制，以后UI部分不放在这里
 public class DiceManager : MonoBehaviour
 {
-	public static DiceManager instance;
+	public static DiceManager Instance{ get; private set; }
 
 	public delegate void DiceHandler (string param);
 
 	public event DiceHandler diceEvent;
 
-	public Button btnRoll;
+	//	public Button btnRoll;
 	//	public Text txtRollResult;
 	public Transform spawnPoint;
 	private string galleryDie = "d6-green";
 
 	void Awake ()
 	{
-		if (instance == null) {
-			instance = this;
-		} else if (instance != this) {
+		if (Instance == null) {
+			Instance = this;
+		} else if (Instance != this) {
 			Destroy (gameObject);
 		}
 	}
 
 	void Start ()
 	{
-		btnRoll.onClick.AddListener (RollDice);
+//		btnRoll.onClick.AddListener (RollDice);
 	}
 
 	void Update ()
@@ -39,7 +40,7 @@ public class DiceManager : MonoBehaviour
 //		txtRollResult.text = Dice.AsString ("");
 	}
 
-	void RollDice ()
+	public void RollDice ()
 	{
 		Dice.Clear ();
 		string[] a = galleryDie.Split ('-');
