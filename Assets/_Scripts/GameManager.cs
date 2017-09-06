@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance{ get; private set; }
 
+	//角色移动
+	public CarLogic mCar;
+	public MapNode[] mNodeList;
 
 	//调试控制
 	public Button btnRoll;
@@ -43,5 +46,12 @@ public class GameManager : MonoBehaviour
 			txtDiceResult.text = para;
 			camDice.enabled = false;
 		}
+	}
+
+	public void CarStep (int num)
+	{
+		int target = mNodeList.Length > (mCar.mCurrentNode.mNodeIndex + num) ? mCar.mCurrentNode.mNodeIndex + num : (mCar.mCurrentNode.mNodeIndex + num) % mNodeList.Length;
+		print ("目标：" + target);
+		mCar.GoStep (mNodeList [target]);
 	}
 }
