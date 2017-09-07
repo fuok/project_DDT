@@ -23,13 +23,14 @@ public class GameManager : MonoBehaviour
 		} else if (Instance != this) {
 			Destroy (gameObject);
 		}
-//		DontDestroyOnLoad (gameObject);
-		DiceManager.Instance.diceEvent += ShowDiceResult;
+
 	}
 
 	void Start ()
 	{
 		btnRoll.onClick.AddListener (() => {
+			resultChecked = false;
+			DiceManager.Instance.diceEvent += ShowDiceResult;//这个方法常驻监听，不是太好，但如果不这样数值会不准，因为骰子的状态不稳定,除非确定稳定后再回调
 			camDice.enabled = true;
 			DiceManager.Instance.RollDice ();
 		});
@@ -42,17 +43,32 @@ public class GameManager : MonoBehaviour
 
 	//---------------------------------------------------------------------------------------------------------
 
-	//
-	void ShowDiceResult (string para)
+	//输出骰子点数，只要骰子动作在监听，这里就会一直调用，而且输出的数值是会变的，需要进一步检查才能确认
+	void ShowDiceResult (int para)
 	{
-		if (para.Contains ("=")) {//临时处理，之后要改，不能一直刷新状态,实际上原Demo中有对于Dice对象物理状态稳定的判断,TODO
-			txtDiceResult.text = para;
-			camDice.enabled = false;
+		txtDiceResult.text = "value=" + para;
+		print ("掷出" + para);
 
-			//TODO
-			int step = int.Parse (para.Substring (para.LastIndexOf ('=')).Trim ());
-			print ("前进:" + step);
-			CarStep (step);
+		StartCoroutine (CheckResult (para));
+	}
+
+	private int tempRslt;
+	private bool resultChecked;
+
+	IEnumerator CheckResult (int para)
+	{
+		tempRslt = para;
+		yield return new WaitForSeconds (0.5f);
+
+		if (para == tempRslt) {//判断数值稳定
+			DiceManager.Instance.diceEvent -= ShowDiceResult;
+			if (resultChecked == false) {
+				resultChecked = true;
+
+				print ("前进:" + para);
+				CarStep (para);
+				camDice.enabled = false;
+			}
 		}
 	}
 
@@ -60,7 +76,7 @@ public class GameManager : MonoBehaviour
 	void CarStep (int num)
 	{
 		int target = mNodeList.Length > (mCar.mCurrentNode.mNodeIndex + num) ? mCar.mCurrentNode.mNodeIndex + num : (mCar.mCurrentNode.mNodeIndex + num) % mNodeList.Length;
-		print ("目标：" + target);
+		print ("掷出" + num + ",前进到" + target);
 		mCar.GoStep (mNodeList [target]);
 	}
 }

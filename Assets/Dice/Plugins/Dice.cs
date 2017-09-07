@@ -180,12 +180,14 @@ public class Dice : MonoBehaviour
 	public static int Value (string dieType)
 	{
 		int v = 0;
-		// loop all dice
-		for (int d = 0; d < allDice.Count; d++) {
-			RollingDie rDie = (RollingDie)allDice [d];
-			// check the type
-			if (rDie.name == dieType || dieType == "")
-				v += rDie.die.value;
+		if (!rolling) {
+			// loop all dice
+			for (int d = 0; d < allDice.Count; d++) {
+				RollingDie rDie = (RollingDie)allDice [d];
+				// check the type
+				if (rDie.name == dieType || dieType == "")
+					v += rDie.die.value;
+			}
 		}
 		return v;
 	}

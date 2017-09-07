@@ -8,7 +8,7 @@ public class DiceManager : MonoBehaviour
 {
 	public static DiceManager Instance{ get; private set; }
 
-	public delegate void DiceHandler (string param);
+	public delegate void DiceHandler (int param);
 
 	public event DiceHandler diceEvent;
 
@@ -33,13 +33,18 @@ public class DiceManager : MonoBehaviour
 
 	void Update ()
 	{
-		if (diceEvent != null) {
+		if (diceEvent != null) {//TODO,不要常驻Update，考虑放到单独协程里
 			//	可进一步判断AsString返回值
-			diceEvent (Dice.AsString (""));
+//			diceEvent (Dice.AsString (""));
+			int rslt = Dice.Value ("");
+			if (rslt > 0) {
+				diceEvent (rslt);//改用直接取值
+			}
 		}
-//		txtRollResult.text = Dice.AsString ("");
 	}
 
+
+	//控制骰子的数量和种类
 	public void RollDice ()
 	{
 		Dice.Clear ();
