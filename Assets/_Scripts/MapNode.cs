@@ -24,7 +24,7 @@ public class MapNode : MonoBehaviour
 
 	void OnDrawGizmos ()
 	{
-		Gizmos.color = Color.white;
-		Gizmos.DrawSphere (transform.position, 0.5f);
+		Gizmos.color = Color.green;
+		Gizmos.DrawSphere (transform.position, 4f);
 	}
 }

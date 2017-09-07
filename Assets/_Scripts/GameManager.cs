@@ -40,15 +40,24 @@ public class GameManager : MonoBehaviour
 		
 	}
 
+	//---------------------------------------------------------------------------------------------------------
+
+	//
 	void ShowDiceResult (string para)
 	{
 		if (para.Contains ("=")) {//临时处理，之后要改，不能一直刷新状态,实际上原Demo中有对于Dice对象物理状态稳定的判断,TODO
 			txtDiceResult.text = para;
 			camDice.enabled = false;
+
+			//TODO
+			int step = int.Parse (para.Substring (para.LastIndexOf ('=')).Trim ());
+			print ("前进:" + step);
+			CarStep (step);
 		}
 	}
 
-	public void CarStep (int num)
+	//
+	void CarStep (int num)
 	{
 		int target = mNodeList.Length > (mCar.mCurrentNode.mNodeIndex + num) ? mCar.mCurrentNode.mNodeIndex + num : (mCar.mCurrentNode.mNodeIndex + num) % mNodeList.Length;
 		print ("目标：" + target);
