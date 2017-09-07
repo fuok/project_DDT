@@ -12,8 +12,6 @@ public class DiceManager : MonoBehaviour
 
 	public event DiceHandler diceEvent;
 
-	//	public Button btnRoll;
-	//	public Text txtRollResult;
 	public Transform spawnPoint;
 	private string galleryDie = "d6-green";
 
@@ -34,6 +32,7 @@ public class DiceManager : MonoBehaviour
 	void Update ()
 	{
 		if (diceEvent != null) {//TODO,不要常驻Update，考虑放到单独协程里
+			
 			//	可进一步判断AsString返回值
 //			diceEvent (Dice.AsString (""));
 			int rslt = Dice.Value ("");
