@@ -11,30 +11,33 @@ public enum PlayerStatus
 
 public class Player
 {
+	//------------ 数据结构部分 -----------------------------------
 
 	private bool hasChanged;
 
+	public int Index{ set; get; }
+
 	public string Name{ set; get; }
-
-	public PlayerStatus mStatus = PlayerStatus.Stop;
-
-	public int Id{ set; get; }
 
 	public int Money { set; get; }
 
+	//-----------------------------------------------
+
+	public PlayerStatus mStatus = PlayerStatus.Stop;
 
 	private delegate void DataHandler (bool param);
 
 	private event DataHandler DataEvent;
 
-	public Player ()//TODO
+	private Player ()
 	{
 		DataEvent += SetDataStatus;
 	}
 
-	public Player (int id, int money) : this ()
+	public Player (int index, string name, int money) : this ()
 	{
-		this.Id = id;
+		this.Index = index;
+		this.Name = name;
 		this.Money = money;
 	}
 

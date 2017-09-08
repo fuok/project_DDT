@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 	public static GameManager Instance{ get; private set; }
 
 	//角色移动
-	public CarLogic mCar;
+	public CarLogic[] mCarList;
 	public MapNode[] mNodeList;
 
 	//调试控制
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 		});
 
 		btnNextTurn.onClick.AddListener (() => {
-			txtCurrentPlayer.text = TurnManager.Instance.CurrentPlayer.Name + ",正在行动";//TODO
+			txtCurrentPlayer.text = TurnManager.Instance.CurrentPlayer.Name + ",回合开始！";
 			TurnManager.Instance.StopPlayerMoving ();
 		});
 	}
@@ -82,8 +82,10 @@ public class GameManager : MonoBehaviour
 	//
 	void CarStep (int num)
 	{
-		int target = mNodeList.Length > (mCar.mCurrentNode.mNodeIndex + num) ? mCar.mCurrentNode.mNodeIndex + num : (mCar.mCurrentNode.mNodeIndex + num) % mNodeList.Length;
-		print ("掷出" + num + ",前进到" + target);
-		mCar.GoStep (mNodeList [target]);
+		CarLogic car = mCarList [TurnManager.Instance.CurrentPlayer.Index];
+
+		int target = mNodeList.Length > (car.mCurrentNode.mNodeIndex + num) ? car.mCurrentNode.mNodeIndex + num : (car.mCurrentNode.mNodeIndex + num) % mNodeList.Length;
+		print (TurnManager.Instance.CurrentPlayer.Name + "掷出" + num + ",前进到" + target);
+		car.GoStep (mNodeList [target]);
 	}
 }

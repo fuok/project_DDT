@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 //骰子控制，以后UI部分不放在这里
 public class DiceManager : MonoBehaviour

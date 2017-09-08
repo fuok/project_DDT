@@ -1,14 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TurnManager : MonoBehaviour
 {
 	public static TurnManager Instance{ get; private set; }
-
-	//	public Text txtCurrentPlayer;
-	//	public Button btnTest;
 
 	//构建Player，内部结构目前还不全,TODO
 	private Queue<Player> queue = new Queue<Player> ();
@@ -29,11 +25,16 @@ public class TurnManager : MonoBehaviour
 
 	void Start ()
 	{
+		//Test
+		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 0, "刘玄德");
+		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 1, "林志玲");
+		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 2, "奥巴马");
+		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 3, "苍井空");
 
+		//角色初始化
 		for (int i = 0; i < 4; i++) {
-			Player p = new Player ();
-			p.Name = "player" + i;
-			print ("add player " + i);
+			Player p = new Player (i, PlayerPrefs.GetString (Constants.PLAYER_SAVE_NAME + i, "player" + i), Constants.DEFAULT_MONEY);
+//			print ("add player " + i);
 			queue.Enqueue (p);
 		}
 		queue.TrimExcess ();
