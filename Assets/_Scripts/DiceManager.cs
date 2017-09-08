@@ -26,22 +26,29 @@ public class DiceManager : MonoBehaviour
 
 	void Start ()
 	{
-//		btnRoll.onClick.AddListener (RollDice);
+		StartCoroutine (DiceCoroutine ());
 	}
 
 	void Update ()
 	{
-		if (diceEvent != null) {//TODO,不要常驻Update，考虑放到单独协程里
-			
+
+	}
+
+	//不要常驻Update，放到单独协程里
+	private IEnumerator DiceCoroutine ()
+	{
+		restart:
+		yield return new WaitForSeconds (0.1f);
+		if (diceEvent != null) {
 			//	可进一步判断AsString返回值
-//			diceEvent (Dice.AsString (""));
+			//			diceEvent (Dice.AsString (""));
 			int rslt = Dice.Value ("");
 			if (rslt > 0) {
 				diceEvent (rslt);//改用直接取值
 			}
 		}
+		goto restart;
 	}
-
 
 	//控制骰子的数量和种类
 	public void RollDice ()

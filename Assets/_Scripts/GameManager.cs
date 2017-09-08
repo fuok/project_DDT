@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 	public Button btnRoll;
 	public Text txtDiceResult;
 	public Camera camDice;
+	public Button btnNextTurn;
+	public Text txtCurrentPlayer;
 
 	void Awake ()
 	{
@@ -33,6 +35,11 @@ public class GameManager : MonoBehaviour
 			DiceManager.Instance.diceEvent += ShowDiceResult;//这个方法常驻监听，不是太好，但如果不这样数值会不准，因为骰子的状态不稳定,除非确定稳定后再回调
 			camDice.enabled = true;
 			DiceManager.Instance.RollDice ();
+		});
+
+		btnNextTurn.onClick.AddListener (() => {
+			txtCurrentPlayer.text = TurnManager.Instance.CurrentPlayer.Name + ",正在行动";//TODO
+			TurnManager.Instance.StopPlayerMoving ();
 		});
 	}
 

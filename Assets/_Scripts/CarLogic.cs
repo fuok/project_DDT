@@ -12,8 +12,8 @@ public class CarLogic : MonoBehaviour
 	public MapNode mCurrentNode;
 	public MapNode mTargetNode;
 	public CarStatus status = CarStatus.Stop;
-	[Range (5f, 20f)]
-	public float mSpeed = 5f;
+	[Range (20f, 100f)]
+	public float mSpeed = 20f;
 
 	// Use this for initialization
 	void Start ()
