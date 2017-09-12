@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//回合循环计数机
 public class TurnManager : MonoBehaviour
 {
 	public static TurnManager Instance{ get; private set; }
@@ -11,7 +12,7 @@ public class TurnManager : MonoBehaviour
 
 	public Player CurrentPlayer{ get; private set; }
 
-	bool isPlayerMoving;
+	//	bool isPlayerMoving;
 
 	void Awake ()
 	{
@@ -34,7 +35,8 @@ public class TurnManager : MonoBehaviour
 		//角色初始化
 		for (int i = 0; i < 4; i++) {
 			Player p = new Player (i, PlayerPrefs.GetString (Constants.PLAYER_SAVE_NAME + i, "player" + i), Constants.DEFAULT_MONEY);
-//			print ("add player " + i);
+			//注册玩家事件
+			p.PlayerActionEvent += GameManager.Instance.OnPlayerActionChanged;
 			queue.Enqueue (p);
 		}
 		queue.TrimExcess ();
@@ -76,7 +78,7 @@ public class TurnManager : MonoBehaviour
 	/// </summary>
 	public void StopPlayerMoving ()//目前逻辑有问题，后面改,TODO
 	{
-		isPlayerMoving = false;
+//		isPlayerMoving = false;
 
 		NextTurn ();
 	}
@@ -86,10 +88,10 @@ public class TurnManager : MonoBehaviour
 	{
 		//queue操作
 		Player p = queue.Dequeue ();
-		p.mStatus = PlayerStatus.Stop;
+		p.mStatus = PlayerStatus.Waiting;
 		queue.Enqueue (p);
 		CurrentPlayer = queue.Peek ();
 		CurrentPlayer.mStatus = PlayerStatus.Moving;
-		isPlayerMoving = true;
+//		isPlayerMoving = true;
 	}
 }

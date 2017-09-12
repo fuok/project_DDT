@@ -3,15 +3,19 @@ using System.Collections;
 
 public enum PlayerStatus
 {
+	//角色行动中
 	Moving,
+	//角色到达目的地
+	Arrived,
+	//等待其他角色行动中
 	Waiting,
-	Stop,
+	//角色出局
 	GameOver
 }
 
 public class Player
 {
-	//------------ 数据结构部分 -----------------------------------
+	//------------ 数据结构 -----------------------------------
 
 	private bool hasChanged;
 
@@ -21,9 +25,13 @@ public class Player
 
 	public int Money { set; get; }
 
-	//-----------------------------------------------
+	//------------- basic logic ----------------------------------
 
-	public PlayerStatus mStatus = PlayerStatus.Stop;
+	public PlayerStatus mStatus = PlayerStatus.GameOver;
+
+	public delegate void ActionHandler (string action);
+
+	public event ActionHandler PlayerActionEvent;
 
 	private delegate void DataHandler (bool param);
 
@@ -52,6 +60,17 @@ public class Player
 		}
 	}
 
+	//----交互操作----------------------------------------
+
+	public void SetAction (string action)
+	{
+		PlayerActionEvent (action);
+	}
+
+	public void XXX ()
+	{
+		
+	}
 
 	//----数据操作----------------------------------------
 

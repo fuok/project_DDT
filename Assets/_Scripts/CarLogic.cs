@@ -7,6 +7,7 @@ public enum CarStatus
 	Stop
 }
 
+//棋子逻辑，棋子和Player概念不同
 public class CarLogic : MonoBehaviour
 {
 	public MapNode mCurrentNode;

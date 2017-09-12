@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance{ get; private set; }
 
-	//角色移动
+	//棋子移动
 	public CarLogic[] mCarList;
 	public MapNode[] mNodeList;
 
@@ -41,24 +41,16 @@ public class GameManager : MonoBehaviour
 		}
 
 
-		//角色状态监听
+		//棋子状态监听
 		foreach (var item in mCarList) {
-			item.carMoveEvent += OnCarMove;
+			item.carMoveEvent += OnCarStatusChanged;
 		}
 
 		//
 
-		btnRoll.onClick.AddListener (() => {
-			resultChecked = false;
-			DiceManager.Instance.diceEvent += ShowDiceResult;//这个方法常驻监听，不是太好，但如果不这样数值会不准，因为骰子的状态不稳定,除非确定稳定后再回调
-			camDice.enabled = true;
-			DiceManager.Instance.RollDice ();
-		});
+		btnRoll.onClick.AddListener (RollDice);
 
-		btnNextTurn.onClick.AddListener (() => {
-			TurnManager.Instance.StopPlayerMoving ();
-			txtCurrentPlayer.text = TurnManager.Instance.CurrentPlayer.Name + ",回合开始！";
-		});
+		btnNextTurn.onClick.AddListener (EndTurn);
 	}
 
 	void Update ()
@@ -68,8 +60,22 @@ public class GameManager : MonoBehaviour
 
 	//---------------------------------------------------------------------------------------------------------
 
+	void EndTurn ()
+	{
+		TurnManager.Instance.StopPlayerMoving ();
+		txtCurrentPlayer.text = TurnManager.Instance.CurrentPlayer.Name + ",回合开始！";
+	}
+
+	void RollDice ()
+	{
+		resultChecked = false;
+		DiceManager.Instance.diceEvent += OnDiceResult;//这个方法常驻监听，不是太好，但如果不这样数值会不准，因为骰子的状态不稳定,除非确定稳定后再回调
+		camDice.enabled = true;
+		DiceManager.Instance.RollDice ();
+	}
+
 	//输出骰子点数，只要骰子动作在监听，这里就会一直调用，而且输出的数值是会变的，需要进一步检查才能确认
-	void ShowDiceResult (int para)
+	void OnDiceResult (int para)
 	{
 		txtDiceResult.text = "value=" + para;
 		print ("掷出" + para);
@@ -86,7 +92,7 @@ public class GameManager : MonoBehaviour
 		yield return new WaitForSeconds (0.5f);
 
 		if (para == tempRslt) {//判断数值稳定
-			DiceManager.Instance.diceEvent -= ShowDiceResult;
+			DiceManager.Instance.diceEvent -= OnDiceResult;
 			if (resultChecked == false) {
 				resultChecked = true;
 
@@ -97,7 +103,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	//获得点数后，开始移动角色
+	//获得点数后，开始移动棋子
 	void CarStep (int num)
 	{
 		CarLogic car = mCarList [TurnManager.Instance.CurrentPlayer.Index];
@@ -107,20 +113,36 @@ public class GameManager : MonoBehaviour
 		car.GoStep (mNodeList [target]);
 	}
 
-	//角色移动后的响应函数
-	void OnCarMove (CarStatus status)
+	//棋子移动后的响应函数
+	void OnCarStatusChanged (CarStatus status)
 	{
 		switch (status) {
 		case CarStatus.Stop:
-			print ("车子停了");
-			//开始玩家交互,TODO
+//			print ("车子停了");
 			//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
+			Player currentPlayer = TurnManager.Instance.CurrentPlayer;
+//			Ground currentGround = groundList [mCarList [TurnManager.Instance.CurrentPlayer.Index].mCurrentNode.mNodeIndex];
 
-
+			currentPlayer.SetAction ("buy ground");
 
 			break;
 		default:
 			break;
 		}
 	}
+
+	//玩家角色事件回调函数
+	public void OnPlayerActionChanged (string action)
+	{
+		switch (action) {
+		case "buy ground":
+			//开始玩家交互,TODO
+			print ("买地");
+			break;
+
+		default:
+			break;
+		}
+	}
+
 }
