@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
 	public Button btnNextTurn;
 	public Text txtCurrentPlayer;
 
+	//缓存Ground和Girl
+	private List<Ground> groundList = new List<Ground> ();
+
 	void Awake ()
 	{
 		if (Instance == null) {
@@ -30,6 +33,21 @@ public class GameManager : MonoBehaviour
 
 	void Start ()
 	{
+
+		//Test,创造一组Ground数据
+		for (int i = 0; i < 32; i++) {
+			Ground ground = new Ground{ Index = i, Owner = -1, Level = 0, Price = 1000 };
+			groundList.Add (ground);
+		}
+
+
+		//角色状态监听
+		foreach (var item in mCarList) {
+			item.carMoveEvent += OnCarMove;
+		}
+
+		//
+
 		btnRoll.onClick.AddListener (() => {
 			resultChecked = false;
 			DiceManager.Instance.diceEvent += ShowDiceResult;//这个方法常驻监听，不是太好，但如果不这样数值会不准，因为骰子的状态不稳定,除非确定稳定后再回调
@@ -38,8 +56,8 @@ public class GameManager : MonoBehaviour
 		});
 
 		btnNextTurn.onClick.AddListener (() => {
-			txtCurrentPlayer.text = TurnManager.Instance.CurrentPlayer.Name + ",回合开始！";
 			TurnManager.Instance.StopPlayerMoving ();
+			txtCurrentPlayer.text = TurnManager.Instance.CurrentPlayer.Name + ",回合开始！";
 		});
 	}
 
@@ -79,7 +97,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	//
+	//获得点数后，开始移动角色
 	void CarStep (int num)
 	{
 		CarLogic car = mCarList [TurnManager.Instance.CurrentPlayer.Index];
@@ -87,5 +105,22 @@ public class GameManager : MonoBehaviour
 		int target = mNodeList.Length > (car.mCurrentNode.mNodeIndex + num) ? car.mCurrentNode.mNodeIndex + num : (car.mCurrentNode.mNodeIndex + num) % mNodeList.Length;
 		print (TurnManager.Instance.CurrentPlayer.Name + "掷出" + num + ",前进到" + target);
 		car.GoStep (mNodeList [target]);
+	}
+
+	//角色移动后的响应函数
+	void OnCarMove (CarStatus status)
+	{
+		switch (status) {
+		case CarStatus.Stop:
+			print ("车子停了");
+			//开始玩家交互,TODO
+			//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
+
+
+
+			break;
+		default:
+			break;
+		}
 	}
 }

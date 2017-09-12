@@ -15,7 +15,11 @@ public class CarLogic : MonoBehaviour
 	[Range (20f, 100f)]
 	public float mSpeed = 20f;
 
-	// Use this for initialization
+
+	public delegate void CarMoveHandler (CarStatus status);
+
+	public event CarMoveHandler carMoveEvent;
+
 	void Start ()
 	{
 		transform.position = mCurrentNode.transform.position;
@@ -27,8 +31,11 @@ public class CarLogic : MonoBehaviour
 		if (status == CarStatus.Moving) {
 
 			if (mCurrentNode == mTargetNode) {
-				//到达
+				//到达目的地，要在GM里监听此状态
 				status = CarStatus.Stop;
+				//传递状态
+				carMoveEvent (status);
+
 			} else {
 				
 				transform.position = Vector3.MoveTowards (transform.position, mCurrentNode.AftNode.transform.position, mSpeed * Time.deltaTime);
