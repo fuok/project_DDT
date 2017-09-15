@@ -21,7 +21,7 @@ public class TurnManager : MonoBehaviour
 		} else if (Instance != this) {
 			Destroy (gameObject);
 		}
-
+			
 	}
 
 	void Start ()
@@ -40,9 +40,6 @@ public class TurnManager : MonoBehaviour
 			queue.Enqueue (p);
 		}
 		queue.TrimExcess ();
-
-		//初始化调用一次，所以第一个行动的是Player1，而不是Player0
-		NextTurn ();
 	}
 
 	//	void Update ()

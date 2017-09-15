@@ -10,13 +10,19 @@ public class GameManager : MonoBehaviour
 	//棋子移动
 	public CarLogic[] mCarList;
 	public MapNode[] mNodeList;
+	Player currentPlayer;
 
 	//调试控制
 	public Button btnRoll;
 	public Text txtDiceResult;
 	public Camera camDice;
-	public Button btnNextTurn;
+	//	public Button btnNextTurn;
 	public Text txtCurrentPlayer;
+
+	//UI
+	[Header ("UI")]
+	public GameObject panelEndTurn;
+	public Button btnEndTurn;
 
 	//缓存Ground和Girl
 	private List<Ground> groundList = new List<Ground> ();
@@ -46,11 +52,17 @@ public class GameManager : MonoBehaviour
 			item.carMoveEvent += OnCarStatusChanged;
 		}
 
-		//
+		//Init UI
 
 		btnRoll.onClick.AddListener (RollDice);
+//		btnNextTurn.onClick.AddListener (EndTurn);
+		btnEndTurn.onClick.AddListener (() => {
+			panelEndTurn.SetActive (false);
+		});
 
-		btnNextTurn.onClick.AddListener (EndTurn);
+		//游戏开始
+		//初始化调用一次，所以第一个行动的是Player1，而不是Player0
+		EndTurn ();
 	}
 
 	void Update ()
@@ -63,7 +75,8 @@ public class GameManager : MonoBehaviour
 	void EndTurn ()
 	{
 		TurnManager.Instance.StopPlayerMoving ();
-		txtCurrentPlayer.text = TurnManager.Instance.CurrentPlayer.Name + ",回合开始！";
+		currentPlayer = TurnManager.Instance.CurrentPlayer;
+		txtCurrentPlayer.text = currentPlayer.Name + ",回合开始！";
 	}
 
 	void RollDice ()
@@ -77,7 +90,6 @@ public class GameManager : MonoBehaviour
 	//输出骰子点数，只要骰子动作在监听，这里就会一直调用，而且输出的数值是会变的，需要进一步检查才能确认
 	void OnDiceResult (int para)
 	{
-		txtDiceResult.text = "value=" + para;
 		print ("掷出" + para);
 
 		StartCoroutine (CheckResult (para));
@@ -106,10 +118,11 @@ public class GameManager : MonoBehaviour
 	//获得点数后，开始移动棋子
 	void CarStep (int num)
 	{
-		CarLogic car = mCarList [TurnManager.Instance.CurrentPlayer.Index];
+		CarLogic car = mCarList [currentPlayer.Index];
 
 		int target = mNodeList.Length > (car.mCurrentNode.mNodeIndex + num) ? car.mCurrentNode.mNodeIndex + num : (car.mCurrentNode.mNodeIndex + num) % mNodeList.Length;
-		print (TurnManager.Instance.CurrentPlayer.Name + "掷出" + num + ",前进到" + target);
+		print (currentPlayer.Name + "掷出" + num + ",前进到" + target);
+		txtDiceResult.text = currentPlayer.Name + "掷出" + num + ",前进到" + target;
 		car.GoStep (mNodeList [target]);
 	}
 
@@ -120,10 +133,10 @@ public class GameManager : MonoBehaviour
 		case CarStatus.Stop:
 //			print ("车子停了");
 			//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
-			Player currentPlayer = TurnManager.Instance.CurrentPlayer;
+		
 //			Ground currentGround = groundList [mCarList [TurnManager.Instance.CurrentPlayer.Index].mCurrentNode.mNodeIndex];
 
-			currentPlayer.SetAction ("buy ground");
+			currentPlayer.SetAction (Constants.ACTION_ARRIVE_GROUNG);
 
 			break;
 		default:
@@ -134,11 +147,23 @@ public class GameManager : MonoBehaviour
 	//玩家角色事件回调函数
 	public void OnPlayerActionChanged (string action)
 	{
+		//开始玩家交互,TODO
 		switch (action) {
-		case "buy ground":
-			//开始玩家交互,TODO
+
+		case Constants.ACTION_ARRIVE_GROUNG:
+			currentPlayer.SetAction (Constants.ACTION_END_TURN);
+
+			break;
+		case Constants.ACTION_BUY_GROUNG:
 			print ("买地");
 			break;
+
+		case Constants.ACTION_END_TURN:
+			print ("回合结束");
+			EndTurn ();
+			panelEndTurn.SetActive (true);
+			break;
+
 
 		default:
 			break;

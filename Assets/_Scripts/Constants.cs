@@ -12,4 +12,14 @@ public class Constants
 
 	public const string PLAYER_SAVE_NAME = "player_save_name_";
 
+
+
+
+
+	//------------- Action Key ----------------------
+	public const string ACTION_ARRIVE_GROUNG = "action_arrive_ground";
+	public const string ACTION_BUY_GROUNG = "action_buy_ground";
+
+	public const string ACTION_END_TURN = "action_end_turn";
+
 }
