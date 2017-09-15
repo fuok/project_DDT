@@ -11,12 +11,12 @@ public class GameManager : MonoBehaviour
 	public CarLogic[] mCarList;
 	public MapNode[] mNodeList;
 	Player currentPlayer;
+	Ground currentGround;
 
 	//调试控制
 	public Button btnRoll;
 	public Text txtDiceResult;
 	public Camera camDice;
-	//	public Button btnNextTurn;
 	public Text txtCurrentPlayer;
 
 	//UI
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 	{
 
 		//Test,创造一组Ground数据
-		for (int i = 0; i < 32; i++) {
+		for (int i = 0; i < mNodeList.Length; i++) {
 			Ground ground = new Ground{ Index = i, Owner = -1, Level = 0, Price = 1000 };
 			groundList.Add (ground);
 		}
@@ -55,7 +55,6 @@ public class GameManager : MonoBehaviour
 		//Init UI
 
 		btnRoll.onClick.AddListener (RollDice);
-//		btnNextTurn.onClick.AddListener (EndTurn);
 		btnEndTurn.onClick.AddListener (() => {
 			panelEndTurn.SetActive (false);
 		});
@@ -123,7 +122,10 @@ public class GameManager : MonoBehaviour
 		int target = mNodeList.Length > (car.mCurrentNode.mNodeIndex + num) ? car.mCurrentNode.mNodeIndex + num : (car.mCurrentNode.mNodeIndex + num) % mNodeList.Length;
 		print (currentPlayer.Name + "掷出" + num + ",前进到" + target);
 		txtDiceResult.text = currentPlayer.Name + "掷出" + num + ",前进到" + target;
-		car.GoStep (mNodeList [target]);
+
+		//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
+		currentGround = groundList [target];//逻辑移动
+		car.GoStep (mNodeList [target]);//棋子移动
 	}
 
 	//棋子移动后的响应函数
@@ -132,9 +134,6 @@ public class GameManager : MonoBehaviour
 		switch (status) {
 		case CarStatus.Stop:
 //			print ("车子停了");
-			//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
-		
-//			Ground currentGround = groundList [mCarList [TurnManager.Instance.CurrentPlayer.Index].mCurrentNode.mNodeIndex];
 
 			currentPlayer.SetAction (Constants.ACTION_ARRIVE_GROUNG);
 
@@ -149,13 +148,21 @@ public class GameManager : MonoBehaviour
 	{
 		//开始玩家交互,TODO
 		switch (action) {
-
 		case Constants.ACTION_ARRIVE_GROUNG:
-			currentPlayer.SetAction (Constants.ACTION_END_TURN);
+			if (currentGround.Owner == -2) {
+				//中立区域
+			} else if (currentGround.Owner == -1) {
+				//空白区域
+				currentPlayer.SetAction (Constants.ACTION_BUY_GROUNG);
+			} else {
+				//有主区域
+			}
 
 			break;
 		case Constants.ACTION_BUY_GROUNG:
 			print ("买地");
+
+			currentPlayer.SetAction (Constants.ACTION_END_TURN);
 			break;
 
 		case Constants.ACTION_END_TURN:
