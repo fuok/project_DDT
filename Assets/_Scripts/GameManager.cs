@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
 			break;
 		case Constants.ACTION_BUY_GROUNG:
 			print ("买地");
-
+			currentPlayer.AddMoney (10);//Test
 			currentPlayer.SetAction (Constants.ACTION_END_TURN);
 			break;
 

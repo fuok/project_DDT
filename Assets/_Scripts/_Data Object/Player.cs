@@ -13,11 +13,10 @@ public enum PlayerStatus
 	GameOver
 }
 
-public class Player
+public class Player:SaveData
 {
 	//------------ 数据结构 -----------------------------------
 
-	private bool hasChanged;
 
 	public int Index{ set; get; }
 
@@ -33,13 +32,9 @@ public class Player
 
 	public event ActionHandler PlayerActionEvent;
 
-	private delegate void DataHandler (bool param);
-
-	private event DataHandler DataEvent;
-
-	private Player ()
+	private Player () : base ()
 	{
-		DataEvent += SetDataStatus;
+		
 	}
 
 	public Player (int index, string name, int money) : this ()
@@ -49,27 +44,11 @@ public class Player
 		this.Money = money;
 	}
 
-	private void SetDataStatus (bool hasChanged)
-	{
-		this.hasChanged = hasChanged;
-
-		if (hasChanged) {
-			Debug.Log ("数据变化");
-		} else {
-			Debug.Log ("数据已存");
-		}
-	}
-
 	//----交互操作----------------------------------------
 
 	public void SetAction (string action)
 	{
 		PlayerActionEvent (action);
-	}
-
-	public void XXX ()
-	{
-		
 	}
 
 	//----数据操作----------------------------------------
@@ -78,14 +57,19 @@ public class Player
 	public void AddMoney (int number)
 	{
 		Money += number;
-		DataEvent (true);
+		OnDataEvent (true);
 	}
 
 	//回合结束后保存数据
 	public void SaveData ()
 	{
 		//持久化,TODO
-		DataEvent (false);
+		OnDataEvent (false);
+	}
+
+	protected override void OnDataEvent (bool hasChanged)
+	{
+		base.OnDataEvent (hasChanged);
 	}
 
 }
