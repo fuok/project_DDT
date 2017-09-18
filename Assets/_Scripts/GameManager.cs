@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
 	[Header ("UI")]
 	public GameObject panelEndTurn;
 	public Button btnEndTurn;
+	public GameObject panelBuyGround;
+	public Button btnBuyGroundYes;
+	public Button btnBuyGroundNo;
 
 	//缓存Ground和Girl
 	private List<Ground> groundList = new List<Ground> ();
@@ -55,8 +58,18 @@ public class GameManager : MonoBehaviour
 		//Init UI
 
 		btnRoll.onClick.AddListener (RollDice);
+
 		btnEndTurn.onClick.AddListener (() => {
-			panelEndTurn.SetActive (false);
+			currentPlayer.SetAction (Constants.ACTION_END_TURN_OFF);
+		});
+
+		btnBuyGroundYes.onClick.AddListener (() => {
+			BuyGround ();
+			currentPlayer.SetAction (Constants.ACTION_BUY_GROUNG_OFF);
+		});
+
+		btnBuyGroundNo.onClick.AddListener (() => {
+			currentPlayer.SetAction (Constants.ACTION_BUY_GROUNG_OFF);
 		});
 
 		//游戏开始
@@ -151,30 +164,42 @@ public class GameManager : MonoBehaviour
 		case Constants.ACTION_ARRIVE_GROUNG:
 			if (currentGround.Owner == -2) {
 				//中立区域
+				print ("中立区域");
 			} else if (currentGround.Owner == -1) {
 				//空白区域
-				currentPlayer.SetAction (Constants.ACTION_BUY_GROUNG);
+				print ("空白区域");
+				currentPlayer.SetAction (Constants.ACTION_BUY_GROUNG_SHOW);
 			} else {
 				//有主区域
+				print (TurnManager.Instance.GetPlayerList () [currentGround.Owner].Name + " 的区域");
 			}
 
 			break;
-		case Constants.ACTION_BUY_GROUNG:
-			print ("买地");
-			currentPlayer.AddMoney (10);//Test
-			currentPlayer.SetAction (Constants.ACTION_END_TURN);
+		case Constants.ACTION_BUY_GROUNG_SHOW:
+			panelBuyGround.SetActive (true);
 			break;
+		case Constants.ACTION_BUY_GROUNG_OFF:
+			panelBuyGround.SetActive (false);
 
-		case Constants.ACTION_END_TURN:
+			currentPlayer.SetAction (Constants.ACTION_END_TURN_SHOW);//活动结束
+			break;
+		case Constants.ACTION_END_TURN_SHOW:
 			print ("回合结束");
 			EndTurn ();
 			panelEndTurn.SetActive (true);
 			break;
-
-
+		case Constants.ACTION_END_TURN_OFF:
+			panelEndTurn.SetActive (false);
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void BuyGround ()
+	{
+		currentPlayer.Money -= currentGround.Price;
+		currentGround.SetGround (currentPlayer.Index);
 	}
 
 }

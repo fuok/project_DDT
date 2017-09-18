@@ -18,8 +18,9 @@ public class Constants
 
 	//------------- Action Key ----------------------
 	public const string ACTION_ARRIVE_GROUNG = "action_arrive_ground";
-	public const string ACTION_BUY_GROUNG = "action_buy_ground";
+	public const string ACTION_BUY_GROUNG_SHOW = "action_buy_ground_show";
+	public const string ACTION_BUY_GROUNG_OFF = "action_buy_ground_off";
 
-	public const string ACTION_END_TURN = "action_end_turn";
-
+	public const string ACTION_END_TURN_SHOW = "action_end_turn_show";
+	public const string ACTION_END_TURN_OFF = "action_end_turn_off";
 }

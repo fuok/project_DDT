@@ -10,6 +10,8 @@ public class TurnManager : MonoBehaviour
 	//构建Player
 	private Queue<Player> queue = new Queue<Player> ();
 
+	private List<Player> playerList = new List<Player> ();
+
 	public Player CurrentPlayer{ get; private set; }
 
 	//	bool isPlayerMoving;
@@ -37,9 +39,15 @@ public class TurnManager : MonoBehaviour
 			Player p = new Player (i, PlayerPrefs.GetString (Constants.PLAYER_SAVE_NAME + i, "player" + i), Constants.DEFAULT_MONEY);
 			//注册玩家事件
 			p.PlayerActionEvent += GameManager.Instance.OnPlayerActionChanged;
+			playerList.Add (p);
 			queue.Enqueue (p);
 		}
 		queue.TrimExcess ();
+	}
+
+	public List<Player> GetPlayerList ()
+	{
+		return playerList;
 	}
 
 	//	void Update ()
