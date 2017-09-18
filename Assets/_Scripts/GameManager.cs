@@ -14,10 +14,11 @@ public class GameManager : MonoBehaviour
 	Ground currentGround;
 
 	//调试控制
+	public Camera camDice;
 	public Button btnRoll;
 	public Text txtDiceResult;
-	public Camera camDice;
 	public Text txtCurrentPlayer;
+	public Text[] txtPlayerInfo;
 
 	//UI
 	[Header ("UI")]
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
 	public GameObject panelBuyGround;
 	public Button btnBuyGroundYes;
 	public Button btnBuyGroundNo;
+	public GameObject panelBuyGroundNoMoney;
+	public Button btnBuyGroundNoMoney;
 
 	//缓存Ground和Girl
 	private List<Ground> groundList = new List<Ground> ();
@@ -45,7 +48,7 @@ public class GameManager : MonoBehaviour
 
 		//Test,创造一组Ground数据
 		for (int i = 0; i < mNodeList.Length; i++) {
-			Ground ground = new Ground{ Index = i, Owner = -1, Level = 0, Price = 1000 };
+			Ground ground = new Ground{ Index = i, Owner = -1, Level = 0, Price = 3000 };
 			groundList.Add (ground);
 		}
 
@@ -65,11 +68,15 @@ public class GameManager : MonoBehaviour
 
 		btnBuyGroundYes.onClick.AddListener (() => {
 			BuyGround ();
-			currentPlayer.SetAction (Constants.ACTION_BUY_GROUNG_OFF);
+			currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_OFF);
 		});
 
 		btnBuyGroundNo.onClick.AddListener (() => {
-			currentPlayer.SetAction (Constants.ACTION_BUY_GROUNG_OFF);
+			currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_OFF);
+		});
+
+		btnBuyGroundNoMoney.onClick.AddListener (() => {
+			currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY_OFF);
 		});
 
 		//游戏开始
@@ -79,7 +86,10 @@ public class GameManager : MonoBehaviour
 
 	void Update ()
 	{
-		
+		//Test
+		for (int i = 0; i < 4; i++) {
+			txtPlayerInfo [i].text = TurnManager.Instance.GetPlayerList () [i].Name + "\n" + "金钱:" + TurnManager.Instance.GetPlayerList () [i].Money;
+		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -148,7 +158,7 @@ public class GameManager : MonoBehaviour
 		case CarStatus.Stop:
 //			print ("车子停了");
 
-			currentPlayer.SetAction (Constants.ACTION_ARRIVE_GROUNG);
+			currentPlayer.SetAction (Constants.ACTION_ARRIVE_GROUND);
 
 			break;
 		default:
@@ -161,26 +171,36 @@ public class GameManager : MonoBehaviour
 	{
 		//开始玩家交互,TODO
 		switch (action) {
-		case Constants.ACTION_ARRIVE_GROUNG:
+		case Constants.ACTION_ARRIVE_GROUND:
 			if (currentGround.Owner == -2) {
 				//中立区域
 				print ("中立区域");
 			} else if (currentGround.Owner == -1) {
 				//空白区域
 				print ("空白区域");
-				currentPlayer.SetAction (Constants.ACTION_BUY_GROUNG_SHOW);
+				if (currentPlayer.Money > currentGround.Price) {
+					currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_SHOW);
+				} else {
+					currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY_SHOW);
+				}
 			} else {
 				//有主区域
 				print (TurnManager.Instance.GetPlayerList () [currentGround.Owner].Name + " 的区域");
+				currentPlayer.SetAction (Constants.ACTION_END_TURN_SHOW);//活动结束
 			}
-
 			break;
-		case Constants.ACTION_BUY_GROUNG_SHOW:
+		case Constants.ACTION_BUY_GROUND_SHOW:
 			panelBuyGround.SetActive (true);
 			break;
-		case Constants.ACTION_BUY_GROUNG_OFF:
+		case Constants.ACTION_BUY_GROUND_OFF:
 			panelBuyGround.SetActive (false);
-
+			currentPlayer.SetAction (Constants.ACTION_END_TURN_SHOW);//活动结束
+			break;
+		case Constants.ACTION_BUY_GROUND_NO_MONEY_SHOW:
+			panelBuyGroundNoMoney.SetActive (true);
+			break;
+		case Constants.ACTION_BUY_GROUND_NO_MONEY_OFF:
+			panelBuyGroundNoMoney.SetActive (false);
 			currentPlayer.SetAction (Constants.ACTION_END_TURN_SHOW);//活动结束
 			break;
 		case Constants.ACTION_END_TURN_SHOW:
