@@ -16,8 +16,13 @@ public class SaveData
 		DataEvent += OnDataEvent;//注册
 	}
 
+	protected virtual void DataChange (bool hasChange)
+	{
+		DataEvent (hasChange);
+	}
 
-	protected virtual void OnDataEvent (bool hasChanged)
+
+	private void OnDataEvent (bool hasChanged)
 	{
 		this.hasChanged = hasChanged;
 

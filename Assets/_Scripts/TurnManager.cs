@@ -7,7 +7,7 @@ public class TurnManager : MonoBehaviour
 {
 	public static TurnManager Instance{ get; private set; }
 
-	//构建Player，内部结构目前还不全,TODO
+	//构建Player
 	private Queue<Player> queue = new Queue<Player> ();
 
 	public Player CurrentPlayer{ get; private set; }

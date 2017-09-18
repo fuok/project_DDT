@@ -57,19 +57,24 @@ public class Player:SaveData
 	public void AddMoney (int number)
 	{
 		Money += number;
-		OnDataEvent (true);
+		//通知
+		DataChange (true);
 	}
 
-	//回合结束后保存数据
+	//回合结束后调用此方法保存数据
 	public void SaveData ()
 	{
-		//持久化,TODO
-		OnDataEvent (false);
+		if (hasChanged) {
+			//持久化,TODO
+			
+			//通知
+			DataChange (false);
+		}
 	}
 
-	protected override void OnDataEvent (bool hasChanged)
+	protected override void DataChange (bool hasChanged)
 	{
-		base.OnDataEvent (hasChanged);
+		base.DataChange (hasChanged);
 	}
 
 }
