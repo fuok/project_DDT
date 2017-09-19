@@ -98,5 +98,6 @@ public class TurnManager : MonoBehaviour
 		CurrentPlayer = queue.Peek ();
 		CurrentPlayer.mStatus = PlayerStatus.Moving;
 //		isPlayerMoving = true;
+		print ("取出了：" + CurrentPlayer.Index);
 	}
 }

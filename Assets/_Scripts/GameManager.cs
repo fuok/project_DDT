@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 	//棋子移动
 	public CarLogic[] mCarList;
 	public MapNode[] mNodeList;
+	//当前的逻辑角色
 	Player currentPlayer;
 	Ground currentGround;
 
@@ -59,6 +60,18 @@ public class GameManager : MonoBehaviour
 
 		//Init UI
 		btnRoll.onClick.AddListener (RollDice);
+		btnBuyGroundYes.onClick.AddListener (() => {
+			currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_YES);
+		});
+		btnBuyGroundNo.onClick.AddListener (() => {
+			currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_NO);
+		});
+		btnBuyGroundNoMoney.onClick.AddListener (() => {
+			currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY_CONFIRM);
+		});
+		btnEndTurn.onClick.AddListener (() => {
+			currentPlayer.SetAction (Constants.ACTION_END_TURN_CONFIRM);
+		});
 
 		//游戏开始
 		//初始化调用一次，所以第一个行动的是Player1，而不是Player0
@@ -170,22 +183,18 @@ public class GameManager : MonoBehaviour
 			break;
 		case Constants.ACTION_BUY_GROUND:
 			panelBuyGround.SetActive (true);
-			btnBuyGroundYes.onClick.AddListener (() => {
-				BuyGround ();
-				panelBuyGround.SetActive (false);
-				currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
-			});
-
-			btnBuyGroundNo.onClick.AddListener (() => {
-				panelBuyGround.SetActive (false);
-				currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
-			});
+			break;
+		case Constants.ACTION_BUY_GROUND_YES:
+			BuyGround ();
+			panelBuyGround.SetActive (false);
+			currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
+			break;
+		case Constants.ACTION_BUY_GROUND_NO:
+			panelBuyGround.SetActive (false);
+			currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
 		case Constants.ACTION_BUY_GROUND_NO_MONEY:
 			panelBuyGroundNoMoney.SetActive (true);
-			btnBuyGroundNoMoney.onClick.AddListener (() => {
-				currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY_CONFIRM);
-			});
 			break;
 		case Constants.ACTION_BUY_GROUND_NO_MONEY_CONFIRM:
 			panelBuyGroundNoMoney.SetActive (false);
@@ -193,14 +202,11 @@ public class GameManager : MonoBehaviour
 			break;
 		case Constants.ACTION_END_TURN:
 			print ("回合结束");
-			EndTurn ();
 			panelEndTurn.SetActive (true);
-			btnEndTurn.onClick.AddListener (() => {
-				currentPlayer.SetAction (Constants.ACTION_END_TURN_CONFIRM);
-			});
 			break;
 		case Constants.ACTION_END_TURN_CONFIRM:
 			panelEndTurn.SetActive (false);
+			EndTurn ();
 			break;
 		default:
 			break;
@@ -213,6 +219,7 @@ public class GameManager : MonoBehaviour
 	{
 		currentPlayer.Money -= currentGround.Price;
 		currentGround.SetGround (currentPlayer.Index);
+		mNodeList [currentGround.Index].mBuilding.SetBuilding (currentPlayer.Index);
 	}
 
 }

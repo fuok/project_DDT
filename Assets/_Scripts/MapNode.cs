@@ -10,6 +10,9 @@ public class MapNode : MonoBehaviour
 	//	[HideInInspector]
 	public MapNode AftNode;
 
+	//建筑
+	public Building mBuilding;
+
 	// Use this for initialization
 	void Start ()
 	{
