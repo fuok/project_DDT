@@ -18,10 +18,11 @@ public class Constants
 
 	//------------- Action Key ----------------------
 	public const string ACTION_ARRIVE_GROUND = "action_arrive_ground";
-	public const string ACTION_BUY_GROUND_SHOW = "action_buy_ground_show";
-	public const string ACTION_BUY_GROUND_OFF = "action_buy_ground_off";
-	public const string ACTION_BUY_GROUND_NO_MONEY_SHOW = "action_buy_ground_no_money_show";
-	public const string ACTION_BUY_GROUND_NO_MONEY_OFF = "action_buy_ground_no_money_off";
-	public const string ACTION_END_TURN_SHOW = "action_end_turn_show";
-	public const string ACTION_END_TURN_OFF = "action_end_turn_off";
+	public const string ACTION_BUY_GROUND = "action_buy_ground";
+	public const string ACTION_BUY_GROUND_YES = "action_buy_ground_yes";
+	public const string ACTION_BUY_GROUND_NO = "action_buy_ground_no";
+	public const string ACTION_BUY_GROUND_NO_MONEY = "action_buy_ground_no_money";
+	public const string ACTION_BUY_GROUND_NO_MONEY_CONFIRM = "action_buy_ground_no_money_confirm";
+	public const string ACTION_END_TURN = "action_end_turn";
+	public const string ACTION_END_TURN_CONFIRM = "action_end_turn_confirm";
 }

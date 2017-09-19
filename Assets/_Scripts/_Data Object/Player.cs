@@ -24,6 +24,8 @@ public class Player:SaveData
 
 	public int Money { set; get; }
 
+	public int Position { set; get; }
+
 	//------------- basic logic ----------------------------------
 
 	public PlayerStatus mStatus = PlayerStatus.GameOver;

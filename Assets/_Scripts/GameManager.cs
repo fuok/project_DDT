@@ -51,33 +51,14 @@ public class GameManager : MonoBehaviour
 			Ground ground = new Ground{ Index = i, Owner = -1, Level = 0, Price = 3000 };
 			groundList.Add (ground);
 		}
-
-
+			
 		//棋子状态监听
 		foreach (var item in mCarList) {
 			item.carMoveEvent += OnCarStatusChanged;
 		}
 
 		//Init UI
-
 		btnRoll.onClick.AddListener (RollDice);
-
-		btnEndTurn.onClick.AddListener (() => {
-			currentPlayer.SetAction (Constants.ACTION_END_TURN_OFF);
-		});
-
-		btnBuyGroundYes.onClick.AddListener (() => {
-			BuyGround ();
-			currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_OFF);
-		});
-
-		btnBuyGroundNo.onClick.AddListener (() => {
-			currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_OFF);
-		});
-
-		btnBuyGroundNoMoney.onClick.AddListener (() => {
-			currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY_OFF);
-		});
 
 		//游戏开始
 		//初始化调用一次，所以第一个行动的是Player1，而不是Player0
@@ -113,7 +94,6 @@ public class GameManager : MonoBehaviour
 	void OnDiceResult (int para)
 	{
 		print ("掷出" + para);
-
 		StartCoroutine (CheckResult (para));
 	}
 
@@ -123,7 +103,7 @@ public class GameManager : MonoBehaviour
 	IEnumerator CheckResult (int para)
 	{
 		tempRslt = para;
-		yield return new WaitForSeconds (0.5f);
+		yield return new WaitForSeconds (0.5f);//延迟0.5秒检查稳定后的数值
 
 		if (para == tempRslt) {//判断数值稳定
 			DiceManager.Instance.diceEvent -= OnDiceResult;
@@ -156,10 +136,7 @@ public class GameManager : MonoBehaviour
 	{
 		switch (status) {
 		case CarStatus.Stop:
-//			print ("车子停了");
-
-			currentPlayer.SetAction (Constants.ACTION_ARRIVE_GROUND);
-
+			currentPlayer.SetAction (Constants.ACTION_ARRIVE_GROUND);//角色停住后进入交互阶段
 			break;
 		default:
 			break;
@@ -167,6 +144,8 @@ public class GameManager : MonoBehaviour
 	}
 
 	//玩家角色事件回调函数
+	//为了程序框架和玩法内容完全分离、所有玩法相关的操作都通过Action字符串互相串联，玩法相关的函数也全部在这里调用
+	//这部分的完善建立在流程完善的基础上,TODO
 	public void OnPlayerActionChanged (string action)
 	{
 		//开始玩家交互,TODO
@@ -179,42 +158,56 @@ public class GameManager : MonoBehaviour
 				//空白区域
 				print ("空白区域");
 				if (currentPlayer.Money > currentGround.Price) {
-					currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_SHOW);
+					currentPlayer.SetAction (Constants.ACTION_BUY_GROUND);
 				} else {
-					currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY_SHOW);
+					currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY);
 				}
 			} else {
 				//有主区域
 				print (TurnManager.Instance.GetPlayerList () [currentGround.Owner].Name + " 的区域");
-				currentPlayer.SetAction (Constants.ACTION_END_TURN_SHOW);//活动结束
+				currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
 			}
 			break;
-		case Constants.ACTION_BUY_GROUND_SHOW:
+		case Constants.ACTION_BUY_GROUND:
 			panelBuyGround.SetActive (true);
+			btnBuyGroundYes.onClick.AddListener (() => {
+				BuyGround ();
+				panelBuyGround.SetActive (false);
+				currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
+			});
+
+			btnBuyGroundNo.onClick.AddListener (() => {
+				panelBuyGround.SetActive (false);
+				currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
+			});
 			break;
-		case Constants.ACTION_BUY_GROUND_OFF:
-			panelBuyGround.SetActive (false);
-			currentPlayer.SetAction (Constants.ACTION_END_TURN_SHOW);//活动结束
-			break;
-		case Constants.ACTION_BUY_GROUND_NO_MONEY_SHOW:
+		case Constants.ACTION_BUY_GROUND_NO_MONEY:
 			panelBuyGroundNoMoney.SetActive (true);
+			btnBuyGroundNoMoney.onClick.AddListener (() => {
+				currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY_CONFIRM);
+			});
 			break;
-		case Constants.ACTION_BUY_GROUND_NO_MONEY_OFF:
+		case Constants.ACTION_BUY_GROUND_NO_MONEY_CONFIRM:
 			panelBuyGroundNoMoney.SetActive (false);
-			currentPlayer.SetAction (Constants.ACTION_END_TURN_SHOW);//活动结束
+			currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
-		case Constants.ACTION_END_TURN_SHOW:
+		case Constants.ACTION_END_TURN:
 			print ("回合结束");
 			EndTurn ();
 			panelEndTurn.SetActive (true);
+			btnEndTurn.onClick.AddListener (() => {
+				currentPlayer.SetAction (Constants.ACTION_END_TURN_CONFIRM);
+			});
 			break;
-		case Constants.ACTION_END_TURN_OFF:
+		case Constants.ACTION_END_TURN_CONFIRM:
 			panelEndTurn.SetActive (false);
 			break;
 		default:
 			break;
 		}
 	}
+
+	//------ 游戏玩法相关的函数 ---------------------------------
 
 	private void BuyGround ()
 	{
