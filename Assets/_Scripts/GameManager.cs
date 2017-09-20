@@ -109,7 +109,6 @@ public class GameManager : MonoBehaviour
 		TurnManager.Instance.StopPlayerMoving ();
 		currentPlayer = TurnManager.Instance.CurrentPlayer;
 		txtCurrentPlayer.text = currentPlayer.Name + ",回合开始！";
-		txtDiceResult.text = "";
 	}
 
 	void RollDice ()
