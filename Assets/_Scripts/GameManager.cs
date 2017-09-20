@@ -44,7 +44,20 @@ public class GameManager : MonoBehaviour
 		}
 
 		//初始化游戏数据，Player、Ground、Girl都在这里，后期可以放到静态对象里
+		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 0, "刘玄德(红)");
+		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 1, "林志玲(黄)");
+		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 2, "奥巴马(蓝)");
+		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 3, "苍井空(绿)");
 
+		//角色初始化
+		for (int i = 0; i < 4; i++) {
+			Player p = new Player (i, PlayerPrefs.GetString (Constants.PLAYER_SAVE_NAME + i, "player" + i), Constants.DEFAULT_MONEY);
+			//注册玩家事件
+			p.PlayerActionEvent += GameManager.Instance.OnPlayerActionChanged;
+			mPlayerList.Add (p);
+		}
+
+		TurnManager.Instance.SetPlayerQueue (ref mPlayerList);
 	}
 
 	void Start ()
@@ -85,7 +98,7 @@ public class GameManager : MonoBehaviour
 	{
 		//Test
 		for (int i = 0; i < 4; i++) {
-			txtPlayerInfo [i].text = TurnManager.Instance.GetPlayerList () [i].Name + "\n" + "金钱:" + TurnManager.Instance.GetPlayerList () [i].Money;
+			txtPlayerInfo [i].text = mPlayerList [i].Name + "\n" + "金钱:" + mPlayerList [i].Money;
 		}
 	}
 
@@ -181,7 +194,7 @@ public class GameManager : MonoBehaviour
 				}
 			} else {
 				//有主区域
-				print (TurnManager.Instance.GetPlayerList () [currentGround.Owner].Name + " 的区域");
+				print (mPlayerList [currentGround.Owner].Name + " 的区域");
 				currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
 			}
 			break;

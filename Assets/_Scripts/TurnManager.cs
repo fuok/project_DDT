@@ -7,10 +7,8 @@ public class TurnManager : MonoBehaviour
 {
 	public static TurnManager Instance{ get; private set; }
 
-	//构建Player
+	//储存Player的Queue
 	private Queue<Player> queue = new Queue<Player> ();
-
-	private List<Player> playerList = new List<Player> ();
 
 	public Player CurrentPlayer{ get; private set; }
 
@@ -28,31 +26,15 @@ public class TurnManager : MonoBehaviour
 
 	void Start ()
 	{
-		//Test
-		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 0, "刘玄德");
-		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 1, "林志玲");
-		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 2, "奥巴马");
-		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 3, "苍井空");
 
-		//角色初始化
-		for (int i = 0; i < 4; i++) {
-			Player p = new Player (i, PlayerPrefs.GetString (Constants.PLAYER_SAVE_NAME + i, "player" + i), Constants.DEFAULT_MONEY);
-			//注册玩家事件
-			p.PlayerActionEvent += GameManager.Instance.OnPlayerActionChanged;
-			playerList.Add (p);
-			queue.Enqueue (p);
-		}
-		queue.TrimExcess ();
 	}
 
 	public void SetPlayerQueue (ref List<Player> playerList)
 	{
-		
-	}
-
-	public List<Player> GetPlayerList ()
-	{
-		return playerList;
+		for (int i = 0; i < playerList.Count; i++) {
+			queue.Enqueue (playerList [i]);
+		}
+		queue.TrimExcess ();
 	}
 
 	//	void Update ()
