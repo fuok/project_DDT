@@ -31,8 +31,9 @@ public class GameManager : MonoBehaviour
 	public GameObject panelBuyGroundNoMoney;
 	public Button btnBuyGroundNoMoney;
 
-	//缓存Ground和Girl
-	private List<Ground> groundList = new List<Ground> ();
+	//缓存游戏数据,相当于从DB读取出来的数据
+	private List<Player> mPlayerList = new List<Player> ();
+	private List<Ground> mGroundList = new List<Ground> ();
 
 	void Awake ()
 	{
@@ -42,6 +43,8 @@ public class GameManager : MonoBehaviour
 			Destroy (gameObject);
 		}
 
+		//初始化游戏数据，Player、Ground、Girl都在这里，后期可以放到静态对象里
+
 	}
 
 	void Start ()
@@ -50,7 +53,7 @@ public class GameManager : MonoBehaviour
 		//Test,创造一组Ground数据
 		for (int i = 0; i < mNodeList.Length; i++) {
 			Ground ground = new Ground{ Index = i, Owner = -1, Level = 0, Price = 3000 };
-			groundList.Add (ground);
+			mGroundList.Add (ground);
 		}
 			
 		//棋子状态监听
@@ -93,6 +96,7 @@ public class GameManager : MonoBehaviour
 		TurnManager.Instance.StopPlayerMoving ();
 		currentPlayer = TurnManager.Instance.CurrentPlayer;
 		txtCurrentPlayer.text = currentPlayer.Name + ",回合开始！";
+		txtDiceResult.text = "";
 	}
 
 	void RollDice ()
@@ -134,13 +138,13 @@ public class GameManager : MonoBehaviour
 	void CarStep (int num)
 	{
 		CarLogic car = mCarList [currentPlayer.Index];
-
+		//计算移动后所处的Node序列
 		int target = mNodeList.Length > (car.mCurrentNode.mNodeIndex + num) ? car.mCurrentNode.mNodeIndex + num : (car.mCurrentNode.mNodeIndex + num) % mNodeList.Length;
 		print (currentPlayer.Name + "掷出" + num + ",前进到" + target);
 		txtDiceResult.text = currentPlayer.Name + "掷出" + num + ",前进到" + target;
 
 		//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
-		currentGround = groundList [target];//逻辑移动
+		currentGround = mGroundList [target];//逻辑移动
 		car.GoStep (mNodeList [target]);//棋子移动
 	}
 
@@ -219,7 +223,7 @@ public class GameManager : MonoBehaviour
 	{
 		currentPlayer.Money -= currentGround.Price;
 		currentGround.SetGround (currentPlayer.Index);
-		mNodeList [currentGround.Index].mBuilding.SetBuilding (currentPlayer.Index);
+		mNodeList [currentGround.Index].mBuilding.SetBuilding (currentPlayer.Index);//目前的Ground操作和基于Node的Building操作其实是逻辑分离的
 	}
 
 }

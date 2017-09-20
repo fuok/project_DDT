@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//回合循环计数机
+//回合循环计数机,Player实例在这里声明
 public class TurnManager : MonoBehaviour
 {
 	public static TurnManager Instance{ get; private set; }
@@ -43,6 +43,11 @@ public class TurnManager : MonoBehaviour
 			queue.Enqueue (p);
 		}
 		queue.TrimExcess ();
+	}
+
+	public void SetPlayerQueue (ref List<Player> playerList)
+	{
+		
 	}
 
 	public List<Player> GetPlayerList ()
