@@ -30,6 +30,12 @@ public class GameManager : MonoBehaviour
 	public Button btnBuyGroundNo;
 	public GameObject panelBuyGroundNoMoney;
 	public Button btnBuyGroundNoMoney;
+	public GameObject panelPayToll;
+	public Text txtPayToll;
+	public Button btnPayToll;
+	public GameObject panelBreakdown;
+	public Text txtBreakdown;
+	public Button btnBreakdown;
 
 	//缓存游戏数据,相当于从DB读取出来的数据
 	private List<Player> mPlayerList = new List<Player> ();
@@ -84,6 +90,12 @@ public class GameManager : MonoBehaviour
 		});
 		btnBuyGroundNoMoney.onClick.AddListener (() => {
 			currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY_CONFIRM);
+		});
+		btnPayToll.onClick.AddListener (() => {
+			currentPlayer.SetAction (Constants.ACTION_PAY_TOLL_CONFIRM);
+		});
+		btnBreakdown.onClick.AddListener (() => {
+			currentPlayer.SetAction (Constants.ACTION_BREAKDOWN_CONFIRM);
 		});
 		btnEndTurn.onClick.AddListener (() => {
 			currentPlayer.SetAction (Constants.ACTION_END_TURN_CONFIRM);
@@ -178,7 +190,7 @@ public class GameManager : MonoBehaviour
 	//这部分的完善建立在流程完善的基础上,TODO
 	public void OnPlayerActionChanged (string action)
 	{
-		//开始玩家交互,TODO
+		//开始玩家交互
 		switch (action) {
 		case Constants.ACTION_ARRIVE_GROUND:
 			if (currentGround.Owner == -2) {
@@ -187,15 +199,19 @@ public class GameManager : MonoBehaviour
 			} else if (currentGround.Owner == -1) {
 				//空白区域
 				print ("空白区域");
-				if (currentPlayer.Money > currentGround.Price) {
+				if (currentPlayer.Money >= currentGround.Price) {
 					currentPlayer.SetAction (Constants.ACTION_BUY_GROUND);
 				} else {
 					currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY);
 				}
-			} else {
-				//有主区域
-				print (mPlayerList [currentGround.Owner].Name + " 的区域");
+			} else if (currentGround.Owner == currentPlayer.Index) {
+				//自己区域
+				print ("自己区域");
 				currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
+			} else {
+				//他人区域
+				print (mPlayerList [currentGround.Owner].Name + " 的区域");
+				currentPlayer.SetAction (Constants.ACTION_PAY_TOLL);
 			}
 			break;
 		case Constants.ACTION_BUY_GROUND:
@@ -217,6 +233,32 @@ public class GameManager : MonoBehaviour
 			panelBuyGroundNoMoney.SetActive (false);
 			currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
+		case Constants.ACTION_PAY_TOLL:
+			panelPayToll.SetActive (true);
+			txtPayToll.text = string.Format ("到达了{0}的地盘，需要支付{1}过路费。", mPlayerList [currentGround.Owner].Name, currentGround.Level * 2000);
+			break;
+		case Constants.ACTION_PAY_TOLL_CONFIRM:
+			panelPayToll.SetActive (false);
+			//计算过路费
+			int cost = Mathf.Clamp (currentGround.Level * 2000, 0, currentPlayer.Money);
+			currentPlayer.Money -= cost;
+			mPlayerList [currentGround.Owner].Money += cost;
+			//玩家破产,TODO,破产算法不严谨，暂时先这样，最终胜负不看这个。
+			if (currentPlayer.Money <= 0) {
+				currentPlayer.SetAction (Constants.ACTION_BREAKDOWN);
+			} else {
+				currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
+			}
+			break;
+		case Constants.ACTION_BREAKDOWN:
+			panelBreakdown.SetActive (true);
+			txtBreakdown.text = currentPlayer.Name + "破产了。。";
+			break;
+		case Constants.ACTION_BREAKDOWN_CONFIRM:
+			panelBreakdown.SetActive (false);
+			//TODO
+			currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
+			break;
 		case Constants.ACTION_END_TURN:
 			print ("回合结束");
 			panelEndTurn.SetActive (true);
@@ -235,8 +277,13 @@ public class GameManager : MonoBehaviour
 	private void BuyGround ()
 	{
 		currentPlayer.Money -= currentGround.Price;
-		currentGround.SetGround (currentPlayer.Index);
+		currentGround.SetGround (currentPlayer.Index, 1);//TODO,简单处理给个建筑
 		mNodeList [currentGround.Index].mBuilding.SetBuilding (currentPlayer.Index);//目前的Ground操作和基于Node的Building操作其实是逻辑分离的
+	}
+
+	private void BreakDown ()
+	{
+		
 	}
 
 }

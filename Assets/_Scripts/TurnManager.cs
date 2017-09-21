@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//回合循环计数机,Player实例在这里声明
+//回合循环计数机
 public class TurnManager : MonoBehaviour
 {
 	public static TurnManager Instance{ get; private set; }
@@ -11,8 +11,6 @@ public class TurnManager : MonoBehaviour
 	private Queue<Player> queue = new Queue<Player> ();
 
 	public Player CurrentPlayer{ get; private set; }
-
-	//	bool isPlayerMoving;
 
 	void Awake ()
 	{
@@ -68,10 +66,8 @@ public class TurnManager : MonoBehaviour
 	/// <summary>
 	/// 结束当前Player的行动，并且标记一个变量,
 	/// </summary>
-	public void StopPlayerMoving ()//目前逻辑有问题，后面改,TODO
+	public void StopPlayerMoving ()
 	{
-//		isPlayerMoving = false;
-
 		NextTurn ();
 	}
 
@@ -84,7 +80,6 @@ public class TurnManager : MonoBehaviour
 		queue.Enqueue (p);
 		CurrentPlayer = queue.Peek ();
 		CurrentPlayer.mStatus = PlayerStatus.Moving;
-//		isPlayerMoving = true;
 		print ("取出了：" + CurrentPlayer.Index);
 	}
 }
