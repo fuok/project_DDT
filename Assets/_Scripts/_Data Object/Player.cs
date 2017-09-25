@@ -13,7 +13,7 @@ public enum PlayerStatus
 	GameOver
 }
 
-public class Player:SaveData
+public class Player:GameData
 {
 	//------------ 数据结构 -----------------------------------
 
@@ -22,7 +22,7 @@ public class Player:SaveData
 
 	public string Name{ set; get; }
 
-	public int Money { set; get; }
+	public int Money { private set; get; }
 
 	public int Position { set; get; }
 
@@ -61,17 +61,6 @@ public class Player:SaveData
 		Money += number;
 		//通知
 		DataChange (true);
-	}
-
-	//回合结束后调用此方法保存数据
-	public void SaveData ()
-	{
-		if (hasChanged) {
-			//持久化,TODO
-			
-			//通知
-			DataChange (false);
-		}
 	}
 
 	protected override void DataChange (bool hasChanged)

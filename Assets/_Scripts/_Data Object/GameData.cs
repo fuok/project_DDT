@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SaveData
+public class GameData
 {
 	protected bool hasChanged;
 
@@ -10,7 +10,7 @@ public class SaveData
 
 	protected event DataHandler DataEvent;
 
-	protected SaveData ()
+	protected GameData ()
 	{
 //		Debug.Log ("构造");
 		DataEvent += OnDataEvent;//注册
@@ -21,6 +21,16 @@ public class SaveData
 		DataEvent (hasChange);
 	}
 
+	//回合结束后调用此方法保存数据
+	public void DataSave ()
+	{
+		if (hasChanged) {
+			//持久化,TODO
+					
+			//通知
+			DataChange (false);
+		}
+	}
 
 	private void OnDataEvent (bool hasChanged)
 	{

@@ -241,8 +241,8 @@ public class GameManager : MonoBehaviour
 			panelPayToll.SetActive (false);
 			//计算过路费
 			int cost = Mathf.Clamp (currentGround.Level * 2000, 0, currentPlayer.Money);
-			currentPlayer.Money -= cost;
-			mPlayerList [currentGround.Owner].Money += cost;
+			currentPlayer.AddMoney (-cost);
+			mPlayerList [currentGround.Owner].AddMoney (cost);
 			//玩家破产,TODO,破产算法不严谨，暂时先这样，最终胜负不看这个。
 			if (currentPlayer.Money <= 0) {
 				currentPlayer.SetAction (Constants.ACTION_BREAKDOWN);
@@ -262,6 +262,7 @@ public class GameManager : MonoBehaviour
 		case Constants.ACTION_END_TURN:
 			print ("回合结束");
 			panelEndTurn.SetActive (true);
+			currentPlayer.DataSave ();
 			break;
 		case Constants.ACTION_END_TURN_CONFIRM:
 			panelEndTurn.SetActive (false);
@@ -276,7 +277,7 @@ public class GameManager : MonoBehaviour
 
 	private void BuyGround ()
 	{
-		currentPlayer.Money -= currentGround.Price;
+		currentPlayer.AddMoney (-currentGround.Price);
 		currentGround.SetGround (currentPlayer.Index, 1);//TODO,简单处理给个建筑
 		mNodeList [currentGround.Index].mBuilding.SetBuilding (currentPlayer.Index);//目前的Ground操作和基于Node的Building操作其实是逻辑分离的
 	}
