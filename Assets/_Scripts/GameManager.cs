@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 	//缓存游戏数据,相当于从DB读取出来的数据
 	private List<Player> mPlayerList = new List<Player> ();
 	private List<Ground> mGroundList = new List<Ground> ();
+	private List<Girl> mGirlList = new List<Girl> ();
 
 	void Awake ()
 	{
@@ -69,10 +70,14 @@ public class GameManager : MonoBehaviour
 	void Start ()
 	{
 
-		//Test,创造一组Ground数据
+		//构造测试数据
 		for (int i = 0; i < mNodeList.Length; i++) {
 			Ground ground = new Ground{ Index = i, Owner = -1, Level = 0, Price = 3000 };
 			mGroundList.Add (ground);
+		}
+
+		for (int i = 0; i < 4; i++) {
+			Girl girl = new Girl{ Index = i, Owner = -1, LastOwner = -1, Name = "女生" + (i + 1) + "号" };
 		}
 			
 		//棋子状态监听
@@ -192,6 +197,17 @@ public class GameManager : MonoBehaviour
 	{
 		//开始玩家交互
 		switch (action) {
+		//
+		case Constants.ACTION_MEET_GIRL:
+			if (Utils.RandomMeetGirl ()) {
+				
+			}
+			break;
+		case Constants.ACTION_MEET_GIRL_YES:
+			break;
+		case Constants.ACTION_MEET_GIRL_NO:
+			break;
+		//
 		case Constants.ACTION_ARRIVE_GROUND:
 			if (currentGround.Owner == -2) {
 				//中立区域
@@ -214,6 +230,7 @@ public class GameManager : MonoBehaviour
 				currentPlayer.SetAction (Constants.ACTION_PAY_TOLL);
 			}
 			break;
+		//
 		case Constants.ACTION_BUY_GROUND:
 			panelBuyGround.SetActive (true);
 			break;
@@ -226,6 +243,7 @@ public class GameManager : MonoBehaviour
 			panelBuyGround.SetActive (false);
 			currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
+		//
 		case Constants.ACTION_BUY_GROUND_NO_MONEY:
 			panelBuyGroundNoMoney.SetActive (true);
 			break;
@@ -233,14 +251,16 @@ public class GameManager : MonoBehaviour
 			panelBuyGroundNoMoney.SetActive (false);
 			currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
+		//
 		case Constants.ACTION_PAY_TOLL:
 			panelPayToll.SetActive (true);
 			txtPayToll.text = string.Format ("到达了{0}的地盘，需要支付{1}过路费。", mPlayerList [currentGround.Owner].Name, currentGround.Level * 2000);
 			break;
 		case Constants.ACTION_PAY_TOLL_CONFIRM:
 			panelPayToll.SetActive (false);
-			//计算过路费
-			int cost = Mathf.Clamp (currentGround.Level * 2000, 0, currentPlayer.Money);
+			//计算过路费,TODO,price计算后面再搞
+//			int cost = Mathf.Clamp (currentGround.Level * 2000, 0, currentPlayer.Money);
+			int cost = currentGround.Level * 2000;//允许玩家负债
 			currentPlayer.AddMoney (-cost);
 			mPlayerList [currentGround.Owner].AddMoney (cost);
 			//玩家破产,TODO,破产算法不严谨，暂时先这样，最终胜负不看这个。
@@ -250,6 +270,7 @@ public class GameManager : MonoBehaviour
 				currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
 			}
 			break;
+		//
 		case Constants.ACTION_BREAKDOWN:
 			panelBreakdown.SetActive (true);
 			txtBreakdown.text = currentPlayer.Name + "破产了。。";
@@ -259,6 +280,7 @@ public class GameManager : MonoBehaviour
 			//TODO
 			currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
+		//
 		case Constants.ACTION_END_TURN:
 			print ("回合结束");
 			panelEndTurn.SetActive (true);
@@ -273,7 +295,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	//------ 游戏玩法相关的函数 ---------------------------------
+	//------ 游戏玩法相关的函数,函数主题都是CurrentPlayer ---------------------------------
 
 	private void BuyGround ()
 	{

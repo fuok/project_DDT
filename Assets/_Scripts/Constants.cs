@@ -18,6 +18,11 @@ public class Constants
 
 	//------------- Action Key ----------------------
 	public const string ACTION_ARRIVE_GROUND = "action_arrive_ground";
+
+	public const string ACTION_MEET_GIRL = "action_meet_girl";
+	public const string ACTION_MEET_GIRL_YES = "action_meet_girl_yes";
+	public const string ACTION_MEET_GIRL_NO = "action_meet_girl_no";
+
 	public const string ACTION_BUY_GROUND = "action_buy_ground";
 	public const string ACTION_BUY_GROUND_YES = "action_buy_ground_yes";
 	public const string ACTION_BUY_GROUND_NO = "action_buy_ground_no";
