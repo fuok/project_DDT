@@ -52,33 +52,42 @@ public class GameManager : MonoBehaviour
 
 		//初始化游戏数据，Player、Ground、Girl都在这里，后期可以放到静态对象里
 		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 0, "刘玄德(红)");
-		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 1, "林志玲(黄)");
+		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 1, "雷锋(黄)");
 		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 2, "奥巴马(蓝)");
-		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 3, "苍井空(绿)");
+		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 3, "金三胖(绿)");
 
-		//角色初始化
+		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 0, "林志玲");
+		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 1, "波多野结衣");
+		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 2, "张雨桐");
+		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 3, "王熙凤");
+
+		//构造测试数据
+		//Player
 		for (int i = 0; i < 4; i++) {
 			Player p = new Player (i, PlayerPrefs.GetString (Constants.PLAYER_SAVE_NAME + i, "player" + i), Constants.DEFAULT_MONEY);
 			//注册玩家事件
 			p.PlayerActionEvent += GameManager.Instance.OnPlayerActionChanged;
 			mPlayerList.Add (p);
 		}
-
 		TurnManager.Instance.SetPlayerQueue (ref mPlayerList);
-	}
-
-	void Start ()
-	{
-
-		//构造测试数据
+		//Ground
 		for (int i = 0; i < mNodeList.Length; i++) {
 			Ground ground = new Ground{ Index = i, Owner = -1, Level = 0, Price = 3000 };
 			mGroundList.Add (ground);
 		}
-
+		//Girl
 		for (int i = 0; i < 4; i++) {
-			Girl girl = new Girl{ Index = i, Owner = -1, LastOwner = -1, Name = "女生" + (i + 1) + "号" };
+			Girl girl = new Girl {
+				Index = i,
+				Owner = -1,
+				LastOwner = -1,
+				Name = PlayerPrefs.GetString (Constants.GIRL_SAVE_NAME + i, "girl" + i)
+			};
 		}
+	}
+
+	void Start ()
+	{
 			
 		//棋子状态监听
 		foreach (var item in mCarList) {
@@ -307,6 +316,36 @@ public class GameManager : MonoBehaviour
 	private void BreakDown ()
 	{
 		
+	}
+
+	//------- 数据获取,当已有CurrentPlayer时，获取其他玩家列表，以及每个人的Ground和Girl列表
+
+	private List<Player> GetOtherPlayer ()
+	{
+		return mPlayerList.FindAll ((Player p) => {
+			return p.Index != currentPlayer.Index;
+		});
+	}
+
+	private List<Ground> GetPlayerGround (int pIndex)
+	{
+		return mGroundList.FindAll ((Ground g) => {
+			return g.Owner == pIndex;
+		});
+	}
+
+	private List<Girl> GetPlayerGirl (int pIndex)
+	{
+		return mGirlList.FindAll ((Girl g) => {
+			return g.Owner == pIndex;
+		});
+	}
+
+	private Girl GetLeisureGirl ()
+	{
+		return mGirlList.Find ((Girl g) => {
+			return g.Owner == -1 && g.LastOwner != currentPlayer.Index;
+		});
 	}
 
 }

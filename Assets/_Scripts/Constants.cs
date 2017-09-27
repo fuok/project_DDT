@@ -11,7 +11,7 @@ public class Constants
 	//------------- PlayerPrefabs Key ----------------------
 
 	public const string PLAYER_SAVE_NAME = "player_save_name_";
-
+	public const string GIRL_SAVE_NAME = "girl_save_name_";
 
 
 

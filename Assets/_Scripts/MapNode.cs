@@ -13,13 +13,11 @@ public class MapNode : MonoBehaviour
 	//建筑
 	public Building mBuilding;
 
-	// Use this for initialization
 	void Start ()
 	{
 	
 	}
-	
-	// Update is called once per frame
+
 	void Update ()
 	{
 	
