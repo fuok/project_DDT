@@ -25,14 +25,24 @@ public class GameManager : MonoBehaviour
 	[Header ("UI")]
 	public GameObject panelEndTurn;
 	public Button btnEndTurn;
+
+	public GameObject panelMeetGirl;
+	public Text txtGirlName;
+	public Text txtGirlSalary;
+	public Button btnMeetGirlYes;
+	public Button btnMeetGirlNo;
+
 	public GameObject panelBuyGround;
 	public Button btnBuyGroundYes;
 	public Button btnBuyGroundNo;
+
 	public GameObject panelBuyGroundNoMoney;
 	public Button btnBuyGroundNoMoney;
+
 	public GameObject panelPayToll;
 	public Text txtPayToll;
 	public Button btnPayToll;
+
 	public GameObject panelBreakdown;
 	public Text txtBreakdown;
 	public Button btnBreakdown;
@@ -81,8 +91,9 @@ public class GameManager : MonoBehaviour
 				Index = i,
 				Owner = -1,
 				LastOwner = -1,
-				Name = PlayerPrefs.GetString (Constants.GIRL_SAVE_NAME + i, "girl" + i)
+				Name = PlayerPrefs.GetString (Constants.GIRL_SAVE_NAME + i, "girl" + i), Salary = 1000
 			};
+			mGirlList.Add (girl);
 		}
 	}
 
@@ -96,6 +107,12 @@ public class GameManager : MonoBehaviour
 
 		//Init UI
 		btnRoll.onClick.AddListener (RollDice);
+		btnMeetGirlYes.onClick.AddListener (() => {
+			currentPlayer.SetAction (Constants.ACTION_MEET_GIRL_YES);
+		});
+		btnMeetGirlNo.onClick.AddListener (() => {
+			currentPlayer.SetAction (Constants.ACTION_MEET_GIRL_NO);
+		});
 		btnBuyGroundYes.onClick.AddListener (() => {
 			currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_YES);
 		});
@@ -192,12 +209,15 @@ public class GameManager : MonoBehaviour
 	{
 		switch (status) {
 		case CarStatus.Stop:
-			currentPlayer.SetAction (Constants.ACTION_ARRIVE_GROUND);//角色停住后进入交互阶段
+			currentPlayer.SetAction (Constants.ACTION_MEET_GIRL);//角色停住后进入交互阶段
 			break;
 		default:
 			break;
 		}
 	}
+		
+	//事件机制不能传参所以用全局变量
+	Girl leisureGirl;
 
 	//玩家角色事件回调函数
 	//为了程序框架和玩法内容完全分离、所有玩法相关的操作都通过Action字符串互相串联，玩法相关的函数也全部在这里调用
@@ -208,13 +228,24 @@ public class GameManager : MonoBehaviour
 		switch (action) {
 		//
 		case Constants.ACTION_MEET_GIRL:
-			if (Utils.RandomMeetGirl ()) {
-				
+			//尝试获取新女友
+			leisureGirl = GetLeisureGirl ();
+			if (Utils.RandomMeetGirl () && leisureGirl != null) {
+				panelMeetGirl.SetActive (true);
+				txtGirlName.text = leisureGirl.Name;
+				txtGirlSalary.text = "薪水:" + leisureGirl.Salary;
+			} else {
+				currentPlayer.SetAction (Constants.ACTION_ARRIVE_GROUND);
 			}
 			break;
 		case Constants.ACTION_MEET_GIRL_YES:
+			panelMeetGirl.SetActive (false);
+			leisureGirl.SetGirl (currentPlayer.Index);
+			currentPlayer.SetAction (Constants.ACTION_ARRIVE_GROUND);
 			break;
 		case Constants.ACTION_MEET_GIRL_NO:
+			panelMeetGirl.SetActive (false);
+			currentPlayer.SetAction (Constants.ACTION_ARRIVE_GROUND);
 			break;
 		//
 		case Constants.ACTION_ARRIVE_GROUND:

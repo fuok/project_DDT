@@ -10,7 +10,7 @@ public class Girl:GameData
 	//名称
 	public string Name{ set; get; }
 	//薪水，每一轮给玩家的钱
-	public string Salary{ set; get; }
+	public int Salary{ set; get; }
 	//简介
 	public string Desc{ set; get; }
 	//所属的玩家序号,无主为-1
