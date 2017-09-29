@@ -26,11 +26,11 @@ public class GameManager : MonoBehaviour
 	public GameObject panelEndTurn;
 	public Button btnEndTurn;
 
-	public GameObject panelMeetGirl;
-	public Text txtGirlName;
-	public Text txtGirlSalary;
-	public Button btnMeetGirlYes;
-	public Button btnMeetGirlNo;
+	//	public GameObject panelMeetGirl;
+	//	public Text txtGirlName;
+	//	public Text txtGirlSalary;
+	//	public Button btnMeetGirlYes;
+	//	public Button btnMeetGirlNo;
 
 	public GameObject panelBuyGround;
 	public Button btnBuyGroundYes;
@@ -107,29 +107,23 @@ public class GameManager : MonoBehaviour
 
 		//Init UI
 		btnRoll.onClick.AddListener (RollDice);
-		btnMeetGirlYes.onClick.AddListener (() => {
-			currentPlayer.SetAction (Constants.ACTION_MEET_GIRL_YES);
-		});
-		btnMeetGirlNo.onClick.AddListener (() => {
-			currentPlayer.SetAction (Constants.ACTION_MEET_GIRL_NO);
-		});
 		btnBuyGroundYes.onClick.AddListener (() => {
-			currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_YES);
+			SetAction (Constants.ACTION_BUY_GROUND_YES);
 		});
 		btnBuyGroundNo.onClick.AddListener (() => {
-			currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_NO);
+			SetAction (Constants.ACTION_BUY_GROUND_NO);
 		});
 		btnBuyGroundNoMoney.onClick.AddListener (() => {
-			currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY_CONFIRM);
+			SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY_CONFIRM);
 		});
 		btnPayToll.onClick.AddListener (() => {
-			currentPlayer.SetAction (Constants.ACTION_PAY_TOLL_CONFIRM);
+			SetAction (Constants.ACTION_PAY_TOLL_CONFIRM);
 		});
 		btnBreakdown.onClick.AddListener (() => {
-			currentPlayer.SetAction (Constants.ACTION_BREAKDOWN_CONFIRM);
+			SetAction (Constants.ACTION_BREAKDOWN_CONFIRM);
 		});
 		btnEndTurn.onClick.AddListener (() => {
-			currentPlayer.SetAction (Constants.ACTION_END_TURN_CONFIRM);
+			SetAction (Constants.ACTION_END_TURN_CONFIRM);
 		});
 
 		//游戏开始
@@ -209,15 +203,17 @@ public class GameManager : MonoBehaviour
 	{
 		switch (status) {
 		case CarStatus.Stop:
-			currentPlayer.SetAction (Constants.ACTION_MEET_GIRL);//角色停住后进入交互阶段
+			SetAction (Constants.ACTION_MEET_GIRL);//角色停住后进入交互阶段
 			break;
 		default:
 			break;
 		}
 	}
-		
-	//事件机制不能传参所以用全局变量
-	Girl leisureGirl;
+
+	public void SetAction (string action)
+	{
+		currentPlayer.SetAction (action);
+	}
 
 	//玩家角色事件回调函数
 	//为了程序框架和玩法内容完全分离、所有玩法相关的操作都通过Action字符串互相串联，玩法相关的函数也全部在这里调用
@@ -229,23 +225,21 @@ public class GameManager : MonoBehaviour
 		//
 		case Constants.ACTION_MEET_GIRL:
 			//尝试获取新女友
-			leisureGirl = GetLeisureGirl ();
-			if (Utils.RandomMeetGirl () && leisureGirl != null) {
-				panelMeetGirl.SetActive (true);
-				txtGirlName.text = leisureGirl.Name;
-				txtGirlSalary.text = "薪水:" + leisureGirl.Salary;
+			if (Utils.RandomMeetGirl () && GetLeisureGirl () != null) {
+				print ("遇到女孩");
+				UIManager.Instance.Open (typeof(PanelMeetGirl));
+
 			} else {
-				currentPlayer.SetAction (Constants.ACTION_ARRIVE_GROUND);
+				SetAction (Constants.ACTION_ARRIVE_GROUND);
 			}
 			break;
 		case Constants.ACTION_MEET_GIRL_YES:
-			panelMeetGirl.SetActive (false);
-			leisureGirl.SetGirl (currentPlayer.Index);
-			currentPlayer.SetAction (Constants.ACTION_ARRIVE_GROUND);
+			UIManager.Instance.Close (typeof(PanelMeetGirl));
+			SetAction (Constants.ACTION_ARRIVE_GROUND);
 			break;
 		case Constants.ACTION_MEET_GIRL_NO:
-			panelMeetGirl.SetActive (false);
-			currentPlayer.SetAction (Constants.ACTION_ARRIVE_GROUND);
+			UIManager.Instance.Close (typeof(PanelMeetGirl));
+			SetAction (Constants.ACTION_ARRIVE_GROUND);
 			break;
 		//
 		case Constants.ACTION_ARRIVE_GROUND:
@@ -256,18 +250,18 @@ public class GameManager : MonoBehaviour
 				//空白区域
 				print ("空白区域");
 				if (currentPlayer.Money >= currentGround.Price) {
-					currentPlayer.SetAction (Constants.ACTION_BUY_GROUND);
+					SetAction (Constants.ACTION_BUY_GROUND);
 				} else {
-					currentPlayer.SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY);
+					SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY);
 				}
 			} else if (currentGround.Owner == currentPlayer.Index) {
 				//自己区域
 				print ("自己区域");
-				currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
+				SetAction (Constants.ACTION_END_TURN);//活动结束
 			} else {
 				//他人区域
 				print (mPlayerList [currentGround.Owner].Name + " 的区域");
-				currentPlayer.SetAction (Constants.ACTION_PAY_TOLL);
+				SetAction (Constants.ACTION_PAY_TOLL);
 			}
 			break;
 		//
@@ -277,11 +271,11 @@ public class GameManager : MonoBehaviour
 		case Constants.ACTION_BUY_GROUND_YES:
 			BuyGround ();
 			panelBuyGround.SetActive (false);
-			currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
+			SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
 		case Constants.ACTION_BUY_GROUND_NO:
 			panelBuyGround.SetActive (false);
-			currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
+			SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
 		//
 		case Constants.ACTION_BUY_GROUND_NO_MONEY:
@@ -289,7 +283,7 @@ public class GameManager : MonoBehaviour
 			break;
 		case Constants.ACTION_BUY_GROUND_NO_MONEY_CONFIRM:
 			panelBuyGroundNoMoney.SetActive (false);
-			currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
+			SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
 		//
 		case Constants.ACTION_PAY_TOLL:
@@ -305,9 +299,9 @@ public class GameManager : MonoBehaviour
 			mPlayerList [currentGround.Owner].AddMoney (cost);
 			//玩家破产,TODO,破产算法不严谨，暂时先这样，最终胜负不看这个。
 			if (currentPlayer.Money <= 0) {
-				currentPlayer.SetAction (Constants.ACTION_BREAKDOWN);
+				SetAction (Constants.ACTION_BREAKDOWN);
 			} else {
-				currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
+				SetAction (Constants.ACTION_END_TURN);//活动结束
 			}
 			break;
 		//
@@ -318,7 +312,7 @@ public class GameManager : MonoBehaviour
 		case Constants.ACTION_BREAKDOWN_CONFIRM:
 			panelBreakdown.SetActive (false);
 			//TODO
-			currentPlayer.SetAction (Constants.ACTION_END_TURN);//活动结束
+			SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
 		//
 		case Constants.ACTION_END_TURN:
@@ -349,7 +343,12 @@ public class GameManager : MonoBehaviour
 		
 	}
 
-	//------- 数据获取,当已有CurrentPlayer时，获取其他玩家列表，以及每个人的Ground和Girl列表
+	//------- 数据获取,当已有CurrentPlayer时，获取其他玩家列表，以及每个人的Ground和Girl列表,这部分函数要扩展，UI层也要调用,TODO
+
+	public Player GetCurrentPlayer ()
+	{
+		return currentPlayer;
+	}
 
 	private List<Player> GetOtherPlayer ()
 	{
@@ -372,7 +371,7 @@ public class GameManager : MonoBehaviour
 		});
 	}
 
-	private Girl GetLeisureGirl ()
+	public Girl GetLeisureGirl ()
 	{
 		return mGirlList.Find ((Girl g) => {
 			return g.Owner == -1 && g.LastOwner != currentPlayer.Index;
