@@ -39,11 +39,6 @@ public class PanelMeetGirl : UIBase
 	}
 
 
-	void Update ()
-	{
-		
-	}
-
 	public override void SetParams (params object[] args)
 	{
 		base.SetParams (args);
