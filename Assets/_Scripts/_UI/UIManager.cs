@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
 	/// </summary>
 	/// <param name="type">Type.</param>
 	/// <param name="args">Arguments.</param>
-	public void Open (Type type, params object[] args)
+	public void Open<T> (Type type, ref T arg, params object[] args)
 	{
 //		print (panelMeetGirl.GetType ().Name);
 
@@ -48,7 +48,7 @@ public class UIManager : MonoBehaviour
 //				print ("对比成功");
 //				GameObject ui = GameObject.Instantiate<GameObject> (((UIBase)item).gameObject, transCanvas);
 				UIBase ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
-				ui.SetParams (args);
+				ui.SetParams (ref arg, args);
 			} else {
 				print ("对比失败");
 			}

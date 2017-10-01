@@ -225,9 +225,10 @@ public class GameManager : MonoBehaviour
 		//
 		case Constants.ACTION_MEET_GIRL:
 			//尝试获取新女友
-			if (Utils.RandomMeetGirl () && GetLeisureGirl () != null) {
+			Girl leisureGirl = GetLeisureGirl ();
+			if (Utils.RandomMeetGirl () && leisureGirl != null) {
 				print ("遇到女孩");
-				UIManager.Instance.Open (typeof(PanelMeetGirl));
+				UIManager.Instance.Open (typeof(PanelMeetGirl), ref leisureGirl);
 
 			} else {
 				SetAction (Constants.ACTION_ARRIVE_GROUND);

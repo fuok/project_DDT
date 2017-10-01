@@ -25,7 +25,16 @@ public class PanelMeetGirl : UIBase
 
 	void Start ()
 	{
-		Girl leisureGirl = GameManager.Instance.GetLeisureGirl ();
+	}
+
+
+	public override void SetParams<T> (ref T arg, params object[] args)
+	{
+		base.SetParams (ref arg, args);
+//		print ("进来了");
+//		print (arg.GetType ().Name);
+
+		Girl leisureGirl = arg as Girl;//Unboxing
 		txtGirlName.text = leisureGirl.Name;
 		txtGirlSalary.text = "薪水:" + leisureGirl.Salary;
 
@@ -36,11 +45,5 @@ public class PanelMeetGirl : UIBase
 		btnMeetGirlNo.onClick.AddListener (() => {
 			GameManager.Instance.SetAction (Constants.ACTION_MEET_GIRL_NO);
 		});
-	}
-
-
-	public override void SetParams (params object[] args)
-	{
-		base.SetParams (args);
 	}
 }

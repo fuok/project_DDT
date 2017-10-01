@@ -16,18 +16,11 @@ public class UIBase : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 传递可变参数。用于当前界面只做数据显示的情况
+	/// Sets the parameters.
 	/// </summary>
-	/// <param name="args">Arguments.</param>
-	public virtual void SetParams (params object[] args)
-	{
-	}
-
-	/// <summary>
-	/// 重载，传递引用参数。用于当前界面直接修改主缓存数据的情况
-	/// </summary>
-	/// <param name="arg">Argument.</param>
-	public virtual void SetParams (ref object arg)
+	/// <param name="arg">引用参数。用于当前界面直接修改主缓存数据的情况.因为引用参数必须是指定类型不能用object装箱，所以这里使用泛型.</param>
+	/// <param name="args">可变参数。用于只修改界面显示的情况.</param>
+	public virtual void SetParams<T> (ref T arg, params object[] args)
 	{
 	}
 
