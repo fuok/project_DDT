@@ -31,8 +31,6 @@ public class PanelMeetGirl : UIBase
 	public override void SetParams<T> (ref T arg, params object[] args)
 	{
 		base.SetParams (ref arg, args);
-//		print ("进来了");
-//		print (arg.GetType ().Name);
 
 		Girl leisureGirl = arg as Girl;//Unboxing
 		txtGirlName.text = leisureGirl.Name;

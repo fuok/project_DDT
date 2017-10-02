@@ -10,7 +10,12 @@ public class UIManager : MonoBehaviour
 	public static UIManager Instance{ private set; get; }
 
 	public Transform transCanvas;
+	//所有panel都要注册在此
 	public PanelMeetGirl panelMeetGirl;
+	public PanelBuyGround panelBuyGround;
+	public PanelBuyGroundNoMoney panelBuyGroundNoMoney;
+	public PanelPayToll panelPayToll;
+	public PanelEndTurn panelEndTurn;
 
 	ArrayList uiList = new ArrayList ();
 
@@ -27,6 +32,10 @@ public class UIManager : MonoBehaviour
 	{
 		//把全部界面添加进来
 		uiList.Add (panelMeetGirl);
+		uiList.Add (panelBuyGround);
+		uiList.Add (panelBuyGroundNoMoney);
+		uiList.Add (panelPayToll);
+		uiList.Add (panelEndTurn);
 	}
 
 	void Update ()
@@ -50,7 +59,19 @@ public class UIManager : MonoBehaviour
 				UIBase ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
 				ui.SetParams (ref arg, args);
 			} else {
-				print ("对比失败");
+//				print ("对比失败");
+			}
+		}
+	}
+
+	public void Open (Type type, params object[] args)
+	{
+		foreach (var item in uiList) {
+			if (item.GetType ().Equals (type)) {
+				UIBase ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
+				ui.SetParams (args);
+			} else {
+//				print ("对比失败");
 			}
 		}
 	}

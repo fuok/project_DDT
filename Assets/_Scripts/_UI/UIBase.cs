@@ -24,4 +24,8 @@ public class UIBase : MonoBehaviour
 	{
 	}
 
+	public virtual void SetParams (params object[] args)
+	{
+	}
+
 }

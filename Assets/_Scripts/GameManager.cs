@@ -21,32 +21,6 @@ public class GameManager : MonoBehaviour
 	public Text txtCurrentPlayer;
 	public Text[] txtPlayerInfo;
 
-	//UI
-	[Header ("UI")]
-	public GameObject panelEndTurn;
-	public Button btnEndTurn;
-
-	//	public GameObject panelMeetGirl;
-	//	public Text txtGirlName;
-	//	public Text txtGirlSalary;
-	//	public Button btnMeetGirlYes;
-	//	public Button btnMeetGirlNo;
-
-	public GameObject panelBuyGround;
-	public Button btnBuyGroundYes;
-	public Button btnBuyGroundNo;
-
-	public GameObject panelBuyGroundNoMoney;
-	public Button btnBuyGroundNoMoney;
-
-	public GameObject panelPayToll;
-	public Text txtPayToll;
-	public Button btnPayToll;
-
-	public GameObject panelBreakdown;
-	public Text txtBreakdown;
-	public Button btnBreakdown;
-
 	//缓存游戏数据,相当于从DB读取出来的数据
 	private List<Player> mPlayerList = new List<Player> ();
 	private List<Ground> mGroundList = new List<Ground> ();
@@ -107,24 +81,6 @@ public class GameManager : MonoBehaviour
 
 		//Init UI
 		btnRoll.onClick.AddListener (RollDice);
-		btnBuyGroundYes.onClick.AddListener (() => {
-			SetAction (Constants.ACTION_BUY_GROUND_YES);
-		});
-		btnBuyGroundNo.onClick.AddListener (() => {
-			SetAction (Constants.ACTION_BUY_GROUND_NO);
-		});
-		btnBuyGroundNoMoney.onClick.AddListener (() => {
-			SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY_CONFIRM);
-		});
-		btnPayToll.onClick.AddListener (() => {
-			SetAction (Constants.ACTION_PAY_TOLL_CONFIRM);
-		});
-		btnBreakdown.onClick.AddListener (() => {
-			SetAction (Constants.ACTION_BREAKDOWN_CONFIRM);
-		});
-		btnEndTurn.onClick.AddListener (() => {
-			SetAction (Constants.ACTION_END_TURN_CONFIRM);
-		});
 
 		//游戏开始
 		//初始化调用一次，所以第一个行动的是Player1，而不是Player0
@@ -267,62 +223,61 @@ public class GameManager : MonoBehaviour
 			break;
 		//
 		case Constants.ACTION_BUY_GROUND:
-			panelBuyGround.SetActive (true);
+			UIManager.Instance.Open (typeof(PanelBuyGround));
 			break;
 		case Constants.ACTION_BUY_GROUND_YES:
 			BuyGround ();
-			panelBuyGround.SetActive (false);
+			UIManager.Instance.Close (typeof(PanelBuyGround));
 			SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
 		case Constants.ACTION_BUY_GROUND_NO:
-			panelBuyGround.SetActive (false);
+			UIManager.Instance.Close (typeof(PanelBuyGround));
 			SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
 		//
 		case Constants.ACTION_BUY_GROUND_NO_MONEY:
-			panelBuyGroundNoMoney.SetActive (true);
+			UIManager.Instance.Open (typeof(PanelBuyGroundNoMoney));
 			break;
 		case Constants.ACTION_BUY_GROUND_NO_MONEY_CONFIRM:
-			panelBuyGroundNoMoney.SetActive (false);
+			UIManager.Instance.Close (typeof(PanelBuyGroundNoMoney));
 			SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
 		//
 		case Constants.ACTION_PAY_TOLL:
-			panelPayToll.SetActive (true);
-			txtPayToll.text = string.Format ("到达了{0}的地盘，需要支付{1}过路费。", mPlayerList [currentGround.Owner].Name, currentGround.Level * 2000);
+			string str = string.Format ("到达了{0}的地盘，需要支付{1}过路费。", mPlayerList [currentGround.Owner].Name, currentGround.Level * 2000);
+			UIManager.Instance.Open (typeof(PanelPayToll), str);
 			break;
 		case Constants.ACTION_PAY_TOLL_CONFIRM:
-			panelPayToll.SetActive (false);
+			UIManager.Instance.Close (typeof(PanelPayToll));
 			//计算过路费,TODO,price计算后面再搞
 //			int cost = Mathf.Clamp (currentGround.Level * 2000, 0, currentPlayer.Money);
 			int cost = currentGround.Level * 2000;//允许玩家负债
 			currentPlayer.AddMoney (-cost);
 			mPlayerList [currentGround.Owner].AddMoney (cost);
 			//玩家破产,TODO,破产算法不严谨，暂时先这样，最终胜负不看这个。
-			if (currentPlayer.Money <= 0) {
-				SetAction (Constants.ACTION_BREAKDOWN);
-			} else {
-				SetAction (Constants.ACTION_END_TURN);//活动结束
-			}
+//			if (currentPlayer.Money <= 0) {
+//				SetAction (Constants.ACTION_BREAKDOWN);
+//			} else {
+			SetAction (Constants.ACTION_END_TURN);//活动结束
+//			}
 			break;
 		//
-		case Constants.ACTION_BREAKDOWN:
-			panelBreakdown.SetActive (true);
-			txtBreakdown.text = currentPlayer.Name + "破产了。。";
-			break;
-		case Constants.ACTION_BREAKDOWN_CONFIRM:
-			panelBreakdown.SetActive (false);
-			//TODO
-			SetAction (Constants.ACTION_END_TURN);//活动结束
-			break;
+//		case Constants.ACTION_BREAKDOWN:
+//			panelBreakdown.SetActive (true);
+//			txtBreakdown.text = currentPlayer.Name + "破产了。。";
+//			break;
+//		case Constants.ACTION_BREAKDOWN_CONFIRM:
+//			panelBreakdown.SetActive (false);
+//			SetAction (Constants.ACTION_END_TURN);//活动结束
+//			break;
 		//
 		case Constants.ACTION_END_TURN:
 			print ("回合结束");
-			panelEndTurn.SetActive (true);
+			UIManager.Instance.Open (typeof(PanelEndTurn));
 			currentPlayer.DataSave ();
 			break;
 		case Constants.ACTION_END_TURN_CONFIRM:
-			panelEndTurn.SetActive (false);
+			UIManager.Instance.Close (typeof(PanelEndTurn));
 			EndTurn ();
 			break;
 		default:
