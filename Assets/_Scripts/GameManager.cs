@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
 	//调试控制
 	public Camera camDice;
+
+	[Header ("Test UI")]
 	public Button btnRoll;
 	public Text txtDiceResult;
 	public Text txtCurrentPlayer;
@@ -248,18 +250,15 @@ public class GameManager : MonoBehaviour
 			UIManager.Instance.Open (typeof(PanelPayToll), str);
 			break;
 		case Constants.ACTION_PAY_TOLL_CONFIRM:
-			UIManager.Instance.Close (typeof(PanelPayToll));
 			//计算过路费,TODO,price计算后面再搞
 //			int cost = Mathf.Clamp (currentGround.Level * 2000, 0, currentPlayer.Money);
 			int cost = currentGround.Level * 2000;//允许玩家负债
 			currentPlayer.AddMoney (-cost);
 			mPlayerList [currentGround.Owner].AddMoney (cost);
-			//玩家破产,TODO,破产算法不严谨，暂时先这样，最终胜负不看这个。
-//			if (currentPlayer.Money <= 0) {
-//				SetAction (Constants.ACTION_BREAKDOWN);
-//			} else {
+			//玩家破产,破产算法不严谨，暂时不设定，最终胜负不看这个。
+
+			UIManager.Instance.Close (typeof(PanelPayToll));
 			SetAction (Constants.ACTION_END_TURN);//活动结束
-//			}
 			break;
 		//
 //		case Constants.ACTION_BREAKDOWN:
