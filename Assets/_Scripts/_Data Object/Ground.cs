@@ -13,6 +13,8 @@ public class Ground:GameData
 	public int Level{ set; get; }
 
 	public int Price{ set; get; }
+	//中立地区的种类，各种中立建筑
+	public int Type{ set; get; }
 
 	//------------- basic logic ----------------------------------
 
