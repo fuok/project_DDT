@@ -30,8 +30,10 @@ public class Constants
 	public const string ACTION_BUY_GROUND_NO_MONEY_CONFIRM = "action_buy_ground_no_money_confirm";
 	public const string ACTION_PAY_TOLL = "action_pay_toll";
 	public const string ACTION_PAY_TOLL_CONFIRM = "action_pay_toll_confirm";
-//	public const string ACTION_BREAKDOWN = "action_breakdown";
-//	public const string ACTION_BREAKDOWN_CONFIRM = "action_breakdown_confirm";
+	public const string ACTION_BUY_DRUG = "action_buy_drug";
+	public const string ACTION_BUY_DRUG_CONFIRM = "action_buy_drug_confirm";
+	//	public const string ACTION_BREAKDOWN = "action_breakdown";
+	//	public const string ACTION_BREAKDOWN_CONFIRM = "action_breakdown_confirm";
 	public const string ACTION_END_TURN = "action_end_turn";
 	public const string ACTION_END_TURN_CONFIRM = "action_end_turn_confirm";
 }

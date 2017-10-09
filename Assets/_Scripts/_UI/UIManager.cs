@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
 	public PanelBuyGround panelBuyGround;
 	public PanelBuyGroundNoMoney panelBuyGroundNoMoney;
 	public PanelPayToll panelPayToll;
+	public PanelBuyDrug panelBuyDrug;
 	public PanelEndTurn panelEndTurn;
 
 	ArrayList uiList = new ArrayList ();
@@ -35,6 +36,7 @@ public class UIManager : MonoBehaviour
 		uiList.Add (panelBuyGround);
 		uiList.Add (panelBuyGroundNoMoney);
 		uiList.Add (panelPayToll);
+		uiList.Add (panelBuyDrug);
 		uiList.Add (panelEndTurn);
 	}
 
@@ -44,10 +46,11 @@ public class UIManager : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 打开对应界面
+	/// 打开对应界面,引用参数是修改主缓存数据，只包括Player、Girl、Ground三种
 	/// </summary>
-	/// <param name="type">Type.</param>
-	/// <param name="args">Arguments.</param>
+	/// <param name="type">对应的UI类型.</param>
+	/// <param name="arg">主缓存</param>
+	/// <param name="args">其他参数.</param>
 	public void Open<T> (Type type, ref T arg, params object[] args)
 	{
 //		print (panelMeetGirl.GetType ().Name);

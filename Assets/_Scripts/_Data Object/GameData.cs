@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 主缓存数据，同时也是需要持久化的数据
+/// </summary>
 public class GameData
 {
 	protected bool hasChanged;

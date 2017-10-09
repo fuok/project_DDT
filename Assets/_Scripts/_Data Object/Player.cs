@@ -28,7 +28,7 @@ public class Player:GameData
 
 	public int Position { set; get; }
 
-	private int[] ItemList = new int[6];
+	private int[] DrugList = new int[6];
 
 	//------------- basic logic ----------------------------------
 
@@ -81,13 +81,13 @@ public class Player:GameData
 
 	public int[] GetItemList ()
 	{
-		return ItemList;
+		return DrugList;
 	}
 
 	public bool IsSpaceAvailable ()
 	{
-		for (int i = 0; i < ItemList.Length; i++) {
-			if (ItemList [i] == 0) {
+		for (int i = 0; i < DrugList.Length; i++) {
+			if (DrugList [i] == 0) {
 				return true;
 			}
 		}
@@ -96,25 +96,25 @@ public class Player:GameData
 
 	public int[] AddItem (int type)
 	{
-		for (int i = 0; i < ItemList.Length; i++) {
-			if (ItemList [i] == 0) {
-				ItemList [i] = type;
-				return ItemList;
+		for (int i = 0; i < DrugList.Length; i++) {
+			if (DrugList [i] == 0) {
+				DrugList [i] = type;
+				return DrugList;
 			}
 		}
-		return ItemList;
+		return DrugList;
 	}
 
 	public int[] UseItem (int type)
 	{
-		for (int i = 0; i < ItemList.Length; i++) {
-			if (ItemList [i] == type) {
-				ItemList [i] = 0;
+		for (int i = 0; i < DrugList.Length; i++) {
+			if (DrugList [i] == type) {
+				DrugList [i] = 0;
 				//TODO
-				return ItemList;
+				return DrugList;
 			}
 		}
-		return ItemList;
+		return DrugList;
 	}
 
 	protected override void DataChange (bool hasChanged)

@@ -236,6 +236,14 @@ public class GameManager : MonoBehaviour
 			if (currentGround.Owner == -2) {
 				//中立区域
 				print ("中立区域");
+				switch (currentGround.Type) {
+				case 1:
+					//商店
+					SetAction (Constants.ACTION_BUY_DRUG);
+					break;
+				default:
+					break;
+				}
 			} else if (currentGround.Owner == -1) {
 				//空白区域
 				print ("空白区域");
@@ -300,6 +308,14 @@ public class GameManager : MonoBehaviour
 //			panelBreakdown.SetActive (false);
 //			SetAction (Constants.ACTION_END_TURN);//活动结束
 //			break;
+		//
+		case Constants.ACTION_BUY_DRUG:
+			UIManager.Instance.Open (typeof(PanelBuyDrug));
+			break;
+		case Constants.ACTION_BUY_DRUG_CONFIRM:
+			UIManager.Instance.Close (typeof(PanelBuyDrug));
+			SetAction (Constants.ACTION_END_TURN);//活动结束
+			break;
 		//
 		case Constants.ACTION_END_TURN:
 			print ("回合结束");
