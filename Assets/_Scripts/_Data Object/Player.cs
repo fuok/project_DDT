@@ -24,7 +24,11 @@ public class Player:GameData
 
 	public int Money { private set; get; }
 
+	public int Health{ private set; get; }
+
 	public int Position { set; get; }
+
+	private int[] ItemList = new int[6];
 
 	//------------- basic logic ----------------------------------
 
@@ -56,11 +60,61 @@ public class Player:GameData
 	//----数据操作----------------------------------------
 
 	//改变金钱数，其他操作以此类推
-	public void AddMoney (int number)
+	public int AddMoney (int number)
 	{
 		Money += number;
 		//通知
 		DataChange (true);
+
+		return Money;
+	}
+
+	//体力
+	public int AddHealth (int number)
+	{
+		Health += number;
+		//通知
+		DataChange (true);
+
+		return Health;
+	}
+
+	public int[] GetItemList ()
+	{
+		return ItemList;
+	}
+
+	public bool IsSpaceAvailable ()
+	{
+		for (int i = 0; i < ItemList.Length; i++) {
+			if (ItemList [i] == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public int[] AddItem (int type)
+	{
+		for (int i = 0; i < ItemList.Length; i++) {
+			if (ItemList [i] == 0) {
+				ItemList [i] = type;
+				return ItemList;
+			}
+		}
+		return ItemList;
+	}
+
+	public int[] UseItem (int type)
+	{
+		for (int i = 0; i < ItemList.Length; i++) {
+			if (ItemList [i] == type) {
+				ItemList [i] = 0;
+				//TODO
+				return ItemList;
+			}
+		}
+		return ItemList;
 	}
 
 	protected override void DataChange (bool hasChanged)
