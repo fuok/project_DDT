@@ -20,8 +20,8 @@ public class PanelBuyDrug : UIBase
 		}
 
 		//测试数据
-		Drug d1 = new Drug (1, "营养快线", "", "");
-		Drug d2 = new Drug (2, "汇仁肾宝", "", "");
+		Drug d1 = new Drug (1, 100, "营养快线", "", "");
+		Drug d2 = new Drug (2, 200, "汇仁肾宝", "", "");
 		dList.SetValue (d1, 0);
 		dList.SetValue (d2, 1);
 

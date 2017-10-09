@@ -8,8 +8,10 @@ public class GameManager : MonoBehaviour
 	public static GameManager Instance{ get; private set; }
 
 	//棋子移动
-	public CarLogic[] mCarList;
-	public MapNode[] mNodeList;
+	[SerializeField]
+	private CarLogic[] mCarList;
+	[SerializeField]
+	private MapNode[] mNodeList;
 	//当前的逻辑角色
 	Player currentPlayer;
 	Ground currentGround;
@@ -89,6 +91,11 @@ public class GameManager : MonoBehaviour
 		mGroundList.Add (new Ground{ Index = 29, Owner = -1, Level = 0, Price = 3000 });
 		mGroundList.Add (new Ground{ Index = 30, Owner = -2, Type = 1 });//
 		mGroundList.Add (new Ground{ Index = 31, Owner = -1, Level = 0, Price = 3000 });
+		for (int i = 0; i < mGroundList.Count; i++) {
+			if (mGroundList [i].Owner == -2) {
+				mNodeList [i].mBuilding.SetNeutralBuilding (mGroundList [i].Type);
+			}
+		}
 
 
 
@@ -337,7 +344,7 @@ public class GameManager : MonoBehaviour
 	{
 		currentPlayer.AddMoney (-currentGround.Price);
 		currentGround.SetGround (currentPlayer.Index, 1);//TODO,简单处理给个建筑
-		mNodeList [currentGround.Index].mBuilding.SetBuilding (currentPlayer.Index);//目前的Ground操作和基于Node的Building操作其实是逻辑分离的
+		mNodeList [currentGround.Index].mBuilding.SetPlayerBuilding (currentPlayer.Index);//目前的Ground操作和基于Node的Building操作其实是逻辑分离的
 	}
 
 	private void BreakDown ()
