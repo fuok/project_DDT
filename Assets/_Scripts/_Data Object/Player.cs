@@ -64,7 +64,7 @@ public class Player:GameData
 	{
 		Money += number;
 		//通知
-		DataChange (true);
+		NotifyDataChanged (true);
 
 		return Money;
 	}
@@ -74,7 +74,7 @@ public class Player:GameData
 	{
 		Health += number;
 		//通知
-		DataChange (true);
+		NotifyDataChanged (true);
 
 		return Health;
 	}
@@ -117,9 +117,9 @@ public class Player:GameData
 		return DrugList;
 	}
 
-	protected override void DataChange (bool hasChanged)
+	protected override void NotifyDataChanged (bool hasChanged)
 	{
-		base.DataChange (hasChanged);
+		base.NotifyDataChanged (hasChanged);
 	}
 
 }

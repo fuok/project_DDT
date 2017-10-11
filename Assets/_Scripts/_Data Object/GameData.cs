@@ -19,7 +19,7 @@ public class GameData
 		DataEvent += OnDataEvent;//注册
 	}
 
-	protected virtual void DataChange (bool hasChange)
+	protected virtual void NotifyDataChanged (bool hasChange)
 	{
 		DataEvent (hasChange);
 	}
@@ -31,7 +31,7 @@ public class GameData
 			//持久化,TODO
 					
 			//通知
-			DataChange (false);
+			NotifyDataChanged (false);
 		}
 	}
 

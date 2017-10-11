@@ -36,11 +36,11 @@ public class Girl:GameData
 		this.Owner = owner;
 
 		//通知
-		DataChange (true);
+		NotifyDataChanged (true);
 	}
 
-	protected override void DataChange (bool hasChanged)
+	protected override void NotifyDataChanged (bool hasChanged)
 	{
-		base.DataChange (hasChanged);
+		base.NotifyDataChanged (hasChanged);
 	}
 }
