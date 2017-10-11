@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
 	public PanelPayToll panelPayToll;
 	public PanelBuyDrug panelBuyDrug;
 	public PanelEndTurn panelEndTurn;
+	public PanelMain panelMain;
 
 	ArrayList uiList = new ArrayList ();
 
@@ -27,17 +28,20 @@ public class UIManager : MonoBehaviour
 		} else if (Instance != this) {
 			Destroy (gameObject);
 		}
-	}
 
-	void Start ()
-	{
 		//把全部界面添加进来
+		uiList.Add (panelMain);
 		uiList.Add (panelMeetGirl);
 		uiList.Add (panelBuyGround);
 		uiList.Add (panelBuyGroundNoMoney);
 		uiList.Add (panelPayToll);
 		uiList.Add (panelBuyDrug);
 		uiList.Add (panelEndTurn);
+	}
+
+	void Start ()
+	{
+
 	}
 
 	void Update ()
@@ -71,10 +75,11 @@ public class UIManager : MonoBehaviour
 	{
 		foreach (var item in uiList) {
 			if (item.GetType ().Equals (type)) {
+//				print ("找到页面");
 				UIBase ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
 				ui.SetParams (args);
 			} else {
-//				print ("对比失败");
+//				print ("找不到页面");
 			}
 		}
 	}

@@ -19,12 +19,6 @@ public class GameManager : MonoBehaviour
 	//调试控制
 	public Camera camDice;
 
-	[Header ("Test UI")]
-	public Button btnRoll;
-	public Text txtDiceResult;
-	public Text txtCurrentPlayer;
-	public Text[] txtPlayerInfo;
-
 	//缓存游戏数据,相当于从DB读取出来的数据
 	private List<Player> mPlayerList = new List<Player> ();
 	private List<Ground> mGroundList = new List<Ground> ();
@@ -97,8 +91,6 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-
-
 		//Girl
 		for (int i = 0; i < 4; i++) {
 			Girl girl = new Girl {
@@ -113,39 +105,34 @@ public class GameManager : MonoBehaviour
 
 	void Start ()
 	{
-			
 		//棋子状态监听
 		foreach (var item in mCarList) {
 			item.carMoveEvent += OnCarStatusChanged;
 		}
 
-		//Init UI
-		btnRoll.onClick.AddListener (RollDice);
-
 		//游戏开始
-		//初始化调用一次，所以第一个行动的是Player1，而不是Player0
-		EndTurn ();
+		StartTurn ();
 	}
 
 	void Update ()
 	{
-		//Test
-		for (int i = 0; i < 4; i++) {
-			txtPlayerInfo [i].text = mPlayerList [i].Name + "\n" + "金钱:" + mPlayerList [i].Money;
-		}
+
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
+	void StartTurn ()
+	{
+		currentPlayer = TurnManager.Instance.GetCurrentPlayer ();
+		SetAction (Constants.ACTION_START_TURN_IN);
+	}
+
 	void EndTurn ()
 	{
 		TurnManager.Instance.StopPlayerMoving ();
-		currentPlayer = TurnManager.Instance.CurrentPlayer;
-		txtCurrentPlayer.text = currentPlayer.Name + ",回合开始！";
-		txtDiceResult.text = "";
 	}
 
-	void RollDice ()
+	public void RollDice ()
 	{
 		resultChecked = false;
 		DiceManager.Instance.diceEvent += OnDiceResult;//这个方法常驻监听，不是太好，但如果不这样数值会不准，因为骰子的状态不稳定,除非确定稳定后再回调
@@ -187,7 +174,6 @@ public class GameManager : MonoBehaviour
 		//计算移动后所处的Node序列
 		int target = mNodeList.Length > (car.mCurrentNode.mNodeIndex + num) ? car.mCurrentNode.mNodeIndex + num : (car.mCurrentNode.mNodeIndex + num) % mNodeList.Length;
 		print (currentPlayer.Name + "掷出" + num + ",前进到" + target);
-		txtDiceResult.text = currentPlayer.Name + "掷出" + num + ",前进到" + target;
 
 		//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
 		currentGround = mGroundList [target];//逻辑移动
@@ -326,12 +312,21 @@ public class GameManager : MonoBehaviour
 		//
 		case Constants.ACTION_END_TURN:
 			print ("回合结束");
+			UIManager.Instance.Close (typeof(PanelMain));
 			UIManager.Instance.Open (typeof(PanelEndTurn));
 			currentPlayer.DataSave ();
 			break;
 		case Constants.ACTION_END_TURN_CONFIRM:
 			UIManager.Instance.Close (typeof(PanelEndTurn));
 			EndTurn ();
+			StartTurn ();
+			break;
+		case Constants.ACTION_START_TURN_IN:
+			//TODO,表现形式
+			SetAction (Constants.ACTION_START_TURN_OUT);
+			break;
+		case Constants.ACTION_START_TURN_OUT:
+			UIManager.Instance.Open (typeof(PanelMain));
 			break;
 		default:
 			break;

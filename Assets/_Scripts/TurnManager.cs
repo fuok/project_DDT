@@ -10,8 +10,6 @@ public class TurnManager : MonoBehaviour
 	//储存Player的Queue
 	private Queue<Player> queue = new Queue<Player> ();
 
-	public Player CurrentPlayer{ get; private set; }
-
 	void Awake ()
 	{
 		if (Instance == null) {
@@ -33,6 +31,11 @@ public class TurnManager : MonoBehaviour
 			queue.Enqueue (playerList [i]);
 		}
 		queue.TrimExcess ();
+	}
+
+	public Player GetCurrentPlayer ()
+	{
+		return queue.Peek ();
 	}
 
 	//	void Update ()
@@ -78,8 +81,7 @@ public class TurnManager : MonoBehaviour
 		Player p = queue.Dequeue ();
 		p.mStatus = PlayerStatus.Waiting;
 		queue.Enqueue (p);
-		CurrentPlayer = queue.Peek ();
-		CurrentPlayer.mStatus = PlayerStatus.Moving;
-		print ("取出了：" + CurrentPlayer.Index);
+		queue.Peek ().mStatus = PlayerStatus.Moving;
+		print ("取出了：" + queue.Peek ().Index);
 	}
 }
