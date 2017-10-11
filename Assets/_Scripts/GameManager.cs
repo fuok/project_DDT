@@ -322,7 +322,8 @@ public class GameManager : MonoBehaviour
 			StartTurn ();
 			break;
 		case Constants.ACTION_START_TURN_IN:
-			//TODO,表现形式
+			//TODO,表现形式//			
+//			UIManager.Instance.Close (typeof(PanelMain));
 			SetAction (Constants.ACTION_START_TURN_OUT);
 			break;
 		case Constants.ACTION_START_TURN_OUT:
@@ -349,6 +350,11 @@ public class GameManager : MonoBehaviour
 
 	//------- 数据获取,当已有CurrentPlayer时，获取其他玩家列表，以及每个人的Ground和Girl列表,这部分函数要扩展，UI层也要调用,TODO
 
+	public List<Player> GetAllPlayer ()
+	{
+		return mPlayerList;
+	}
+
 	public Player GetCurrentPlayer ()
 	{
 		return currentPlayer;
@@ -368,7 +374,7 @@ public class GameManager : MonoBehaviour
 		});
 	}
 
-	private List<Girl> GetPlayerGirl (int pIndex)
+	public List<Girl> GetPlayerGirl (int pIndex)
 	{
 		return mGirlList.FindAll ((Girl g) => {
 			return g.Owner == pIndex;

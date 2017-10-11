@@ -10,7 +10,9 @@ public class PanelMain : UIBase
 	public Button btnRoll;
 	public Text txtDiceResult;
 	public Text txtCurrentPlayer;
-	public Text[] txtPlayerInfo;
+	//	public Text[] txtPlayerInfo;
+
+	public Transform[] mPlayerInfoField;
 
 	void Awake ()
 	{
@@ -27,22 +29,34 @@ public class PanelMain : UIBase
 		txtDiceResult.text = "";
 		
 		btnRoll.onClick.AddListener (GameManager.Instance.RollDice);
+
+		StartCoroutine (RefreshCoroutine ());
 	}
 
 	void Update ()
 	{
 
-
 		//		txtDiceResult.text = currentPlayer.Name + "掷出" + num + ",前进到" + target;
-
-		//玩家信息展示
-		for (int i = 0; i < 4; i++) {
-//			txtPlayerInfo [i].text = mPlayerList [i].Name + "\n" + "金钱:" + mPlayerList [i].Money;
+		if (Input.GetKeyDown (KeyCode.P)) {
+			Refrsh ();
 		}
+	}
+
+	private IEnumerator RefreshCoroutine ()
+	{
+		Refrsh ();
+		yield return new WaitForSeconds (0.2f);
+		StartCoroutine (RefreshCoroutine ());
 	}
 
 	public void Refrsh ()
 	{
-		//TODO
+		//玩家信息展示
+		for (int i = 0; i < mPlayerInfoField.Length; i++) {
+			mPlayerInfoField [i].Find ("Text Name").GetComponent<Text> ().text = GameManager.Instance.GetAllPlayer () [i].Name;
+			mPlayerInfoField [i].Find ("Text Money").GetComponent<Text> ().text = GameManager.Instance.GetAllPlayer () [i].Money.ToString ();
+			mPlayerInfoField [i].Find ("Text Girl").GetComponent<Text> ().text = GameManager.Instance.GetPlayerGirl (i).Count.ToString ();
+			mPlayerInfoField [i].Find ("Text Health").GetComponent<Text> ().text = GameManager.Instance.GetAllPlayer () [i].Health.ToString ();
+		}
 	}
 }
