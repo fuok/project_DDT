@@ -116,7 +116,9 @@ public class GameManager : MonoBehaviour
 
 	void Update ()
 	{
-
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			SetAction (Constants.ACTION_GAME_OVER);
+		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -124,6 +126,12 @@ public class GameManager : MonoBehaviour
 	void StartTurn ()
 	{
 		currentPlayer = TurnManager.Instance.GetCurrentPlayer ();
+
+		//回合计数
+		if (currentPlayer.Index == 0) {//新的一轮开始
+			PlayerPrefs.SetInt (Constants.GAME_ROUND_NUMBER, PlayerPrefs.GetInt (Constants.GAME_ROUND_NUMBER, 0) + 1);
+		}
+
 		SetAction (Constants.ACTION_START_TURN_IN);
 	}
 
@@ -324,10 +332,16 @@ public class GameManager : MonoBehaviour
 		case Constants.ACTION_START_TURN_IN:
 			//TODO,表现形式//			
 //			UIManager.Instance.Close (typeof(PanelMain));
-			SetAction (Constants.ACTION_START_TURN_OUT);
+			UIManager.Instance.Open (typeof(PanelStartTurn));
 			break;
 		case Constants.ACTION_START_TURN_OUT:
+			UIManager.Instance.Close (typeof(PanelStartTurn));
 			UIManager.Instance.Open (typeof(PanelMain));
+			break;
+		case Constants.ACTION_GAME_OVER://游戏结束，主要目的是清空对局数据
+			PlayerPrefs.SetInt (Constants.GAME_ROUND_NUMBER, 0);
+
+			Application.Quit ();
 			break;
 		default:
 			break;
