@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
 
 	public Transform transCanvas;
 	//所有panel都要注册在此
+	public PanelStartTurn panelStartTurn;
 	public PanelMeetGirl panelMeetGirl;
 	public PanelBuyGround panelBuyGround;
 	public PanelBuyGroundNoMoney panelBuyGroundNoMoney;
@@ -30,6 +31,7 @@ public class UIManager : MonoBehaviour
 		}
 
 		//把全部界面添加进来
+		uiList.Add (panelStartTurn);
 		uiList.Add (panelMain);
 		uiList.Add (panelMeetGirl);
 		uiList.Add (panelBuyGround);

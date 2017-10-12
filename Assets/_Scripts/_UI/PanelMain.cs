@@ -36,10 +36,11 @@ public class PanelMain : UIBase
 	void Update ()
 	{
 
-		//		txtDiceResult.text = currentPlayer.Name + "掷出" + num + ",前进到" + target;
-		if (Input.GetKeyDown (KeyCode.P)) {
-			Refrsh ();
-		}
+//		txtDiceResult.text = currentPlayer.Name + "掷出" + num + ",前进到" + target;
+
+//		if (Input.GetKeyDown (KeyCode.P)) {
+//			Refrsh ();
+//		}
 	}
 
 	private IEnumerator RefreshCoroutine ()
