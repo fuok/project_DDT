@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 		//构造测试数据
 		//Player
 		for (int i = 0; i < 4; i++) {
-			Player p = new Player (i, PlayerPrefs.GetString (Constants.PLAYER_SAVE_NAME + i, "player" + i), Constants.DEFAULT_MONEY);
+			Player p = new Player (i, PlayerPrefs.GetString (Constants.PLAYER_SAVE_NAME + i, "player" + i), Constants.DEFAULT_MONEY, Constants.DEFAULT_HEALTH);
 			//注册玩家事件
 			p.PlayerActionEvent += GameManager.Instance.OnPlayerActionChanged;
 			mPlayerList.Add (p);

@@ -26,6 +26,7 @@ public class Player:GameData
 
 	public int Health{ private set; get; }
 
+	//当游戏中断，记录玩家的位置
 	public int Position { set; get; }
 
 	private int[] DrugList = new int[6];
@@ -43,11 +44,12 @@ public class Player:GameData
 		
 	}
 
-	public Player (int index, string name, int money) : this ()
+	public Player (int index, string name, int money, int health) : this ()
 	{
 		this.Index = index;
 		this.Name = name;
 		this.Money = money;
+		this.Health = health;
 	}
 
 	//----交互操作----------------------------------------

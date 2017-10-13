@@ -6,6 +6,7 @@ public class Constants
 {
 
 	public const int DEFAULT_MONEY = 10000;
+	public const int DEFAULT_HEALTH = 100;
 
 
 	//------------- PlayerPrefabs Key ----------------------
