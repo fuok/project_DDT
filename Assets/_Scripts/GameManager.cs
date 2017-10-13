@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
 	//缓存游戏数据,相当于从DB读取出来的数据
 	private List<Player> mPlayerList = new List<Player> ();
-	private List<Ground> mGroundList = new List<Ground> ();
+	private List<Ground> mGroundList;
 	private List<Girl> mGirlList = new List<Girl> ();
 
 	void Awake ()
@@ -46,45 +46,51 @@ public class GameManager : MonoBehaviour
 		//构造测试数据
 		//Player
 		for (int i = 0; i < 4; i++) {
-			Player p = new Player (i, PlayerPrefs.GetString (Constants.PLAYER_SAVE_NAME + i, "player" + i), Constants.DEFAULT_MONEY, Constants.DEFAULT_HEALTH);
+			Player p = new Player (i, PlayerPrefs.GetString (Constants.PLAYER_SAVE_NAME + i, "player" + i)) {
+				Money = Constants.DEFAULT_MONEY,
+				Health = Constants.DEFAULT_HEALTH
+			};
 			//注册玩家事件
 			p.PlayerActionEvent += GameManager.Instance.OnPlayerActionChanged;
 			mPlayerList.Add (p);
 		}
 		TurnManager.Instance.SetPlayerQueue (ref mPlayerList);
 		//Ground
-		mGroundList.Add (new Ground{ Index = 0, Owner = -2, Type = 0 });//起点
-		mGroundList.Add (new Ground{ Index = 1, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 2, Owner = -2, Type = 1  });//
-		mGroundList.Add (new Ground{ Index = 3, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 4, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 5, Owner = -2, Type = 1 });//
-		mGroundList.Add (new Ground{ Index = 6, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 7, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 8, Owner = -2, Type = 1  });//
-		mGroundList.Add (new Ground{ Index = 9, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 10, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 11, Owner = -2, Type = 1  });//
-		mGroundList.Add (new Ground{ Index = 12, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 13, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 14, Owner = -2, Type = 1 });//
-		mGroundList.Add (new Ground{ Index = 15, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 16, Owner = -2, Type = 1 });//中位
-		mGroundList.Add (new Ground{ Index = 17, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 18, Owner = -2, Type = 1  });//
-		mGroundList.Add (new Ground{ Index = 19, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 20, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 21, Owner = -2, Type = 1 });//
-		mGroundList.Add (new Ground{ Index = 22, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 23, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 24, Owner = -2, Type = 1 });//
-		mGroundList.Add (new Ground{ Index = 25, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 26, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 27, Owner = -2, Type = 1  });//
-		mGroundList.Add (new Ground{ Index = 28, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 29, Owner = -1, Level = 0, Price = 3000 });
-		mGroundList.Add (new Ground{ Index = 30, Owner = -2, Type = 1 });//
-		mGroundList.Add (new Ground{ Index = 31, Owner = -1, Level = 0, Price = 3000 });
+		mGroundList = new List<Ground> {
+			new Ground{ Index = 0, Owner = -2, Type = 0 },//起点
+			new Ground{ Index = 1, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 2, Owner = -2, Type = 1  },//
+			new Ground{ Index = 3, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 4, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 5, Owner = -2, Type = 1 },//
+			new Ground{ Index = 6, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 7, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 8, Owner = -2, Type = 1  },//
+			new Ground{ Index = 9, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 10, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 11, Owner = -2, Type = 1  },//
+			new Ground{ Index = 12, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 13, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 14, Owner = -2, Type = 1 },//
+			new Ground{ Index = 15, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 16, Owner = -2, Type = 1 },//中位
+			new Ground{ Index = 17, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 18, Owner = -2, Type = 1  },//
+			new Ground{ Index = 19, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 20, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 21, Owner = -2, Type = 1 },//
+			new Ground{ Index = 22, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 23, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 24, Owner = -2, Type = 1 },//
+			new Ground{ Index = 25, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 26, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 27, Owner = -2, Type = 1  },//
+			new Ground{ Index = 28, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 29, Owner = -1, Level = 0, Price = 3000 },
+			new Ground{ Index = 30, Owner = -2, Type = 1 },//
+			new Ground{ Index = 31, Owner = -1, Level = 0, Price = 3000 }
+			
+		};
 		for (int i = 0; i < mGroundList.Count; i++) {
 			if (mGroundList [i].Owner == -2) {
 				mNodeList [i].mBuilding.SetNeutralBuilding (mGroundList [i].Type);

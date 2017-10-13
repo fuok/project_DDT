@@ -35,4 +35,23 @@ public class Drug:Item
 	public Drug (int id, int price, string name, string desc, string action) : base (id, price, name, desc, action)
 	{
 	}
+
+	public static string GetName (int type)
+	{
+		string name = "";
+		switch (type) {
+		case 0:
+			name = "空";
+			break;
+		case 1:
+			name = "营养快线";
+			break;
+		case 2:
+			name = "汇仁肾宝";
+			break;
+		default:
+			break;
+		}
+		return name;
+	}
 }

@@ -17,14 +17,14 @@ public class Player:GameData
 {
 	//------------ 数据结构 -----------------------------------
 
+	//前面两项作为必填项，后面用初始化器
+	public int Index{ private set; get; }
 
-	public int Index{ set; get; }
+	public string Name{ private set; get; }
 
-	public string Name{ set; get; }
+	public int Money { set; get; }
 
-	public int Money { private set; get; }
-
-	public int Health{ private set; get; }
+	public int Health{ set; get; }
 
 	//当游戏中断，记录玩家的位置
 	public int Position { set; get; }
@@ -44,12 +44,10 @@ public class Player:GameData
 		
 	}
 
-	public Player (int index, string name, int money, int health) : this ()
+	public Player (int index, string name) : this ()
 	{
 		this.Index = index;
 		this.Name = name;
-		this.Money = money;
-		this.Health = health;
 	}
 
 	//----交互操作----------------------------------------
@@ -105,6 +103,13 @@ public class Player:GameData
 			}
 		}
 		return DrugList;
+	}
+
+	//TODO
+	public bool BuyItem (Item item)
+	{
+
+		return false;
 	}
 
 	public int[] UseItem (int type)
