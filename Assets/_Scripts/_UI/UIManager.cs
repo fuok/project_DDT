@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Reflection;
+//using System.Reflection;
 
 public class UIManager : MonoBehaviour
 {
@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
 	public PanelBuyGroundNoMoney panelBuyGroundNoMoney;
 	public PanelPayToll panelPayToll;
 	public PanelBuyDrug panelBuyDrug;
+	public PanelDrugPackage panelDrugPackage;
 	public PanelEndTurn panelEndTurn;
 	public PanelMain panelMain;
 
@@ -38,6 +39,7 @@ public class UIManager : MonoBehaviour
 		uiList.Add (panelBuyGroundNoMoney);
 		uiList.Add (panelPayToll);
 		uiList.Add (panelBuyDrug);
+		uiList.Add (panelDrugPackage);
 		uiList.Add (panelEndTurn);
 	}
 

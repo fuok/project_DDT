@@ -7,6 +7,7 @@ public class PanelMain : UIBase
 {
 	public static PanelMain Instance{ private set; get; }
 
+	public Button btnPackage;
 	public Button btnRoll;
 	public Text txtDiceResult;
 	public Text txtCurrentPlayer;
@@ -27,7 +28,10 @@ public class PanelMain : UIBase
 	{
 		txtCurrentPlayer.text = GameManager.Instance.GetCurrentPlayer ().Name + ",回合开始！";
 		txtDiceResult.text = "";
-		
+
+		btnPackage.onClick.AddListener (() => {
+			UIManager.Instance.Open (typeof(PanelDrugPackage));
+		});
 		btnRoll.onClick.AddListener (GameManager.Instance.RollDice);
 
 		StartCoroutine (RefreshCoroutine ());
