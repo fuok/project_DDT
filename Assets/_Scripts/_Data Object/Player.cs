@@ -112,10 +112,11 @@ public class Player:GameData
 		return false;
 	}
 
-	public int[] UseItem (int type)
+	public int[] UseItem (int index)
 	{
+		//TODO
 		for (int i = 0; i < DrugList.Length; i++) {
-			if (DrugList [i] == type) {
+			if (DrugList [i] == index) {
 				DrugList [i] = 0;
 				//TODO
 				return DrugList;
