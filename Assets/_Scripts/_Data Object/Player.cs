@@ -29,7 +29,7 @@ public class Player:GameData
 	//当游戏中断，记录玩家的位置
 	public int Position { set; get; }
 
-	private int[] DrugList = new int[6];
+	private int[] mDrugList = new int[6];
 
 	//------------- basic logic ----------------------------------
 
@@ -81,13 +81,13 @@ public class Player:GameData
 
 	public int[] GetItemList ()
 	{
-		return DrugList;
+		return mDrugList;
 	}
 
 	public bool IsSpaceAvailable ()
 	{
-		for (int i = 0; i < DrugList.Length; i++) {
-			if (DrugList [i] == 0) {
+		for (int i = 0; i < mDrugList.Length; i++) {
+			if (mDrugList [i] == 0) {
 				return true;
 			}
 		}
@@ -96,13 +96,13 @@ public class Player:GameData
 
 	public int[] AddItem (int type)
 	{
-		for (int i = 0; i < DrugList.Length; i++) {
-			if (DrugList [i] == 0) {
-				DrugList [i] = type;
-				return DrugList;
+		for (int i = 0; i < mDrugList.Length; i++) {
+			if (mDrugList [i] == 0) {
+				mDrugList [i] = type;
+				return mDrugList;
 			}
 		}
-		return DrugList;
+		return mDrugList;
 	}
 
 	//TODO
@@ -112,17 +112,17 @@ public class Player:GameData
 		return false;
 	}
 
+	/// <summary>
+	/// 注意index是包内的序号
+	/// </summary>
+	/// <returns>The item.</returns>
+	/// <param name="index">Index.</param>
 	public int[] UseItem (int index)
 	{
-		//TODO
-		for (int i = 0; i < DrugList.Length; i++) {
-			if (DrugList [i] == index) {
-				DrugList [i] = 0;
-				//TODO
-				return DrugList;
-			}
-		}
-		return DrugList;
+		SetAction (Drug.GetDrug (mDrugList [index]).action);
+		mDrugList [index] = 0;//将该位置上type改为0
+
+		return mDrugList;
 	}
 
 	protected override void NotifyDataChanged (bool hasChanged)

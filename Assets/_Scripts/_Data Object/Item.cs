@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class Item
 {
-	//目前看来，action和id都可以做唯一标识，id为0的空道具可以认为是不存在,TODO
+	//目前看来，action和id都可以做唯一标识，id为0的道具就可以认为是不存在的
 	public int id;
 	public int price;
 	public string name;
@@ -36,22 +36,20 @@ public class Drug:Item
 	{
 	}
 
-	public static string GetName (int type)
+	public static Drug GetDrug (int type)
 	{
-		string name = "";
+		Drug drug = null;
 		switch (type) {
 		case 0:
-			name = "空";
+			drug = new Drug (0, 0, "空", "", "");
 			break;
 		case 1:
-			name = "营养快线";
+			drug = new Drug (1, 150, "营养快线", "", Constants.ITEM_1);
 			break;
 		case 2:
-			name = "汇仁肾宝";
-			break;
-		default:
+			drug = new Drug (2, 350, "汇仁肾宝", "", Constants.ITEM_2);
 			break;
 		}
-		return name;
+		return drug;
 	}
 }

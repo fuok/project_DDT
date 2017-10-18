@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+
 //using System.Reflection;
 
 public class UIManager : MonoBehaviour
@@ -20,6 +21,7 @@ public class UIManager : MonoBehaviour
 	public PanelDrugPackage panelDrugPackage;
 	public PanelEndTurn panelEndTurn;
 	public PanelMain panelMain;
+	public PanelOptionalDialog panelOptionalDialog;
 
 	ArrayList uiList = new ArrayList ();
 
@@ -41,6 +43,7 @@ public class UIManager : MonoBehaviour
 		uiList.Add (panelBuyDrug);
 		uiList.Add (panelDrugPackage);
 		uiList.Add (panelEndTurn);
+		uiList.Add (panelOptionalDialog);
 	}
 
 	void Start ()
@@ -69,8 +72,22 @@ public class UIManager : MonoBehaviour
 //				GameObject ui = GameObject.Instantiate<GameObject> (((UIBase)item).gameObject, transCanvas);
 				UIBase ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
 				ui.SetParams (ref arg, args);
+				break;
 			} else {
 //				print ("对比失败");
+			}
+		}
+	}
+
+	public void Open (Type type, UIBase.ConfirmDelegate func, params object[] args)
+	{
+		foreach (var item in uiList) {
+			if (item.GetType ().Equals (type)) {
+				UIBase ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
+				ui.SetParams (func, args);
+				break;
+			} else {
+				//				print ("对比失败");
 			}
 		}
 	}
@@ -82,6 +99,7 @@ public class UIManager : MonoBehaviour
 //				print ("找到页面");
 				UIBase ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
 				ui.SetParams (args);
+				break;
 			} else {
 //				print ("找不到页面");
 			}

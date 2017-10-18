@@ -32,25 +32,39 @@ public class PanelDrugPackage : UIBase
 			switch (i) {
 			case 0:
 				mPackageField [i].Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
-					//	GameManager.Instance.GetCurrentPlayer ().AddItem (1);
-					print ("1");
+					GameManager.Instance.GetCurrentPlayer ().UseItem (0);
 					Refrsh ();
 				});
 				break;
 			case 1:
 				mPackageField [i].Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
-					//	GameManager.Instance.GetCurrentPlayer ().AddItem (1);
-					print ("2");
+					GameManager.Instance.GetCurrentPlayer ().UseItem (1);
 					Refrsh ();
 				});
 				break;
 			case 2:
+				mPackageField [i].Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
+					GameManager.Instance.GetCurrentPlayer ().UseItem (2);
+					Refrsh ();
+				});
 				break;
 			case 3:
+				mPackageField [i].Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
+					GameManager.Instance.GetCurrentPlayer ().UseItem (3);
+					Refrsh ();
+				});
 				break;
 			case 4:
+				mPackageField [i].Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
+					GameManager.Instance.GetCurrentPlayer ().UseItem (4);
+					Refrsh ();
+				});
 				break;
 			case 5:
+				mPackageField [i].Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
+					GameManager.Instance.GetCurrentPlayer ().UseItem (5);
+					Refrsh ();
+				});
 				break;
 			default:
 				break;
@@ -68,7 +82,7 @@ public class PanelDrugPackage : UIBase
 		int[] dList = GameManager.Instance.GetCurrentPlayer ().GetItemList ();
 
 		for (int i = 0; i < dList.Length; i++) {
-			mPackageField [i].Find ("Text").GetComponent<Text> ().text = Drug.GetName (dList [i]);
+			mPackageField [i].Find ("Text").GetComponent<Text> ().text = Drug.GetDrug (dList [i]).name;
 		}
 	}
 }

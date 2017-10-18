@@ -46,4 +46,8 @@ public class Constants
 	public const string ACTION_END_TURN = "action_end_turn";
 	public const string ACTION_END_TURN_CONFIRM = "action_end_turn_confirm";
 	public const string ACTION_GAME_OVER = "action_game_over";
+
+	//------------- Action Key 道具----------------------
+	public const string ITEM_1 = "item_1";
+	public const string ITEM_2 = "item_2";
 }

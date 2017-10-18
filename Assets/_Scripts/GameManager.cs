@@ -349,6 +349,21 @@ public class GameManager : MonoBehaviour
 
 			Application.Quit ();
 			break;
+
+		//------------道具-----------------
+
+		case Constants.ITEM_1:
+			UIBase.ConfirmDelegate cd1 = new UIBase.ConfirmDelegate (delegate() {
+				print ("喝下营养快线，体力恢复5");
+			});
+			UIManager.Instance.Open (typeof(PanelOptionalDialog), cd1, "营养快线", "喝下营养快线，体力恢复5");
+			break;
+		case Constants.ITEM_2:
+			UIBase.ConfirmDelegate cd2 = new UIBase.ConfirmDelegate (delegate() {
+				print ("喝下汇仁肾宝，体力恢复100");
+			});
+			UIManager.Instance.Open (typeof(PanelOptionalDialog), cd2, "汇仁肾宝", "喝下汇仁肾宝，体力恢复100");
+			break;
 		default:
 			break;
 		}

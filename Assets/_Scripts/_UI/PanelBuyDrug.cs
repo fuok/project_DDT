@@ -13,7 +13,7 @@ public class PanelBuyDrug : UIBase
 
 	public Button btnBuyDrugConfirm;
 
-	private Drug[] drugList = new Drug[2];
+	private Drug[] mGoodsList = new Drug[2];
 
 	void Awake ()
 	{
@@ -24,10 +24,8 @@ public class PanelBuyDrug : UIBase
 		}
 
 		//测试数据
-		Drug d1 = new Drug (1, 150, "营养快线", "", "");
-		Drug d2 = new Drug (2, 350, "汇仁肾宝", "", "");
-		drugList.SetValue (d1, 0);
-		drugList.SetValue (d2, 1);
+		mGoodsList.SetValue (Drug.GetDrug (1), 0);
+		mGoodsList.SetValue (Drug.GetDrug (2), 1);
 
 	
 	}
@@ -36,11 +34,11 @@ public class PanelBuyDrug : UIBase
 	{
 		Refrsh ();
 
-		for (int i = 0; i < drugList.Length; i++) {
+		for (int i = 0; i < mGoodsList.Length; i++) {
 //			txtItemName [i].text = drugList [i].name;
-			mDrugField [i].Find ("Button Item/Text").GetComponent<Text> ().text = drugList [i].name;
+			mDrugField [i].Find ("Button Item/Text").GetComponent<Text> ().text = mGoodsList [i].name;
 //			txtItemPrice [i].text = drugList [i].price.ToString ();
-			mDrugField [i].Find ("Text Price").GetComponent<Text> ().text = drugList [i].price.ToString ();
+			mDrugField [i].Find ("Text Price").GetComponent<Text> ().text = mGoodsList [i].price.ToString ();
 			switch (i) {//因为lambda内部不能使用变量i，所以使用这种方法对应每种商品
 			case 0:
 				mDrugField [i].Find ("Button Item").GetComponent<Button> ().onClick.AddListener (() => {
@@ -82,7 +80,7 @@ public class PanelBuyDrug : UIBase
 	public void Refrsh ()
 	{
 		for (int i = 0; i < mPackageField.Length; i++) {
-			mPackageField [i].Find ("Text Item").GetComponent<Text> ().text = Drug.GetName (GameManager.Instance.GetCurrentPlayer ().GetItemList () [i]);
+			mPackageField [i].Find ("Text Item").GetComponent<Text> ().text = Drug.GetDrug (GameManager.Instance.GetCurrentPlayer ().GetItemList () [i]).name;
 		}
 	}
 }
