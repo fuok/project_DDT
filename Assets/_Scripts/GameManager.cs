@@ -352,17 +352,87 @@ public class GameManager : MonoBehaviour
 
 		//------------道具-----------------
 
-		case Constants.ITEM_1:
-			UIBase.ConfirmDelegate cd1 = new UIBase.ConfirmDelegate (delegate() {
-				print ("喝下营养快线，体力恢复5");
-			});
-			UIManager.Instance.Open (typeof(PanelOptionalDialog), cd1, "营养快线", "喝下营养快线，体力恢复5");
+		case Constants.ACTIVATE_PACKAGE_0:
+			Drug d0 = Drug.GetDrug (currentPlayer.GetItemList () [0]);
+			if (d0.id != 0) {
+				UIBase.ConfirmDelegate cd0 = new UIBase.ConfirmDelegate (delegate() {
+					currentPlayer.DeleteItem (0);
+					SetAction (d0.action);
+				});
+				UIManager.Instance.Open (typeof(PanelOptionalDialog), cd0, d0.name, d0.desc);
+			}
 			break;
-		case Constants.ITEM_2:
-			UIBase.ConfirmDelegate cd2 = new UIBase.ConfirmDelegate (delegate() {
-				print ("喝下汇仁肾宝，体力恢复100");
-			});
-			UIManager.Instance.Open (typeof(PanelOptionalDialog), cd2, "汇仁肾宝", "喝下汇仁肾宝，体力恢复100");
+		case Constants.ACTIVATE_PACKAGE_1:
+			Drug d1 = Drug.GetDrug (currentPlayer.GetItemList () [1]);
+			if (d1.id != 0) {
+				UIBase.ConfirmDelegate cd1 = new UIBase.ConfirmDelegate (delegate() {
+					currentPlayer.DeleteItem (1);
+					SetAction (d1.action);
+				});
+				UIManager.Instance.Open (typeof(PanelOptionalDialog), cd1, d1.name, d1.desc);
+			}
+			break;
+		case Constants.ACTIVATE_PACKAGE_2:
+			Drug d2 = Drug.GetDrug (currentPlayer.GetItemList () [2]);
+			if (d2.id != 0) {
+				UIBase.ConfirmDelegate cd2 = new UIBase.ConfirmDelegate (delegate() {
+					currentPlayer.DeleteItem (2);
+					SetAction (d2.action);
+				});
+				UIManager.Instance.Open (typeof(PanelOptionalDialog), cd2, d2.name, d2.desc);
+			}
+			break;
+		case Constants.ACTIVATE_PACKAGE_3:
+			Drug d3 = Drug.GetDrug (currentPlayer.GetItemList () [3]);
+			if (d3.id != 0) {
+				UIBase.ConfirmDelegate cd3 = new UIBase.ConfirmDelegate (delegate() {
+					currentPlayer.DeleteItem (3);
+					SetAction (d3.action);
+				});
+				UIManager.Instance.Open (typeof(PanelOptionalDialog), cd3, d3.name, d3.desc);
+			}
+			break;
+		case Constants.ACTIVATE_PACKAGE_4:
+			Drug d4 = Drug.GetDrug (currentPlayer.GetItemList () [4]);
+			if (d4.id != 0) {
+				UIBase.ConfirmDelegate cd4 = new UIBase.ConfirmDelegate (delegate() {
+					currentPlayer.DeleteItem (4);
+					SetAction (d4.action);
+				});
+				UIManager.Instance.Open (typeof(PanelOptionalDialog), cd4, d4.name, d4.desc);
+			}
+			break;
+		case Constants.ACTIVATE_PACKAGE_5:
+			Drug d5 = Drug.GetDrug (currentPlayer.GetItemList () [5]);
+			if (d5.id != 0) {
+				UIBase.ConfirmDelegate cd5 = new UIBase.ConfirmDelegate (delegate() {
+					currentPlayer.DeleteItem (5);
+					SetAction (d5.action);
+				});
+				UIManager.Instance.Open (typeof(PanelOptionalDialog), cd5, d5.name, d5.desc);
+			}
+			break;
+		case Constants.USE_ITEM_1:
+			print ("喝了营养快线");
+			break;
+		case Constants.USE_ITEM_2:
+			print ("喝了汇仁肾宝");
+			break;
+		case Constants.USE_ITEM_3:
+			break;
+		case Constants.USE_ITEM_4:
+			break;
+		case Constants.USE_ITEM_5:
+			break;
+		case Constants.USE_ITEM_6:
+			break;
+		case Constants.USE_ITEM_7:
+			break;
+		case Constants.USE_ITEM_8:
+			break;
+		case Constants.USE_ITEM_9:
+			break;
+		case Constants.USE_ITEM_10:
 			break;
 		default:
 			break;

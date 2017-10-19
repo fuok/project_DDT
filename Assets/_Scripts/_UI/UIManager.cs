@@ -64,12 +64,9 @@ public class UIManager : MonoBehaviour
 	/// <param name="args">其他参数.</param>
 	public void Open<T> (Type type, ref T arg, params object[] args)
 	{
-//		print (panelMeetGirl.GetType ().Name);
-
 		foreach (var item in uiList) {
 			if (item.GetType ().Equals (type)) {
 //				print ("对比成功");
-//				GameObject ui = GameObject.Instantiate<GameObject> (((UIBase)item).gameObject, transCanvas);
 				UIBase ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
 				ui.SetParams (ref arg, args);
 				break;
@@ -79,6 +76,12 @@ public class UIManager : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Dialog专用的方法，区别在于没有返回的Action，直接委托传入方法
+	/// </summary>
+	/// <param name="type">Type.</param>
+	/// <param name="func">Func.</param>
+	/// <param name="args">Arguments.</param>
 	public void Open (Type type, UIBase.ConfirmDelegate func, params object[] args)
 	{
 		foreach (var item in uiList) {
@@ -87,7 +90,6 @@ public class UIManager : MonoBehaviour
 				ui.SetParams (func, args);
 				break;
 			} else {
-				//				print ("对比失败");
 			}
 		}
 	}
@@ -96,12 +98,10 @@ public class UIManager : MonoBehaviour
 	{
 		foreach (var item in uiList) {
 			if (item.GetType ().Equals (type)) {
-//				print ("找到页面");
 				UIBase ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
 				ui.SetParams (args);
 				break;
 			} else {
-//				print ("找不到页面");
 			}
 		}
 	}

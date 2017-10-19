@@ -44,10 +44,10 @@ public class Drug:Item
 			drug = new Drug (0, 0, "空", "", "");
 			break;
 		case 1:
-			drug = new Drug (1, 150, "营养快线", "", Constants.ITEM_1);
+			drug = new Drug (1, 150, "营养快线", "喝下营养快线，体力恢复5", Constants.USE_ITEM_1);
 			break;
 		case 2:
-			drug = new Drug (2, 350, "汇仁肾宝", "", Constants.ITEM_2);
+			drug = new Drug (2, 350, "汇仁肾宝", "喝下汇仁肾宝，体力恢复100", Constants.USE_ITEM_2);
 			break;
 		}
 		return drug;

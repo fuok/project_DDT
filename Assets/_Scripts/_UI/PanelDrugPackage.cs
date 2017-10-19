@@ -22,8 +22,6 @@ public class PanelDrugPackage : UIBase
 
 	void Start ()
 	{
-		Refrsh ();
-
 		btnBack.onClick.AddListener (() => {
 			UIManager.Instance.Close (this.GetType ());
 		});
@@ -32,49 +30,52 @@ public class PanelDrugPackage : UIBase
 			switch (i) {
 			case 0:
 				mPackageField [i].Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
-					GameManager.Instance.GetCurrentPlayer ().UseItem (0);
-					Refrsh ();
+					GameManager.Instance.SetAction (Constants.ACTIVATE_PACKAGE_0);
 				});
 				break;
 			case 1:
 				mPackageField [i].Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
-					GameManager.Instance.GetCurrentPlayer ().UseItem (1);
-					Refrsh ();
+					GameManager.Instance.SetAction (Constants.ACTIVATE_PACKAGE_1);
 				});
 				break;
 			case 2:
 				mPackageField [i].Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
-					GameManager.Instance.GetCurrentPlayer ().UseItem (2);
-					Refrsh ();
+					GameManager.Instance.SetAction (Constants.ACTIVATE_PACKAGE_2);
 				});
 				break;
 			case 3:
 				mPackageField [i].Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
-					GameManager.Instance.GetCurrentPlayer ().UseItem (3);
-					Refrsh ();
+					GameManager.Instance.SetAction (Constants.ACTIVATE_PACKAGE_3);
 				});
 				break;
 			case 4:
 				mPackageField [i].Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
-					GameManager.Instance.GetCurrentPlayer ().UseItem (4);
-					Refrsh ();
+					GameManager.Instance.SetAction (Constants.ACTIVATE_PACKAGE_4);
 				});
 				break;
 			case 5:
 				mPackageField [i].Find ("Button").GetComponent<Button> ().onClick.AddListener (() => {
-					GameManager.Instance.GetCurrentPlayer ().UseItem (5);
-					Refrsh ();
+					GameManager.Instance.SetAction (Constants.ACTIVATE_PACKAGE_5);
 				});
 				break;
 			default:
 				break;
 			}
 		}
+
+		StartCoroutine (RefreshCoroutine ());
 	}
 
 	void Update ()
 	{
 		
+	}
+
+	private IEnumerator RefreshCoroutine ()
+	{
+		Refrsh ();
+		yield return new WaitForSeconds (0.2f);
+		StartCoroutine (RefreshCoroutine ());
 	}
 
 	public void Refrsh ()

@@ -48,6 +48,22 @@ public class Constants
 	public const string ACTION_GAME_OVER = "action_game_over";
 
 	//------------- Action Key 道具----------------------
-	public const string ITEM_1 = "item_1";
-	public const string ITEM_2 = "item_2";
+
+	public const string ACTIVATE_PACKAGE_0 = "activate_package_0";
+	public const string ACTIVATE_PACKAGE_1 = "activate_package_1";
+	public const string ACTIVATE_PACKAGE_2 = "activate_package_2";
+	public const string ACTIVATE_PACKAGE_3 = "activate_package_3";
+	public const string ACTIVATE_PACKAGE_4 = "activate_package_4";
+	public const string ACTIVATE_PACKAGE_5 = "activate_package_5";
+
+	public const string USE_ITEM_1 = "item_1";
+	public const string USE_ITEM_2 = "item_2";
+	public const string USE_ITEM_3 = "item_3";
+	public const string USE_ITEM_4 = "item_4";
+	public const string USE_ITEM_5 = "item_5";
+	public const string USE_ITEM_6 = "item_6";
+	public const string USE_ITEM_7 = "item_7";
+	public const string USE_ITEM_8 = "item_8";
+	public const string USE_ITEM_9 = "item_9";
+	public const string USE_ITEM_10 = "item_10";
 }

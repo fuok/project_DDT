@@ -117,9 +117,9 @@ public class Player:GameData
 	/// </summary>
 	/// <returns>The item.</returns>
 	/// <param name="index">Index.</param>
-	public int[] UseItem (int index)
+	public int[] DeleteItem (int index)
 	{
-		SetAction (Drug.GetDrug (mDrugList [index]).action);
+//		SetAction (Drug.GetDrug (mDrugList [index]).action);
 		mDrugList [index] = 0;//将该位置上type改为0
 
 		return mDrugList;
