@@ -12,7 +12,7 @@ public class DiceManager : MonoBehaviour
 	public event DiceHandler diceEvent;
 
 	public Transform spawnPoint;
-	private string galleryDie = "d6-green";
+	private string galleryDie = "d10-green";
 
 	void Awake ()
 	{
@@ -54,7 +54,7 @@ public class DiceManager : MonoBehaviour
 	{
 		Dice.Clear ();
 		string[] a = galleryDie.Split ('-');
-		Dice.Roll ("2" + a [0], galleryDie, spawnPoint.transform.position, Force ());
+		Dice.Roll ("1" + a [0], galleryDie, spawnPoint.transform.position, Force ());
 	}
 
 	private Vector3 Force ()
