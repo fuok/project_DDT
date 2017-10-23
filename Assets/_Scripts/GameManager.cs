@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
 	IEnumerator CheckResult (int para)
 	{
 		tempRslt = para;
-		yield return new WaitForSeconds (0.5f);//延迟0.5秒检查稳定后的数值
+		yield return new WaitForSeconds (0.7f);//延迟0.5秒检查稳定后的数值
 
 		if (para == tempRslt) {//判断数值稳定
 			DiceManager.Instance.diceEvent -= OnDiceResult;
