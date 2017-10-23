@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Utility;
 
 public class GameManager : MonoBehaviour
 {
@@ -151,7 +152,10 @@ public class GameManager : MonoBehaviour
 		resultChecked = false;
 		DiceManager.Instance.diceEvent += OnDiceResult;//这个方法常驻监听，不是太好，但如果不这样数值会不准，因为骰子的状态不稳定,除非确定稳定后再回调
 		camDice.enabled = true;
-		DiceManager.Instance.RollDice ();
+		GameObject dice = DiceManager.Instance.RollDice ();
+		if (dice) {
+			camDice.GetComponent<SmoothFollow> ().target = dice.transform;	
+		}
 	}
 
 	//输出骰子点数，只要骰子动作在监听，这里就会一直调用，而且输出的数值是会变的，需要进一步检查才能确认

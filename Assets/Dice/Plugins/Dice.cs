@@ -127,7 +127,7 @@ public class Dice : MonoBehaviour
 	/// format dice 			: 	({count}){die type}	, exmpl.  d6, 4d4, 12d8 , 1d20
 	/// possible die types 	:	d4, d6, d8 , d10, d12, d20
 	/// </summary>
-	public static void Roll (string dice, string mat, Vector3 spawnPoint, Vector3 force)
+	public static GameObject Roll (string dice, string mat, Vector3 spawnPoint, Vector3 force)
 	{
 		rolling = true;
 		// sotring dice to lowercase for comparing purposes
@@ -170,8 +170,13 @@ public class Dice : MonoBehaviour
 				allDice.Add (rDie);               
 				// add RollingDie to the rolling queue
 				rollQueue.Add (rDie);
+
+				if (count == 1) {
+					return die;
+				}
 			}
 		}
+		return null;
 	}
 
 	/// <summary>

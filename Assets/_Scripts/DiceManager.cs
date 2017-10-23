@@ -50,11 +50,11 @@ public class DiceManager : MonoBehaviour
 	}
 
 	//控制骰子的数量和种类
-	public void RollDice ()
+	public GameObject RollDice ()
 	{
 		Dice.Clear ();
 		string[] a = galleryDie.Split ('-');
-		Dice.Roll ("1" + a [0], galleryDie, spawnPoint.transform.position, Force ());
+		return Dice.Roll ("1" + a [0], galleryDie, spawnPoint.transform.position, Force ());
 	}
 
 	private Vector3 Force ()
