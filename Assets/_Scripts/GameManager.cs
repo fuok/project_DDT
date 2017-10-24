@@ -17,8 +17,9 @@ public class GameManager : MonoBehaviour
 	Player currentPlayer;
 	Ground currentGround;
 
-	//调试控制
-	public Camera camDice;
+	//骰子相机控制
+	public GameObject mDiceCameraContainer;
+	public Camera[] mDiceCams;
 
 	//缓存游戏数据,相当于从DB读取出来的数据
 	private List<Player> mPlayerList = new List<Player> ();
@@ -151,10 +152,11 @@ public class GameManager : MonoBehaviour
 	{
 		resultChecked = false;
 		DiceManager.Instance.diceEvent += OnDiceResult;//这个方法常驻监听，不是太好，但如果不这样数值会不准，因为骰子的状态不稳定,除非确定稳定后再回调
-		camDice.enabled = true;
-		GameObject dice = DiceManager.Instance.RollDice ();
-		if (dice) {
-			camDice.GetComponent<SmoothFollow> ().target = dice.transform;	
+		mDiceCameraContainer.SetActive (true);
+		GameObject[] dices = DiceManager.Instance.RollDice ();
+		for (int i = 0; i < dices.Length; i++) {
+			dices [i].layer = 8 + i;//两个骰子对应的layer是8、9
+			mDiceCams [i].GetComponent<SmoothFollow> ().target = dices [i].transform;	
 		}
 	}
 
@@ -180,7 +182,7 @@ public class GameManager : MonoBehaviour
 
 				print ("前进:" + para);
 				CarStep (para);
-				camDice.enabled = false;
+				mDiceCameraContainer.SetActive (false);
 			}
 		}
 	}
