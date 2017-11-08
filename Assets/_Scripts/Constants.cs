@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿#if UNITY_ANDROID && !UNITY_EDITOR
+#define ANDROID
+#endif
+
+#if UNITY_IPHONE && !UNITY_EDITOR
+#define IPHONE
+#endif
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,9 +18,31 @@ public class Constants
 	public const int DEFAULT_MONEY = 10000;
 	public const int DEFAULT_HEALTH = 100;
 
+	//沙盒目录
+	#if ANDROID || IPHONE
+	public static string SAVE_PATH = Application.persistentDataPath;
+	#else
+	public static string SAVE_PATH = Application.dataPath + "/_save/";
+	#endif
+
+	//数据库名
+	public const string DbName = "ddt.db";
+	//表名
+	public const string TableNamePlayer = "save1player";
+	public const string TableNameGirl = "save1girl";
+	public const string TableNameGround = "save1ground";
+	//数据库版本号
+	public const int dataBaseVersion = 1;
+	//数据库地址(自行创建),//注意不是在根目录下,Application.dataPath会读取./assets/下面的
+	public static string dbPath = Application.dataPath + "/" + DbName;
+	//Android数据库地址
+	public static string dbPathAndroid = Application.persistentDataPath + "/" + DbName;
+	//数据库地址(外部导入)
+	public static string dbPathStreamIn = "URI=file:" + Application.streamingAssetsPath + "/" + DbName;
+
 
 	//------------- PlayerPrefabs Key ----------------------
-
+	public const string DATABASE_VERSION = "database version";
 	//TODO
 	public const string PLAYER_SAVE_NAME = "player_save_name_";
 	//TODO

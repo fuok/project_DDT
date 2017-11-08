@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mono.Data.Sqlite;
 
-//暂未使用该模式,但考虑到要加入NPC角色，可能会需要
-public class GameMenber : MonoBehaviour
+public class DatabaseBean : MonoBehaviour
 {
+	protected DbAccess db;
+	protected SqliteDataReader sqReader;
 
 	// Use this for initialization
 	void Start ()
@@ -17,5 +19,4 @@ public class GameMenber : MonoBehaviour
 	{
 		
 	}
-
 }
