@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 	public GameObject mDiceCameraContainer;
 	public Camera[] mDiceCams;
 
-	//缓存游戏数据,相当于从DB读取出来的数据
+	//缓存游戏数据,当游戏中断，这部分需要持久化
 	private List<Player> mPlayerList = new List<Player> ();
 	private List<Ground> mGroundList;
 	private List<Girl> mGirlList = new List<Girl> ();
@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
 		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 3, "王熙凤");
 
 		//构造测试数据
+
 		//Player
 		for (int i = 0; i < 4; i++) {
 			Player p = new Player (i, PlayerPrefs.GetString (Constants.PLAYER_SAVE_NAME + i, "player" + i)) {
