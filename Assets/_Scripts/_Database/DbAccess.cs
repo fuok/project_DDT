@@ -9,8 +9,6 @@ public class DbAccess
 	private SqliteCommand dbCommand;
 	private SqliteDataReader reader;
 
-
-
 	public DbAccess (string connectionString)
 	{
 		OpenDB (connectionString);	
@@ -110,13 +108,16 @@ public class DbAccess
 	}
 
 	/// <summary>
-	/// 插入数据
+	/// 插入整行数据
 	/// </summary>
 	/// <returns>The into.</returns>
 	/// <param name="tableName">Table name.</param>
 	/// <param name="values">Values.</param>
-	public SqliteDataReader InsertInto (string tableName, object[] values)//目前还不做不到根据id不重复插入，所以会重复添加相同数据,TODO
+	public SqliteDataReader InsertInto (string tableName, object[] values)
 	{
+		//如果表不是自增id，当插入主键相同的数据时，是会照样添加进去的。
+		//而调用while (sqReader.Read ())条件时，会输出最后一条也就是最新的一条。
+		//如果数据不是特别多，可以这样操作，若数据量大，就要使用Update
 		string query = "INSERT INTO " + tableName + " VALUES (" + values [0];
 
 		for (int i = 1; i < values.Length; ++i) {

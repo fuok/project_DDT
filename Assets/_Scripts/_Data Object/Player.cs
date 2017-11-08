@@ -28,7 +28,7 @@ public class Player:GameData
 
 	//当游戏中断，记录玩家的位置
 	public int Position { set; get; }
-
+	//持有的道具列表，长度为6的数组，用不同数字代表道具编号，0表示空道具栏
 	private int[] mDrugList = new int[6];
 
 	//------------- basic logic ----------------------------------

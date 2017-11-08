@@ -36,10 +36,10 @@ public class Drug:Item
 	{
 	}
 
-	public static Drug GetDrug (int type)
+	public static Drug GetDrug (int id)
 	{
 		Drug drug = null;
-		switch (type) {
+		switch (id) {
 		case 0:
 			drug = new Drug (0, 0, "空", "", "");
 			break;

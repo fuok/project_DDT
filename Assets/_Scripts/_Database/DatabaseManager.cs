@@ -18,7 +18,11 @@ public class DatabaseManager : MonoBehaviour
 
 	void Awake ()
 	{
-		Instance = this;
+		if (Instance == null) {
+			Instance = this;
+		} else if (Instance != this) {
+			Destroy (gameObject);
+		}
 	}
 
 	void Start ()
@@ -53,20 +57,21 @@ public class DatabaseManager : MonoBehaviour
 		if (Constants.dataBaseVersion > version) {
 			print ("database update");
 			//升级para数据库
-			try {
-				db.DeleteTable (Constants.TableNamePlayer);//TODO
-			} catch (System.Exception ex) {
-
-			}
+//			try {
+//				db.DeleteTable (Constants.TableNamePlayer);//TODO
+//			} catch (System.Exception ex) {
+//
+//			}
 			PlayerPrefs.SetInt (Constants.DATABASE_VERSION, Constants.dataBaseVersion);
 			//初始化bean
-//			ParaBean.Instance.InitParaBean (db);
+			PlayerBean.Instance.InitialTable (db);
 //			GameSaveBean.Instance.InitSaveBean (db);
 			//初始化Para表
 //			ParaBean.Instance.WritePara2DB ();
 		} else {
 			print ("no need update");
 			//初始化bean
+			PlayerBean.Instance.InitialTable (db);
 //			ParaBean.Instance.InitParaBean (db);
 //			GameSaveBean.Instance.InitSaveBean (db);
 		}

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mono.Data.Sqlite;
-using System.Reflection;
-using System;
 
 public class PlayerBean : MonoBehaviour
 {
@@ -13,18 +11,11 @@ public class PlayerBean : MonoBehaviour
 	private SqliteDataReader sqReader;
 
 	private string[] colName = new string[] {
-		"savId", "savParaId", "savTime", "savText", "savImgPath"
+		"[index]", "name", "money", "health", "position", "item1", "item2", "item3", "item4", "item5", "item6"
 	};
 	private string[] colType = new string[] {
-		"integer", "text", "text", "text", "text"
+		"integer", "text", "integer", "integer", "integer", "integer", "integer", "integer", "integer", "integer", "integer"
 	};
-
-//	private string hhh = GetTest ();
-//
-//	private string GetTest ()
-//	{
-//		return "";
-//	}
 
 	void Awake ()
 	{
@@ -33,24 +24,49 @@ public class PlayerBean : MonoBehaviour
 		} else if (Instance != this) {
 			Destroy (gameObject);
 		}
+
+
 	}
 
 	//-------------------------public function-------------
+	//Player包含：初始化表，读取表，更新表
 
-	public void InitPlayerBean (DbAccess db)
+	public void InitialTable (DbAccess db)
 	{
-//		ParameterInfo[]=new Player().get
-		Type t = typeof(Player);
-		MemberInfo[] info = t.GetMembers ();
-
-
 		this.db = db;
 		//创建数据库表，与字段
 		db.CreateTable (Constants.TableNamePlayer, colName, colType, false);
 	}
 
-	public void AddPlayerList2DB (List<Player> playerList)
+	public void SavePlayerList2DB (List<Player> playerList)
 	{
+		for (int i = 0; i < playerList.Count; i++) {
+			db.UpdateInto (Constants.TableNamePlayer, new string[] {
+				"index",
+				"name",
+				"money",
+				"health",
+				"position",
+				"item1",
+				"item2",
+				"item3",
+				"item4",
+				"item5",
+				"item6"
+			}, new object[] {
+				playerList [i].Index,
+				"'" + playerList [i].Name + "'",
+				playerList [i].Money,
+				playerList [i].Health,
+				playerList [i].Position,
+				playerList [i].GetItemList () [0],
+				playerList [i].GetItemList () [1],
+				playerList [i].GetItemList () [2],
+				playerList [i].GetItemList () [3],
+				playerList [i].GetItemList () [4],
+				playerList [i].GetItemList () [5],
+			}, "index", playerList [i].Index);
+		}
 //			db.InsertInto (Constants.tableNameSave, new object[] {
 //				save.savId,
 //				"'" + save.savParaId + "'",
