@@ -24,7 +24,7 @@ public class GameData
 		DataEvent (hasChange);
 	}
 
-	//回合结束后调用此方法保存数据
+	//回合结束后调用此方法的重写保存数据
 	public virtual void DataSave ()
 	{
 
