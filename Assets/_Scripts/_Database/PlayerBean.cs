@@ -29,6 +29,7 @@ public class PlayerBean : MonoBehaviour
 	}
 
 	//-------------------------public function-------------
+
 	//Player包含：初始化表，读取表，更新表
 
 	public void InitialTable (DbAccess db)
@@ -38,22 +39,12 @@ public class PlayerBean : MonoBehaviour
 		db.CreateTable (Constants.TableNamePlayer, colName, colType, false);
 	}
 
+	//新游戏的时候一次性存入表
 	public void SavePlayerList2DB (List<Player> playerList)
 	{
 		for (int i = 0; i < playerList.Count; i++) {
-			db.UpdateInto (Constants.TableNamePlayer, new string[] {
-				"index",
-				"name",
-				"money",
-				"health",
-				"position",
-				"item1",
-				"item2",
-				"item3",
-				"item4",
-				"item5",
-				"item6"
-			}, new object[] {
+			
+			db.InsertInto (Constants.TableNamePlayer, new object[] {
 				playerList [i].Index,
 				"'" + playerList [i].Name + "'",
 				playerList [i].Money,
@@ -64,34 +55,98 @@ public class PlayerBean : MonoBehaviour
 				playerList [i].GetItemList () [2],
 				playerList [i].GetItemList () [3],
 				playerList [i].GetItemList () [4],
-				playerList [i].GetItemList () [5],
-			}, "index", playerList [i].Index);
+				playerList [i].GetItemList () [5]
+			});
 		}
-//			db.InsertInto (Constants.tableNameSave, new object[] {
-//				save.savId,
-//				"'" + save.savParaId + "'",
-//				"'" + save.savTime + "'",
-//				"'" + save.savText + "'",
-//				"'" + save.savImgPath + "'"
-//			});
 	}
 
-	public List<Player> GetPlayerListFromDB (int id)
+	public void UpdatePlayer2DB (Player player)
 	{
-		sqReader = db.SelectWhere (Constants.TableNamePlayer, colName, new string[]{ "savId" }, new string[]{ "=" }, new object[]{ id });
-		List<Player> playList = new List<Player> ();
-//		while (sqReader.Read ()) {
-//			save = new GameSave (sqReader.GetInt32 (sqReader.GetOrdinal ("savId")),
-//				sqReader.GetString (sqReader.GetOrdinal ("savParaId")),
-//				sqReader.GetString (sqReader.GetOrdinal ("savTime")),
-//				sqReader.GetString (sqReader.GetOrdinal ("savText")),
-//				sqReader.GetString (sqReader.GetOrdinal ("savImgPath")));
-//		}
-		return playList;
+		db.UpdateInto (Constants.TableNamePlayer, new string[] {
+			"[index]",
+			"name",
+			"money",
+			"health",
+			"position",
+			"item1",
+			"item2",
+			"item3",
+			"item4",
+			"item5",
+			"item6"
+		}, new object[] {
+			player.Index,
+			"'" + player.Name + "'",
+			player.Money,
+			player.Health,
+			player.Position,
+			player.GetItemList () [0],
+			player.GetItemList () [1],
+			player.GetItemList () [2],
+			player.GetItemList () [3],
+			player.GetItemList () [4],
+			player.GetItemList () [5]
+		}, "[index]", player.Index);
 	}
-	
-	//	public void DeleteGameSave (int id)
+
+	//	public void UpdatePlayerList2DB (List<Player> playerList)
 	//	{
-	//		sqReader = db.Delete (Constants.tableNameSave, new string[]{ "savId" }, new object[]{ id });
+	//		for (int i = 0; i < playerList.Count; i++) {
+	//			db.UpdateInto (Constants.TableNamePlayer, new string[] {
+	//				"[index]",
+	//				"name",
+	//				"money",
+	//				"health",
+	//				"position",
+	//				"item1",
+	//				"item2",
+	//				"item3",
+	//				"item4",
+	//				"item5",
+	//				"item6"
+	//			}, new object[] {
+	//				playerList [i].Index,
+	//				"'" + playerList [i].Name + "'",
+	//				playerList [i].Money,
+	//				playerList [i].Health,
+	//				playerList [i].Position,
+	//				playerList [i].GetItemList () [0],
+	//				playerList [i].GetItemList () [1],
+	//				playerList [i].GetItemList () [2],
+	//				playerList [i].GetItemList () [3],
+	//				playerList [i].GetItemList () [4],
+	//				playerList [i].GetItemList () [5]
+	//			}, "[index]", playerList [i].Index);
+	//		}
 	//	}
+
+	public List<Player> GetPlayerListFromDB ()
+	{
+//		sqReader = db.SelectWhere (Constants.TableNamePlayer, colName, new string[]{ "savId" }, new string[]{ "=" }, new object[]{ id });
+		sqReader = db.ReadFullTable (Constants.TableNamePlayer);
+		List<Player> pList = new List<Player> ();
+		while (sqReader.Read ()) {
+			Player p = new Player (sqReader.GetInt32 (sqReader.GetOrdinal ("index")),//读取不需要加[]括号
+				           sqReader.GetString (sqReader.GetOrdinal ("name"))) {
+				Money = sqReader.GetInt32 (sqReader.GetOrdinal ("money")),
+				Health = sqReader.GetInt32 (sqReader.GetOrdinal ("health")),
+				Position = sqReader.GetInt32 (sqReader.GetOrdinal ("position"))
+			};
+			p.GetItemList () [0] = sqReader.GetInt32 (sqReader.GetOrdinal ("item1"));
+			p.GetItemList () [1] = sqReader.GetInt32 (sqReader.GetOrdinal ("item2"));
+			p.GetItemList () [2] = sqReader.GetInt32 (sqReader.GetOrdinal ("item3"));
+			p.GetItemList () [3] = sqReader.GetInt32 (sqReader.GetOrdinal ("item4"));
+			p.GetItemList () [4] = sqReader.GetInt32 (sqReader.GetOrdinal ("item5"));
+			p.GetItemList () [5] = sqReader.GetInt32 (sqReader.GetOrdinal ("item6"));
+			pList.Add (p);
+
+//			print (sqReader.GetInt32 (sqReader.GetOrdinal ("index")) + "," + sqReader.GetString (sqReader.GetOrdinal ("name")));
+		}
+		return pList;
+	}
+
+	public void DeletePlayerListFromDB ()
+	{
+		sqReader = db.DeleteContents (Constants.TableNamePlayer);
+	}
 }

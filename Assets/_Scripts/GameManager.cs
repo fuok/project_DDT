@@ -35,29 +35,23 @@ public class GameManager : MonoBehaviour
 		}
 
 		//初始化游戏数据，Player、Ground、Girl都在这里，后期可以放到静态对象里
-		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 0, "刘玄德(红)");
-		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 1, "雷锋(黄)");
-		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 2, "奥巴马(蓝)");
-		PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 3, "金三胖(绿)");
 
-		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 0, "林志玲");
-		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 1, "波多野结衣");
-		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 2, "张雨桐");
-		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 3, "王熙凤");
+		//读取Player数据
+		mPlayerList = PlayerBean.Instance.GetPlayerListFromDB ();
+		for (int i = 0; i < mPlayerList.Count; i++) {
+			//注册玩家事件
+			mPlayerList [i].PlayerActionEvent += GameManager.Instance.OnPlayerActionChanged;
+		}
+		if (mPlayerList.Count > 1) {
+			print ("Player数据读取成功,count=" + mPlayerList.Count);
+		} else {
+			print ("Player读取失败");
+		}
+		//添加玩家到TurnBase模块
+		TurnManager.Instance.SetPlayerQueue (ref mPlayerList);
 
 		//构造测试数据
 
-		//Player
-		for (int i = 0; i < 4; i++) {
-			Player p = new Player (i, PlayerPrefs.GetString (Constants.PLAYER_SAVE_NAME + i, "player" + i)) {
-				Money = Constants.DEFAULT_MONEY,
-				Health = Constants.DEFAULT_HEALTH
-			};
-			//注册玩家事件
-			p.PlayerActionEvent += GameManager.Instance.OnPlayerActionChanged;
-			mPlayerList.Add (p);
-		}
-		TurnManager.Instance.SetPlayerQueue (ref mPlayerList);
 		//Ground
 		mGroundList = new List<Ground> {
 			new Ground{ Index = 0, Owner = -2, Type = 0 },//起点
@@ -101,6 +95,10 @@ public class GameManager : MonoBehaviour
 		}
 
 		//Girl
+		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 0, "林志玲");
+		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 1, "波多野结衣");
+		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 2, "张雨桐");
+		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 3, "王熙凤");
 		for (int i = 0; i < 4; i++) {
 			Girl girl = new Girl {
 				Index = i,

@@ -13,7 +13,7 @@ using UnityEngine;
 public class Constants
 {
 
-	public static bool fromBeginning = true;
+	public static bool FromBeginning = true;
 
 	public const int DEFAULT_MONEY = 10000;
 	public const int DEFAULT_HEALTH = 100;

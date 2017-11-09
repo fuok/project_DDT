@@ -130,4 +130,14 @@ public class Player:GameData
 		base.NotifyDataChanged (hasChanged);
 	}
 
+	public override	void DataSave ()
+	{
+		if (hasChanged) {
+			//持久化
+			PlayerBean.Instance.UpdatePlayer2DB (this);
+			//通知
+			NotifyDataChanged (false);
+		}
+	}
+
 }

@@ -25,14 +25,9 @@ public class GameData
 	}
 
 	//回合结束后调用此方法保存数据
-	public void DataSave ()
+	public virtual void DataSave ()
 	{
-		if (hasChanged) {
-			//持久化,TODO
-					
-			//通知
-			NotifyDataChanged (false);
-		}
+
 	}
 
 	private void OnDataEvent (bool hasChanged)
