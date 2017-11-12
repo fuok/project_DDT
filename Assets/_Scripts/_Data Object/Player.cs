@@ -18,14 +18,15 @@ public class Player:GameData
 	//------------ 数据结构 -----------------------------------
 
 	//前面两项作为必填项，后面用初始化器
+
+	//序号，0开始
 	public int Index{ private set; get; }
-
+	//名
 	public string Name{ private set; get; }
-
+	//钱数
 	public int Money { set; get; }
-
+	//体力
 	public int Health{ set; get; }
-
 	//当游戏中断，记录玩家的位置
 	public int Position { set; get; }
 	//持有的道具列表，长度为6的数组，用不同数字代表道具编号，0表示空道具栏
