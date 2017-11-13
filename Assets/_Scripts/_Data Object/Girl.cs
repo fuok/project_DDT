@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Girl:GameData
 {
@@ -64,4 +65,9 @@ public class Girl:GameData
 	{
 		base.NotifyDataChanged (hasChanged);
 	}
+}
+
+public class GirlJson
+{
+	public List<Girl> girlList = new List<Girl> ();
 }
