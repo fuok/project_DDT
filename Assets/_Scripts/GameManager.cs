@@ -95,19 +95,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		//Girl
-		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 0, "林志玲");
-		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 1, "波多野结衣");
-		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 2, "张雨桐");
-		PlayerPrefs.SetString (Constants.GIRL_SAVE_NAME + 3, "王熙凤");
-		for (int i = 0; i < 4; i++) {
-			Girl girl = new Girl {
-				Index = i,
-				Owner = -1,
-				LastOwner = -1,
-				Name = PlayerPrefs.GetString (Constants.GIRL_SAVE_NAME + i, "girl" + i), Salary = 1000
-			};
-			mGirlList.Add (girl);
-		}
+		mGirlList = GirlBean.Instance.GetGirlListFromDB ();
 	}
 
 	void Start ()

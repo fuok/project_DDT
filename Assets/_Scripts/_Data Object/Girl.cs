@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[System.Serializable]
 public class Girl:GameData
 {
 	//------------ 数据结构 -----------------------------------
@@ -68,7 +67,6 @@ public class Girl:GameData
 	}
 }
 
-[System.Serializable]
 public class GirlJson
 {
 	public List<Girl> girlList = new List<Girl> ();

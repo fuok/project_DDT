@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mono.Data.Sqlite;
+using Newtonsoft.Json;
 
 public class GirlBean : MonoBehaviour
 {
@@ -96,13 +97,12 @@ public class GirlBean : MonoBehaviour
 	{
 		TextAsset paraAsset = Resources.Load<TextAsset> ("json/girl json");
 		print ("json:" + paraAsset.text);
-//		GirlJson mData = JsonConvert.DeserializeObject<ParagraphData> (paraAsset.text);
-		GirlJson mJson = JsonUtility.FromJson<GirlJson> (paraAsset.text);
+		GirlJson mJson = JsonConvert.DeserializeObject<GirlJson> (paraAsset.text);
 		Resources.UnloadUnusedAssets ();
-		print ("gggdgdgdg:" + mJson.girlList.Count);
-		for (int i = 0; i < mJson.girlList.Count; i++) {
-			print ("name:" + mJson.girlList [i].Name);
-		}
+//		print ("gggdgdgdg:" + mJson.girlList.Count);
+//		for (int i = 0; i < mJson.girlList.Count; i++) {
+//			print ("name:" + mJson.girlList [i].Name);
+//		}
 		return mJson.girlList;
 	}
 
