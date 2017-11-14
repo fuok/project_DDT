@@ -55,7 +55,7 @@ public class LoadingManager : MonoBehaviour
 
 	IEnumerator StartGame ()
 	{
-		yield return new WaitForSeconds (5f);
+		yield return new WaitForSeconds (2f);
 		SceneManager.LoadScene ("[PlayScene]");
 	}
 }
