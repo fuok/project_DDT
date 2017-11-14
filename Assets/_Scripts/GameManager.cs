@@ -34,9 +34,8 @@ public class GameManager : MonoBehaviour
 			Destroy (gameObject);
 		}
 
-		//初始化游戏数据，Player、Ground、Girl都在这里，后期可以放到静态对象里
-
-		//读取Player数据
+		//以下读取数据.一存一取是多余，为了好维护先这样
+		//读取Player
 		mPlayerList = PlayerBean.Instance.GetPlayerListFromDB ();
 		for (int i = 0; i < mPlayerList.Count; i++) {
 			//注册玩家事件
@@ -50,7 +49,10 @@ public class GameManager : MonoBehaviour
 		//添加玩家到TurnBase模块
 		TurnManager.Instance.SetPlayerQueue (ref mPlayerList);
 
-		//构造测试数据
+		//读取Girl
+		mGirlList = GirlBean.Instance.GetGirlListFromDB ();
+
+		//构造测试数据,目前还剩下Ground,TODO
 
 		//Ground
 		mGroundList = new List<Ground> {
@@ -93,9 +95,7 @@ public class GameManager : MonoBehaviour
 				mNodeList [i].mBuilding.SetNeutralBuilding (mGroundList [i].Type);
 			}
 		}
-
-		//Girl
-		mGirlList = GirlBean.Instance.GetGirlListFromDB ();
+			
 	}
 
 	void Start ()

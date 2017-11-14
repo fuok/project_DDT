@@ -20,10 +20,10 @@ public class TurnManager : MonoBehaviour
 			
 	}
 
-	void Start ()
-	{
-
-	}
+	//	void Start ()
+	//	{
+	//
+	//	}
 
 	public void SetPlayerQueue (ref List<Player> playerList)
 	{
@@ -37,34 +37,6 @@ public class TurnManager : MonoBehaviour
 	{
 		return queue.Peek ();
 	}
-
-	//	void Update ()
-	//	{
-	//
-	//		if (CurrentPlayer != null) {
-	////			print (mCurrentPlayer.mStatus);
-	//			switch (CurrentPlayer.mStatus) {
-	//			case PlayerStatus.Moving:
-	////				txtCurrentPlayer.text = mCurrentPlayer.Name + ",正在行动";
-	//				//玩家自由行动
-	//				if (!isPlayerMoving) {//满足回合终止条件
-	//					CurrentPlayer.mStatus = PlayerStatus.Waiting;
-	//				}
-	//				break;
-	//			case PlayerStatus.Waiting:
-	//				print (CurrentPlayer.Name + "结束了");
-	//				NextTurn ();
-	//				break;
-	//			case PlayerStatus.Stop:
-	//				
-	//				break;
-	//			case PlayerStatus.GameOver:
-	//				
-	//				break;
-	//			}
-	//		}
-	//
-	//	}
 
 	/// <summary>
 	/// 结束当前Player的行动，并且标记一个变量,

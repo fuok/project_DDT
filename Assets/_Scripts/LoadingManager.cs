@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoadingManager : MonoBehaviour
 {
+	public Text txtProgressing;
 
-	void Start ()
+	void Awake ()
 	{
-		//根据读取记录情况判断新建游戏或者读取游戏
-		if (Constants.FromBeginning) {
-
-			//测试数据的构建+持久化先放到这里,需要做成异步处理,TODO
+		//以下初始化游戏数据
+		if (Constants.FromBeginning) {//根据读取记录情况判断新建游戏或者读取游戏
 
 			//删除旧数据
 			PlayerBean.Instance.DeletePlayerListFromDB ();
@@ -40,11 +40,16 @@ public class LoadingManager : MonoBehaviour
 			GirlBean.Instance.DeleteGirlListFromDB ();
 			GirlBean.Instance.SaveGirlList2DB ();
 		} else {
-			
-		}
-			
-		StartCoroutine (StartGame ());
 
+		}
+	}
+
+	void Start ()
+	{
+			
+//		StartCoroutine (StartGame ());
+		StartCoroutine (StartMain ());
+//		LoadGame ();
 	}
 	
 	// Update is called once per frame
@@ -58,4 +63,48 @@ public class LoadingManager : MonoBehaviour
 		yield return new WaitForSeconds (2f);
 		SceneManager.LoadScene ("[PlayScene]");
 	}
+
+
+	//-------------------------
+
+	private AsyncOperation async;
+	private int progress = 0;
+
+	void Update ()
+	{
+		if (async != null) {
+			progress = (int)(async.progress * 100);
+			print ("progress:" + async.progress);
+			txtProgressing.text = progress.ToString ();
+			if (progress > 80) {
+				async.allowSceneActivation = true;
+			}
+		}
+	}
+
+	private IEnumerator StartMain ()
+	{
+		yield return new WaitForEndOfFrame ();
+		async = SceneManager.LoadSceneAsync ("[PlayScene]", LoadSceneMode.Single);
+		async.allowSceneActivation = false;
+		yield return async;//也就是说这里不写return async也完全没影响
+	}
+
+	//------------------------------
+
+	//	public void LoadGame ()
+	//	{
+	//		StartCoroutine (StartLoading_1 ());
+	//	}
+	//
+	//	private IEnumerator StartLoading_1 ()
+	//	{
+	//		AsyncOperation op = SceneManager.LoadSceneAsync ("[PlayScene]", LoadSceneMode.Single);
+	//		while (!op.isDone) {
+	//			int progress = (int)(op.progress * 100);
+	//			print ("progress:" + progress);
+	//			txtProgressing.text = progress.ToString ();
+	//			yield return new WaitForEndOfFrame ();
+	//		}
+	//	}
 }
