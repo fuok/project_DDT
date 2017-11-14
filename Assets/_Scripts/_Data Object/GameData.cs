@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 主缓存数据，同时也是需要持久化的数据
 /// </summary>
+[System.Serializable]
 public class GameData
 {
 	protected bool hasChanged;

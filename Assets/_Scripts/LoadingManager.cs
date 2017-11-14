@@ -11,7 +11,7 @@ public class LoadingManager : MonoBehaviour
 		//根据读取记录情况判断新建游戏或者读取游戏
 		if (Constants.FromBeginning) {
 
-			//测试数据的构建+持久化先放到这里,TODO
+			//测试数据的构建+持久化先放到这里,需要做成异步处理,TODO
 
 			//删除旧数据
 			PlayerBean.Instance.DeletePlayerListFromDB ();
@@ -35,13 +35,16 @@ public class LoadingManager : MonoBehaviour
 				pList.Add (p);
 			}
 			PlayerBean.Instance.SavePlayerList2DB (pList);
+
+			//Girl
+			GirlBean.Instance.DeleteGirlListFromDB ();
+			GirlBean.Instance.SaveGirlList2DB ();
 		} else {
 			
 		}
+			
+		StartCoroutine (StartGame ());
 
-
-
-		SceneManager.LoadScene ("[PlayScene]");
 	}
 	
 	// Update is called once per frame
@@ -49,4 +52,10 @@ public class LoadingManager : MonoBehaviour
 	//	{
 	//
 	//	}
+
+	IEnumerator StartGame ()
+	{
+		yield return new WaitForSeconds (5f);
+		SceneManager.LoadScene ("[PlayScene]");
+	}
 }

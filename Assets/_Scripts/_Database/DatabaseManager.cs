@@ -65,15 +65,12 @@ public class DatabaseManager : MonoBehaviour
 			PlayerPrefs.SetInt (Constants.DATABASE_VERSION, Constants.dataBaseVersion);
 			//初始化bean
 			PlayerBean.Instance.InitialTable (db);
-//			GameSaveBean.Instance.InitSaveBean (db);
-			//初始化Para表
-//			ParaBean.Instance.WritePara2DB ();
+			GirlBean.Instance.InitialTable (db);
 		} else {
 			print ("no need update");
 			//初始化bean
 			PlayerBean.Instance.InitialTable (db);
-//			ParaBean.Instance.InitParaBean (db);
-//			GameSaveBean.Instance.InitSaveBean (db);
+			GirlBean.Instance.InitialTable (db);
 		}
 	}
 

@@ -11,7 +11,7 @@ public class PlayerBean : MonoBehaviour
 	private SqliteDataReader sqReader;
 
 	private string[] colName = new string[] {
-		"[index]", "name", "money", "health", "position", "item1", "item2", "item3", "item4", "item5", "item6"
+		"[Index]", "Name", "Money", "Health", "Position", "item1", "item2", "item3", "item4", "item5", "item6"
 	};
 	private string[] colType = new string[] {
 		"integer", "text", "integer", "integer", "integer", "integer", "integer", "integer", "integer", "integer", "integer"
@@ -30,7 +30,7 @@ public class PlayerBean : MonoBehaviour
 
 	//-------------------------public function-------------
 
-	//Player包含：初始化表，读取表，更新表
+	//Player包含：初始化表，保存表，读取表，逐条更新,清空表
 
 	public void InitialTable (DbAccess db)
 	{
@@ -63,11 +63,11 @@ public class PlayerBean : MonoBehaviour
 	public void UpdatePlayer2DB (Player player)
 	{
 		db.UpdateInto (Constants.TableNamePlayer, new string[] {
-			"[index]",
-			"name",
-			"money",
-			"health",
-			"position",
+			"[Index]",
+			"Name",
+			"Money",
+			"Health",
+			"Position",
 			"item1",
 			"item2",
 			"item3",
@@ -122,15 +122,14 @@ public class PlayerBean : MonoBehaviour
 
 	public List<Player> GetPlayerListFromDB ()
 	{
-//		sqReader = db.SelectWhere (Constants.TableNamePlayer, colName, new string[]{ "savId" }, new string[]{ "=" }, new object[]{ id });
 		sqReader = db.ReadFullTable (Constants.TableNamePlayer);
 		List<Player> pList = new List<Player> ();
 		while (sqReader.Read ()) {
-			Player p = new Player (sqReader.GetInt32 (sqReader.GetOrdinal ("index")),//读取不需要加[]括号
-				           sqReader.GetString (sqReader.GetOrdinal ("name"))) {
-				Money = sqReader.GetInt32 (sqReader.GetOrdinal ("money")),
-				Health = sqReader.GetInt32 (sqReader.GetOrdinal ("health")),
-				Position = sqReader.GetInt32 (sqReader.GetOrdinal ("position"))
+			Player p = new Player (sqReader.GetInt32 (sqReader.GetOrdinal ("Index")),//读取不需要加[]括号
+				           sqReader.GetString (sqReader.GetOrdinal ("Name"))) {
+				Money = sqReader.GetInt32 (sqReader.GetOrdinal ("Money")),
+				Health = sqReader.GetInt32 (sqReader.GetOrdinal ("Health")),
+				Position = sqReader.GetInt32 (sqReader.GetOrdinal ("Position"))
 			};
 			p.GetItemList () [0] = sqReader.GetInt32 (sqReader.GetOrdinal ("item1"));
 			p.GetItemList () [1] = sqReader.GetInt32 (sqReader.GetOrdinal ("item2"));
