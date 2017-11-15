@@ -28,7 +28,7 @@ public class DbAccess
 		try {
 			dbConnection = new SqliteConnection (connectionString);
 			dbConnection.Open ();
-			Debug.Log ("version:" + dbConnection.ServerVersion);
+			Debug.Log ("database version:" + dbConnection.ServerVersion);
 
 			//				Debug.Log ("Connected to db");
 		} catch (Exception e) {

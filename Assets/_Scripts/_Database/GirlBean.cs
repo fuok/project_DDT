@@ -69,7 +69,7 @@ public class GirlBean : MonoBehaviour
 		while (ie.MoveNext ()) {
 			yield return new WaitForEndOfFrame ();//wait
 			Girl girl = ie.Current as Girl;
-			print ("保存:" + girl.Name);
+//			print ("保存:" + girl.Name);
 			db.InsertInto (tableName, new object[] {
 				girl.Index,
 				"'" + girl.Name + "'",
@@ -133,7 +133,7 @@ public class GirlBean : MonoBehaviour
 			g.HistoryOwner [3] = sqReader.GetInt32 (sqReader.GetOrdinal ("HistoryOwner4"));
 	
 			pList.Add (g);
-			print ("读取:" + g.Name);
+//			print ("读取:" + g.Name);
 		}
 		return pList;
 	}

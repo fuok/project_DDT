@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class LoadingManager : MonoBehaviour
 {
 	public Text txtProgressing;
+	public Slider sliderProgress;
 
 	void Awake ()
 	{
@@ -46,43 +47,40 @@ public class LoadingManager : MonoBehaviour
 
 	void Start ()
 	{
-			
-//		StartCoroutine (StartGame ());
-		StartCoroutine (StartMain ());
-//		LoadGame ();
+		StartCoroutine (StartLoading ());
 	}
-	
-	// Update is called once per frame
-	//	void Update ()
-	//	{
-	//
-	//	}
-
-	IEnumerator StartGame ()
-	{
-		yield return new WaitForSeconds (2f);
-		SceneManager.LoadScene ("[PlayScene]");
-	}
-
 
 	//-------------------------
 
 	private AsyncOperation async;
-	private int progress = 0;
+	private float progressTrue = 0;
+	private float progressFake = 0;
+	private int progressShow = 0;
 
 	void Update ()
 	{
 		if (async != null) {
-			progress = (int)(async.progress * 100);
-			print ("progress:" + async.progress);
-			txtProgressing.text = progress.ToString ();
-			if (progress > 80) {
+
+			if (progressFake < 1.0f) {
+				progressTrue = async.progress;
+				print ("async.progress=" + progressTrue);
+
+				if (progressFake < progressTrue || progressFake >= 0.9f) {
+					progressFake += 0.01f;
+				}
+
+			} else {
+				print ("good!!!");
 				async.allowSceneActivation = true;
 			}
+
+			progressShow = (int)(progressFake * 100);
+			txtProgressing.text = progressShow.ToString ();
+			sliderProgress.value = progressFake;
 		}
 	}
 
-	private IEnumerator StartMain ()
+	private IEnumerator StartLoading ()
 	{
 		yield return new WaitForEndOfFrame ();
 		async = SceneManager.LoadSceneAsync ("[PlayScene]", LoadSceneMode.Single);
@@ -90,21 +88,4 @@ public class LoadingManager : MonoBehaviour
 		yield return async;//也就是说这里不写return async也完全没影响
 	}
 
-	//------------------------------
-
-	//	public void LoadGame ()
-	//	{
-	//		StartCoroutine (StartLoading_1 ());
-	//	}
-	//
-	//	private IEnumerator StartLoading_1 ()
-	//	{
-	//		AsyncOperation op = SceneManager.LoadSceneAsync ("[PlayScene]", LoadSceneMode.Single);
-	//		while (!op.isDone) {
-	//			int progress = (int)(op.progress * 100);
-	//			print ("progress:" + progress);
-	//			txtProgressing.text = progress.ToString ();
-	//			yield return new WaitForEndOfFrame ();
-	//		}
-	//	}
 }
