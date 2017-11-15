@@ -32,7 +32,10 @@ public class PanelMain : UIBase
 		btnPackage.onClick.AddListener (() => {
 			UIManager.Instance.Open (typeof(PanelDrugPackage));
 		});
-		btnRoll.onClick.AddListener (GameManager.Instance.RollDice);
+		btnRoll.onClick.AddListener (delegate() {
+			GameManager.Instance.RollDice ();
+			btnRoll.onClick.RemoveAllListeners ();//避免重复点
+		});
 
 		StartCoroutine (RefreshCoroutine ());
 	}
