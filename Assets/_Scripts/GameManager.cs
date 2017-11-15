@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 	public static GameManager Instance{ get; private set; }
 
 	//棋子移动
+	[Header ("棋子移动")]
 	[SerializeField]
 	private CarLogic[] mCarList;
 	[SerializeField]
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
 	Ground currentGround;
 
 	//骰子相机控制
+	[Header ("骰子相机控制")]
 	public GameObject mDiceCameraContainer;
 	public Camera[] mDiceCams;
 
@@ -184,7 +186,7 @@ public class GameManager : MonoBehaviour
 
 		//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
 		currentGround = mGroundList [target];//逻辑移动
-		car.GoStep (mNodeList [target]);//棋子移动
+		car.GoStep (mNodeList [target], num);//棋子开始移动
 	}
 
 	//棋子移动后的响应函数
@@ -192,7 +194,8 @@ public class GameManager : MonoBehaviour
 	{
 		switch (status) {
 		case CarStatus.Stop:
-			SetAction (Constants.ACTION_MEET_GIRL);//角色停住后进入交互阶段
+			//角色停住后进入交互阶段
+			SetAction (Constants.ACTION_MEET_GIRL);
 			break;
 		default:
 			break;
