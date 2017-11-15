@@ -13,13 +13,14 @@ public class LoadingManager : MonoBehaviour
 	{
 		//以下初始化游戏数据
 		if (Constants.FromBeginning) {//根据读取记录情况判断新建游戏或者读取游戏
+			//回合数
+			PlayerPrefs.SetInt (Constants.GAME_ROUND_NUMBER, 0);
+
+			//Player
 
 			//删除旧数据
 			PlayerBean.Instance.DeletePlayerListFromDB ();
-
-			//构造测试数据
-
-			//Player
+			//构造新数据
 			PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 0, "刘玄德(红)");
 			PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 1, "雷锋(黄)");
 			PlayerPrefs.SetString (Constants.PLAYER_SAVE_NAME + 2, "奥巴马(蓝)");
@@ -38,8 +39,13 @@ public class LoadingManager : MonoBehaviour
 			PlayerBean.Instance.SavePlayerList2DB (pList);
 
 			//Girl
+			//删除旧数据
 			GirlBean.Instance.DeleteGirlListFromDB ();
+			//构造新数据
 			GirlBean.Instance.SaveGirlList2DB ();
+
+			//TODO,Ground
+
 		} else {
 
 		}

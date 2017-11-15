@@ -95,6 +95,7 @@ public class Player:GameData
 		return false;
 	}
 
+	//不花钱
 	public int[] AddItem (int type)
 	{
 		for (int i = 0; i < mDrugList.Length; i++) {
@@ -106,7 +107,7 @@ public class Player:GameData
 		return mDrugList;
 	}
 
-	//TODO
+	//花钱买,TODO
 	public bool BuyItem (Item item)
 	{
 
@@ -114,7 +115,7 @@ public class Player:GameData
 	}
 
 	/// <summary>
-	/// 注意index是包内的序号
+	/// 注意index是包内的序号，不是道具的种类
 	/// </summary>
 	/// <returns>The item.</returns>
 	/// <param name="index">Index.</param>

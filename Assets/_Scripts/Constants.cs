@@ -42,12 +42,13 @@ public class Constants
 
 
 	//------------- PlayerPrefabs Key ----------------------
+	//TODO
 	public const string DATABASE_VERSION = "database version";
 	//TODO
 	public const string PLAYER_SAVE_NAME = "player_save_name_";
 	//TODO
 	public const string GIRL_SAVE_NAME = "girl_save_name_";
-	//记录游戏回合数,全部玩家行动结束后为一回合结束,TODO,游戏开始或结束要重置
+	//记录游戏回合数,全部玩家行动结束后为一回合结束,游戏开始或结束要重置
 	public const string GAME_ROUND_NUMBER = "game_round_number";
 	//记录当前行动的玩家
 	public const string CURRENT_PALYER_INDEX = "current_player_index";

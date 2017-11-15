@@ -346,7 +346,7 @@ public class GameManager : MonoBehaviour
 			UIManager.Instance.Open (typeof(PanelMain));
 			break;
 		case Constants.ACTION_GAME_OVER://游戏结束，主要目的是清空对局数据
-			PlayerPrefs.SetInt (Constants.GAME_ROUND_NUMBER, 0);
+			//TODO
 
 			Application.Quit ();
 			break;
