@@ -44,7 +44,7 @@ public class PanelMeetGirl : UIBase
 		txtGirlSalary.text = "薪水:" + leisureGirl.Salary;
 
 		btnMeetGirlYes.onClick.AddListener (() => {
-			leisureGirl.SetGirl (GameManager.Instance.GetCurrentPlayer ().Index);
+			leisureGirl.SetOwner (GameManager.Instance.GetCurrentPlayer ().Index);
 			GameManager.Instance.SetAction (Constants.ACTION_MEET_GIRL_YES);
 		});
 		btnMeetGirlNo.onClick.AddListener (() => {

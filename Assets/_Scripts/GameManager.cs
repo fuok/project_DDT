@@ -321,7 +321,12 @@ public class GameManager : MonoBehaviour
 			print ("回合结束");
 			UIManager.Instance.Close (typeof(PanelMain));
 			UIManager.Instance.Open (typeof(PanelEndTurn));
+
+			//保存本回合数据
 			currentPlayer.DataSave ();
+			for (int i = 0; i < mGirlList.Count; i++) {
+				mGirlList [i].DataSave ();
+			}
 			break;
 		case Constants.ACTION_END_TURN_CONFIRM:
 			UIManager.Instance.Close (typeof(PanelEndTurn));

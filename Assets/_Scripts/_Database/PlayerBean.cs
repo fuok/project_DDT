@@ -60,6 +60,7 @@ public class PlayerBean : MonoBehaviour
 		}
 	}
 
+	//单条更新
 	public void UpdatePlayer2DB (Player player)
 	{
 		db.UpdateInto (Constants.TableNamePlayer, new string[] {

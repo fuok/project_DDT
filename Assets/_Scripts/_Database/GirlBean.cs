@@ -138,6 +138,34 @@ public class GirlBean : MonoBehaviour
 		return pList;
 	}
 
+	//单条更新
+	public void UpdateGirl2DB (Girl girl)
+	{
+		db.UpdateInto (tableName, new string[] {
+			"[Index]", "Name", "Job", "Type", "Character", "UseCustom",
+			"Love", "Salary", "Patient", "Pressure", "Grade", "Owner", "LastOwner",
+			"HistoryOwner1", "HistoryOwner2", "HistoryOwner3", "HistoryOwner4"
+		}, new object[] {
+			girl.Index,
+			"'" + girl.Name + "'",
+			"'" + girl.Job + "'",
+			"'" + girl.Type + "'",
+			"'" + girl.Character + "'",
+			girl.UseCustom,
+			girl.Love,
+			girl.Salary,
+			girl.Patient,
+			girl.Pressure, 
+			girl.Grade, 
+			girl.Owner,
+			girl.LastOwner,
+			girl.HistoryOwner [0],
+			girl.HistoryOwner [1], 
+			girl.HistoryOwner [2], 
+			girl.HistoryOwner [3]
+		}, "[Index]", girl.Index);
+	}
+
 	public void DeleteGirlListFromDB ()
 	{
 		sqReader = db.DeleteContents (tableName);

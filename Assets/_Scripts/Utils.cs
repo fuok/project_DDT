@@ -18,9 +18,11 @@ public class Utils
 		return percent > randomPoint;
 	}
 
-	//游戏事件随机函数
+	//游戏事件随机函数,不同函数传入的概率不一样
+
+	//遇到新女友
 	public static bool RandomMeetGirl ()
 	{
-		return GetRandomResult (30f);
+		return GetRandomResult (50f);
 	}
 }

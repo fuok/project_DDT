@@ -48,7 +48,7 @@ public class Girl:GameData
 
 	//----数据操作----------------------------------------
 
-	public void SetGirl (int owner)
+	public void SetOwner (int owner)
 	{
 		this.Owner = owner;
 
@@ -58,7 +58,12 @@ public class Girl:GameData
 
 	public override	void DataSave ()
 	{
-		
+		if (hasChanged) {
+			//持久化
+			GirlBean.Instance.UpdateGirl2DB (this);
+			//通知
+			NotifyDataChanged (false);
+		}
 	}
 
 	protected override void NotifyDataChanged (bool hasChanged)
