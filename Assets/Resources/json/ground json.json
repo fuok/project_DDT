@@ -1,0 +1,228 @@
+{
+   "groundList" : [
+      {
+         "Index" : 0,
+         "Owner" : -2,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 1,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 2,
+         "Owner" : -2,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 1
+      },
+      {
+         "Index" : 3,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 4,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 5,
+         "Owner" : -2,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 1
+      },
+      {
+         "Index" : 6,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 7,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 8,
+         "Owner" : -2,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 1
+      },
+      {
+         "Index" : 9,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 10,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 11,
+         "Owner" : -2,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 1
+      },
+      {
+         "Index" : 12,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 13,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 14,
+         "Owner" : -2,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 1
+      },
+      {
+         "Index" : 15,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 16,
+         "Owner" : -2,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 1
+      },
+      {
+         "Index" : 17,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 18,
+         "Owner" : -2,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 1
+      },
+      {
+         "Index" : 19,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 20,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 21,
+         "Owner" : -2,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 1
+      },
+      {
+         "Index" : 22,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 23,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 24,
+         "Owner" : -2,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 1
+      },
+      {
+         "Index" : 25,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 26,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 27,
+         "Owner" : -2,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 1
+      },
+      {
+         "Index" : 28,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 29,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      },
+      {
+         "Index" : 30,
+         "Owner" : -2,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 1
+      },
+      {
+         "Index" : 31,
+         "Owner" : -1,
+         "Level" : 0,
+         "Price" : 3000,
+         "Type" : 0
+      }
+   ]
+}

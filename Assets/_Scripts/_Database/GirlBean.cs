@@ -30,8 +30,6 @@ public class GirlBean : MonoBehaviour
 		} else if (Instance != this) {
 			Destroy (gameObject);
 		}
-
-
 	}
 
 	// Use this for initialization

@@ -66,11 +66,13 @@ public class DatabaseManager : MonoBehaviour
 			//初始化bean
 			PlayerBean.Instance.InitialTable (db);
 			GirlBean.Instance.InitialTable (db);
+			GroundBean.Instance.InitialTable (db);
 		} else {
 			print ("no need update");
 			//初始化bean
 			PlayerBean.Instance.InitialTable (db);
 			GirlBean.Instance.InitialTable (db);
+			GroundBean.Instance.InitialTable (db);
 		}
 	}
 
@@ -82,5 +84,6 @@ public class DatabaseManager : MonoBehaviour
 		PlayerPrefs.DeleteKey (Constants.DATABASE_VERSION);
 		db.DeleteTable (Constants.TableNamePlayer);
 		db.DeleteTable (Constants.TableNameGirl);
+		db.DeleteTable (Constants.TableNameGround);
 	}
 }

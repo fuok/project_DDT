@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		//以下读取数据.一存一取是多余，为了好维护先这样
+
 		//读取Player
 		mPlayerList = PlayerBean.Instance.GetPlayerListFromDB ();
 		for (int i = 0; i < mPlayerList.Count; i++) {
@@ -54,44 +55,8 @@ public class GameManager : MonoBehaviour
 		//读取Girl
 		mGirlList = GirlBean.Instance.GetGirlListFromDB ();
 
-		//构造测试数据,目前还剩下Ground,TODO
-
 		//Ground
-		mGroundList = new List<Ground> {
-			new Ground{ Index = 0, Owner = -2, Type = 0 },//起点
-			new Ground{ Index = 1, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 2, Owner = -2, Type = 1  },//
-			new Ground{ Index = 3, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 4, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 5, Owner = -2, Type = 1 },//
-			new Ground{ Index = 6, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 7, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 8, Owner = -2, Type = 1  },//
-			new Ground{ Index = 9, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 10, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 11, Owner = -2, Type = 1  },//
-			new Ground{ Index = 12, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 13, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 14, Owner = -2, Type = 1 },//
-			new Ground{ Index = 15, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 16, Owner = -2, Type = 1 },//中位
-			new Ground{ Index = 17, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 18, Owner = -2, Type = 1  },//
-			new Ground{ Index = 19, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 20, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 21, Owner = -2, Type = 1 },//
-			new Ground{ Index = 22, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 23, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 24, Owner = -2, Type = 1 },//
-			new Ground{ Index = 25, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 26, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 27, Owner = -2, Type = 1  },//
-			new Ground{ Index = 28, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 29, Owner = -1, Level = 0, Price = 3000 },
-			new Ground{ Index = 30, Owner = -2, Type = 1 },//
-			new Ground{ Index = 31, Owner = -1, Level = 0, Price = 3000 }
-			
-		};
+		mGroundList = GroundBean.Instance.GetGroundListFromDB ();
 		for (int i = 0; i < mGroundList.Count; i++) {
 			if (mGroundList [i].Owner == -2) {
 				mNodeList [i].mBuilding.SetNeutralBuilding (mGroundList [i].Type);
@@ -329,6 +294,9 @@ public class GameManager : MonoBehaviour
 			currentPlayer.DataSave ();
 			for (int i = 0; i < mGirlList.Count; i++) {
 				mGirlList [i].DataSave ();
+			}
+			for (int i = 0; i < mGroundList.Count; i++) {
+				mGroundList [i].DataSave ();
 			}
 			break;
 		case Constants.ACTION_END_TURN_CONFIRM:

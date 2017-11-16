@@ -24,8 +24,6 @@ public class PlayerBean : MonoBehaviour
 		} else if (Instance != this) {
 			Destroy (gameObject);
 		}
-
-
 	}
 
 	//-------------------------public function-------------
