@@ -135,15 +135,16 @@ public class GameManager : MonoBehaviour
 				resultChecked = true;
 
 				print ("前进:" + para);
-				CarStep (para);
 				mDiceCameraContainer.SetActive (false);
+				StartCoroutine (CarStep (para));
 			}
 		}
 	}
 
 	//获得点数后，开始移动棋子
-	void CarStep (int num)
+	IEnumerator CarStep (int num)
 	{
+		yield return new WaitForSeconds (0.5f);
 		CarLogic car = mCarList [currentPlayer.Index];
 		//计算移动后所处的Node序列
 		int target = mNodeList.Length > (car.mCurrentNode.mNodeIndex + num) ? car.mCurrentNode.mNodeIndex + num : (car.mCurrentNode.mNodeIndex + num) % mNodeList.Length;
@@ -166,6 +167,8 @@ public class GameManager : MonoBehaviour
 			break;
 		}
 	}
+
+	//------ Action部分 ---------------------------------
 
 	public void SetAction (string action)
 	{
