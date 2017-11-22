@@ -111,7 +111,11 @@ public class LoadingManager : MonoBehaviour
 				print ("async.progress=" + progressTrue);
 
 				if (progressFake < progressTrue || progressFake >= 0.9f) {
+					#if UNITY_EDITOR
+					progressFake += 0.1f;
+					#else
 					progressFake += 0.01f;
+					#endif
 				}
 
 			} else {
