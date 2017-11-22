@@ -54,15 +54,7 @@ public class CarLogic : MonoBehaviour
 				}
 			}
 
-
-			//Step气泡跟随
-			if (mStepPop) {
-				Vector3 vScreen = Camera.main.WorldToScreenPoint (transform.position);
-				//		print ("vScreen=" + vScreen.ToString ());
-				float canvasX = vScreen.x - Camera.main.pixelWidth / 2;
-				float canvasY = vScreen.y - Camera.main.pixelHeight / 2;
-				mStepPop.transform.localPosition = new Vector3 (canvasX, canvasY + 100, 0f);//还未做适配,TODO
-			}
+			RefreshPop ();
 
 		}
 	}
@@ -70,9 +62,30 @@ public class CarLogic : MonoBehaviour
 	public void GoStep (MapNode target, int stepNum)
 	{
 		mTargetNode = target;
-		status = CarStatus.Moving;
-		//显示气泡提示角色位置
-		mStepPop.SetActive (true);
+		//显示气泡提示剩余步数
+		RefreshPop ();
 		txtStepNum.text = stepNum.ToString ();
+		mStepPop.SetActive (true);
+
+		StartCoroutine (GoGoGo ());
 	}
+
+	IEnumerator GoGoGo ()
+	{
+		yield return new WaitForSeconds (0.5f);
+		status = CarStatus.Moving;
+	}
+
+	//Step气泡跟随本体
+	private void RefreshPop ()
+	{
+		if (mStepPop) {
+			Vector3 vScreen = Camera.main.WorldToScreenPoint (transform.position);
+			float canvasX = vScreen.x - Camera.main.pixelWidth / 2;
+			float canvasY = vScreen.y - Camera.main.pixelHeight / 2;
+			float deltaY = Camera.main.pixelHeight / 20;//显示高度抬高一点
+			mStepPop.transform.localPosition = new Vector3 (canvasX, canvasY + deltaY, 0f);
+		}
+	}
+
 }

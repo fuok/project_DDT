@@ -7,7 +7,7 @@ public class DiceManager : MonoBehaviour
 {
 	public static DiceManager Instance{ get; private set; }
 
-	public delegate void DiceHandler (int param);
+	public delegate void DiceHandler (int rslt);
 
 	public event DiceHandler diceEvent;
 

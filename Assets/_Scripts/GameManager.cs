@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 	//当前的逻辑角色
 	Player currentPlayer;
 	Ground currentGround;
+	public GameObject mStepTarget;
 
 	//骰子相机控制
 	[Header ("骰子相机控制")]
@@ -115,44 +116,54 @@ public class GameManager : MonoBehaviour
 	}
 
 	//输出骰子点数，只要骰子动作在监听，这里就会一直调用，而且输出的数值是会变的，需要进一步检查才能确认
-	void OnDiceResult (int para)
+	void OnDiceResult (int rslt)
 	{
-		print ("掷出" + para);
-		StartCoroutine (CheckResult (para));
+		print ("掷出" + rslt);
+		StartCoroutine (CheckResult (rslt));
 	}
 
 	private int tempRslt;
 	private bool resultChecked;
 
-	IEnumerator CheckResult (int para)
+	IEnumerator CheckResult (int rslt)
 	{
-		tempRslt = para;
+		tempRslt = rslt;
 		yield return new WaitForSeconds (1f);//延迟0.5秒检查稳定后的数值
 
-		if (para == tempRslt) {//判断数值稳定
+		if (rslt == tempRslt) {//持续1秒不变，判断数值稳定
 			DiceManager.Instance.diceEvent -= OnDiceResult;
 			if (resultChecked == false) {
 				resultChecked = true;
 
-				print ("前进:" + para);
+				CarLogic car = mCarList [currentPlayer.Index];
+				//计算移动后所处的Node序列
+				int target = mNodeList.Length > (car.mCurrentNode.mNodeIndex + rslt) ? car.mCurrentNode.mNodeIndex + rslt : (car.mCurrentNode.mNodeIndex + rslt) % mNodeList.Length;
+				print (currentPlayer.Name + "掷出" + rslt + ",前进到" + target);
+				//隐藏骰子
 				mDiceCameraContainer.SetActive (false);
-				StartCoroutine (CarStep (para));
+				//显示目标箭头
+				if (mStepTarget) {
+					Vector3 vScreen = Camera.main.WorldToScreenPoint (mNodeList [target].transform.position);
+					float canvasX = vScreen.x - Camera.main.pixelWidth / 2;
+					float canvasY = vScreen.y - Camera.main.pixelHeight / 2;
+					float deltaY = Camera.main.pixelHeight / 20;//显示高度抬高一点
+					mStepTarget.transform.localPosition = new Vector3 (canvasX, canvasY + deltaY, 0f);
+					mStepTarget.SetActive (true);
+				}
+				//移动
+				StartCoroutine (CarStep (car, target));
 			}
 		}
 	}
 
 	//获得点数后，开始移动棋子
-	IEnumerator CarStep (int num)
+	IEnumerator CarStep (CarLogic currentCar, int targetIndex)
 	{
 		yield return new WaitForSeconds (0.5f);
-		CarLogic car = mCarList [currentPlayer.Index];
-		//计算移动后所处的Node序列
-		int target = mNodeList.Length > (car.mCurrentNode.mNodeIndex + num) ? car.mCurrentNode.mNodeIndex + num : (car.mCurrentNode.mNodeIndex + num) % mNodeList.Length;
-		print (currentPlayer.Name + "掷出" + num + ",前进到" + target);
 
 		//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
-		currentGround = mGroundList [target];//逻辑移动
-		car.GoStep (mNodeList [target], num);//棋子开始移动
+		currentGround = mGroundList [targetIndex];//逻辑移动
+		currentCar.GoStep (mNodeList [targetIndex], targetIndex);//棋子开始移动
 	}
 
 	//棋子移动后的响应函数
@@ -160,6 +171,10 @@ public class GameManager : MonoBehaviour
 	{
 		switch (status) {
 		case CarStatus.Stop:
+			//隐藏箭头
+			if (mStepTarget) {
+				mStepTarget.SetActive (false);
+			}
 			//角色停住后进入交互阶段
 			SetAction (Constants.ACTION_MEET_GIRL);
 			break;
