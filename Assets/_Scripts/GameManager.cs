@@ -151,19 +151,19 @@ public class GameManager : MonoBehaviour
 					mStepTarget.SetActive (true);
 				}
 				//移动
-				StartCoroutine (CarStep (car, target));
+				StartCoroutine (CarStep (car, target, rslt));
 			}
 		}
 	}
 
 	//获得点数后，开始移动棋子
-	IEnumerator CarStep (CarLogic currentCar, int targetIndex)
+	IEnumerator CarStep (CarLogic currentCar, int targetIndex, int step)
 	{
 		yield return new WaitForSeconds (0.5f);
 
 		//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
 		currentGround = mGroundList [targetIndex];//逻辑移动
-		currentCar.GoStep (mNodeList [targetIndex], targetIndex);//棋子开始移动
+		currentCar.GoStep (mNodeList [targetIndex], step);//棋子开始移动
 	}
 
 	//棋子移动后的响应函数
