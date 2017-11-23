@@ -112,7 +112,7 @@ public class LoadingManager : MonoBehaviour
 
 				if (progressFake < progressTrue || progressFake >= 0.9f) {
 					#if UNITY_EDITOR
-					progressFake += 0.1f;
+					progressFake += 0.02f;//速度设得太快导致出现了数据库写入不全的情况，有没有办法避免,TODO
 					#else
 					progressFake += 0.01f;
 					#endif

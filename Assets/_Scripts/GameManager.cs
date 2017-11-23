@@ -46,11 +46,6 @@ public class GameManager : MonoBehaviour
 			//注册玩家事件
 			mPlayerList [i].PlayerActionEvent += GameManager.Instance.OnPlayerActionChanged;
 		}
-		if (mPlayerList.Count > 1) {
-			print ("Player数据读取成功,count=" + mPlayerList.Count);
-		} else {
-			print ("Player读取失败");
-		}
 		//添加玩家到TurnBase模块
 		TurnManager.Instance.SetPlayerQueue (ref mPlayerList);
 
@@ -63,6 +58,13 @@ public class GameManager : MonoBehaviour
 			if (mGroundList [i].Owner == -2) {
 				mNodeList [i].mBuilding.SetNeutralBuilding (mGroundList [i].Type);
 			}
+		}
+
+		//检查一下数据长度，看看对不对
+		if (mPlayerList.Count > 1 && mGirlList.Count > 9 && mGroundList.Count == 32) {
+			print ("数据无异常");
+		} else {
+			print ("数据异常");
 		}
 			
 	}
@@ -89,7 +91,7 @@ public class GameManager : MonoBehaviour
 
 	void StartTurn ()
 	{
-		//回合开始获取currentPlayer、currentGround
+		//回合开始获取currentPlayer,定位currentGround
 		currentPlayer = TurnManager.Instance.GetCurrentPlayer ();
 		currentGround = mGroundList [currentPlayer.Position];
 
@@ -139,7 +141,6 @@ public class GameManager : MonoBehaviour
 				resultChecked = true;
 
 				//计算移动后所处的Node序列
-//				int target = mNodeList.Length > (currentGround.Index + rslt) ? currentGround.Index + rslt : (currentGround.Index + rslt) % mNodeList.Length;
 				int target = (currentGround.Index + rslt) % mNodeList.Length;
 				print (currentPlayer.Name + "掷出" + rslt + ",前进到" + target);
 				//隐藏骰子
@@ -154,21 +155,20 @@ public class GameManager : MonoBehaviour
 					mStepTarget.SetActive (true);
 				}
 				//移动
-				StartCoroutine (CarStep (target, rslt));
+				CarStep (target, rslt);
 			}
 		}
 	}
 
 	//获得点数后，开始移动棋子
-	IEnumerator CarStep (int targetIndex, int step)
+	private void CarStep (int targetIndex, int stepNum)
 	{
 		CarLogic car = mCarList [currentPlayer.Index];
-		yield return new WaitForSeconds (0.5f);
-
+//		yield return new WaitForSeconds (0.5f);
 		//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
 		currentPlayer.Position = targetIndex;//逻辑移动
 		currentGround = mGroundList [targetIndex];//逻辑移动
-		car.GoStep (mNodeList [targetIndex], step);//棋子开始移动
+		car.GoStep (mNodeList [targetIndex], stepNum);//传入目标Node和显示步数，棋子开始移动
 	}
 
 	//棋子移动后的响应函数
@@ -182,6 +182,8 @@ public class GameManager : MonoBehaviour
 			}
 			//角色停住后进入交互阶段
 			SetAction (Constants.ACTION_MEET_GIRL);
+			//TEST
+//			SetAction (Constants.ACTION_END_TURN);
 			break;
 		default:
 			break;
