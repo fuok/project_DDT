@@ -71,9 +71,12 @@ public class GameManager : MonoBehaviour
 
 	void Start ()
 	{
-		//棋子状态监听
-		foreach (var item in mCarList) {
-			item.carMoveEvent += OnCarStatusChanged;
+		for (int i = 0; i < mCarList.Length; i++) {
+			//棋子状态监听
+			mCarList [i].carMoveEvent += OnCarStatusChanged;
+			//摆放车子mCarList.这里逻辑目前有问题，如果是游戏再开，列表里的玩家顺序不一定是0123（有的可能已经破产了），但车子的顺序还是一样，后面要修改为每个人对应自己的车,TODO
+			print ("sssssssssssss:" + mPlayerList [i].Position);
+			mCarList [i].SetPosition (mNodeList [mPlayerList [i].Position]);//TODO
 		}
 
 		//游戏开始
@@ -168,7 +171,7 @@ public class GameManager : MonoBehaviour
 		//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
 		currentPlayer.Position = targetIndex;//逻辑移动
 		currentGround = mGroundList [targetIndex];//逻辑移动
-		car.GoStep (mNodeList [targetIndex], stepNum);//传入目标Node和显示步数，棋子开始移动
+		car.PrepareGo (mNodeList [targetIndex], stepNum);//传入目标Node和显示步数，棋子开始移动
 	}
 
 	//棋子移动后的响应函数

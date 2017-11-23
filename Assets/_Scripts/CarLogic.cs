@@ -26,7 +26,8 @@ public class CarLogic : MonoBehaviour
 
 	void Start ()
 	{
-		transform.position = mCurrentNode.transform.position;
+//		transform.position = mCurrentNode.transform.position;
+//		SetPosition (mCurrentNode);
 	}
 	
 	// Update is called once per frame
@@ -59,7 +60,20 @@ public class CarLogic : MonoBehaviour
 		}
 	}
 
-	public void GoStep (MapNode target, int stepNum)
+	//--------------------------------------------------------------------------------------------
+
+	/// <summary>
+	/// 游戏开始时给车子定位
+	/// </summary>
+	/// <param name="node">Node.</param>
+	public void SetPosition (MapNode node)
+	{
+		print ("SetPosition:" + node.gameObject.name);
+		mCurrentNode = node;
+		transform.position = mCurrentNode.transform.position;
+	}
+
+	public void PrepareGo (MapNode target, int stepNum)
 	{
 		mTargetNode = target;
 		//显示气泡提示剩余步数
