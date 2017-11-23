@@ -89,7 +89,9 @@ public class GameManager : MonoBehaviour
 
 	void StartTurn ()
 	{
+		//回合开始获取currentPlayer、currentGround
 		currentPlayer = TurnManager.Instance.GetCurrentPlayer ();
+		currentGround = mGroundList [currentPlayer.Position];
 
 		//回合计数
 		if (currentPlayer.Index == 0) {//新的一轮开始
@@ -136,9 +138,9 @@ public class GameManager : MonoBehaviour
 			if (resultChecked == false) {
 				resultChecked = true;
 
-				CarLogic car = mCarList [currentPlayer.Index];
 				//计算移动后所处的Node序列
-				int target = mNodeList.Length > (car.mCurrentNode.mNodeIndex + rslt) ? car.mCurrentNode.mNodeIndex + rslt : (car.mCurrentNode.mNodeIndex + rslt) % mNodeList.Length;
+//				int target = mNodeList.Length > (currentGround.Index + rslt) ? currentGround.Index + rslt : (currentGround.Index + rslt) % mNodeList.Length;
+				int target = (currentGround.Index + rslt) % mNodeList.Length;
 				print (currentPlayer.Name + "掷出" + rslt + ",前进到" + target);
 				//隐藏骰子
 				mDiceCameraContainer.SetActive (false);
@@ -152,19 +154,21 @@ public class GameManager : MonoBehaviour
 					mStepTarget.SetActive (true);
 				}
 				//移动
-				StartCoroutine (CarStep (car, target, rslt));
+				StartCoroutine (CarStep (target, rslt));
 			}
 		}
 	}
 
 	//获得点数后，开始移动棋子
-	IEnumerator CarStep (CarLogic currentCar, int targetIndex, int step)
+	IEnumerator CarStep (int targetIndex, int step)
 	{
+		CarLogic car = mCarList [currentPlayer.Index];
 		yield return new WaitForSeconds (0.5f);
 
 		//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
+		currentPlayer.Position = targetIndex;//逻辑移动
 		currentGround = mGroundList [targetIndex];//逻辑移动
-		currentCar.GoStep (mNodeList [targetIndex], step);//棋子开始移动
+		car.GoStep (mNodeList [targetIndex], step);//棋子开始移动
 	}
 
 	//棋子移动后的响应函数
