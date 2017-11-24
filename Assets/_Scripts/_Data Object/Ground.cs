@@ -7,21 +7,25 @@ public class Ground:GameData
 	//------------ 数据结构 -----------------------------------
 
 
-	public int Index{ set; get; }
+	public int Index{ private set; get; }
 	//所属的玩家id(中立：-2，空地：-1，玩家：0~3)
-	public int Owner{ set; get; }
+	public int Owner{ private set; get; }
 	//地产等级
-	public int Level{ set; get; }
+	public int Level{ private set; get; }
 	//土地售价
-	public int Price{ set; get; }
+	public int Price{ private set; get; }
 	//中立地区的种类，各种中立建筑
-	public int Type{ set; get; }
+	public int Type{ private set; get; }
 
 	//------------- basic logic ----------------------------------
 
-	public Ground () : base ()
+	public Ground (int index, int owner, int level, int price, int type) : base ()
 	{
-
+		this.Index = index;
+		this.Owner = owner;
+		this.Level = level;
+		this.Price = price;
+		this.Type = type;
 	}
 
 
@@ -34,6 +38,8 @@ public class Ground:GameData
 		//通知
 		NotifyDataChanged (true);
 	}
+
+	//----父类操作----------------------------------------
 
 	public override	void DataSave ()
 	{

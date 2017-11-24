@@ -24,13 +24,13 @@ public class Player:GameData
 	//名
 	public string Name{ private set; get; }
 	//钱数
-	public int Money { set; get; }
+	public int Money { private set; get; }
 	//体力
-	public int Health{ set; get; }
+	public int Health{ private set; get; }
 	//当游戏中断，记录玩家的位置
-	public int Position { set; get; }
+	public int Position { private set; get; }
 	//持有的道具列表，长度为6的数组，用不同数字代表道具编号，0表示空道具栏
-	private int[] mDrugList = new int[6];
+	private int[] mDrugList;
 
 	//------------- basic logic ----------------------------------
 
@@ -40,16 +40,21 @@ public class Player:GameData
 
 	public event ActionHandler PlayerActionEvent;
 
-	private Player () : base ()
-	{
-		
-	}
-
-	public Player (int index, string name) : this ()
+	public Player (int index, string name, int money, int health, int position, int item1, int item2, int item3, int item4, int item5, int item6) : base ()
 	{
 		this.Index = index;
 		this.Name = name;
+		this.Money = money;
+		this.Health = health;
+		this.Position = position;
+		this.mDrugList = new int[]{ item1, item2, item3, item4, item5, item6 };
 	}
+
+	//	public Player (int index, string name) : this ()
+	//	{
+	//		this.Index = index;
+	//		this.Name = name;
+	//	}
 
 	//----交互操作----------------------------------------
 
@@ -78,6 +83,15 @@ public class Player:GameData
 		NotifyDataChanged (true);
 
 		return Health;
+	}
+
+	//位置
+	public int SetPosition (int positionIndex)
+	{
+		Position = positionIndex;
+		//通知
+		NotifyDataChanged (true);
+		return Position;
 	}
 
 	public int[] GetItemList ()
@@ -126,6 +140,8 @@ public class Player:GameData
 
 		return mDrugList;
 	}
+
+	//----父类操作----------------------------------------
 
 	protected override void NotifyDataChanged (bool hasChanged)
 	{

@@ -124,18 +124,19 @@ public class PlayerBean : MonoBehaviour
 		sqReader = db.ReadFullTable (Constants.TableNamePlayer);
 		List<Player> pList = new List<Player> ();
 		while (sqReader.Read ()) {
-			Player p = new Player (sqReader.GetInt32 (sqReader.GetOrdinal ("Index")),//读取不需要加[]括号
-				           sqReader.GetString (sqReader.GetOrdinal ("Name"))) {
-				Money = sqReader.GetInt32 (sqReader.GetOrdinal ("Money")),
-				Health = sqReader.GetInt32 (sqReader.GetOrdinal ("Health")),
-				Position = sqReader.GetInt32 (sqReader.GetOrdinal ("Position"))
-			};
-			p.GetItemList () [0] = sqReader.GetInt32 (sqReader.GetOrdinal ("item1"));
-			p.GetItemList () [1] = sqReader.GetInt32 (sqReader.GetOrdinal ("item2"));
-			p.GetItemList () [2] = sqReader.GetInt32 (sqReader.GetOrdinal ("item3"));
-			p.GetItemList () [3] = sqReader.GetInt32 (sqReader.GetOrdinal ("item4"));
-			p.GetItemList () [4] = sqReader.GetInt32 (sqReader.GetOrdinal ("item5"));
-			p.GetItemList () [5] = sqReader.GetInt32 (sqReader.GetOrdinal ("item6"));
+			Player p = new Player (
+				           index: sqReader.GetInt32 (sqReader.GetOrdinal ("Index")),//读取不需要加[]括号
+				           name: sqReader.GetString (sqReader.GetOrdinal ("Name")),
+				           money: sqReader.GetInt32 (sqReader.GetOrdinal ("Money")),
+				           health: sqReader.GetInt32 (sqReader.GetOrdinal ("Health")),
+				           position: sqReader.GetInt32 (sqReader.GetOrdinal ("Position")),
+				           item1: sqReader.GetInt32 (sqReader.GetOrdinal ("item1")),
+				           item2: sqReader.GetInt32 (sqReader.GetOrdinal ("item2")),
+				           item3: sqReader.GetInt32 (sqReader.GetOrdinal ("item3")),
+				           item4: sqReader.GetInt32 (sqReader.GetOrdinal ("item4")),
+				           item5: sqReader.GetInt32 (sqReader.GetOrdinal ("item5")),
+				           item6: sqReader.GetInt32 (sqReader.GetOrdinal ("item6"))
+			           );
 			pList.Add (p);
 
 //			print (sqReader.GetInt32 (sqReader.GetOrdinal ("index")) + "," + sqReader.GetString (sqReader.GetOrdinal ("name")));

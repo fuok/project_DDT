@@ -77,13 +77,13 @@ public class GroundBean : MonoBehaviour
 		sqReader = db.ReadFullTable (tableName);
 		List<Ground> pList = new List<Ground> ();
 		while (sqReader.Read ()) {
-			Ground g = new Ground ();
-			g.Index = sqReader.GetInt32 (sqReader.GetOrdinal ("Index"));//读取不需要加[]括号
-			g.Owner = sqReader.GetInt32 (sqReader.GetOrdinal ("Owner"));
-			g.Level = sqReader.GetInt32 (sqReader.GetOrdinal ("Level"));
-			g.Price = sqReader.GetInt32 (sqReader.GetOrdinal ("Price"));
-			g.Type = sqReader.GetInt32 (sqReader.GetOrdinal ("Type"));
-
+			Ground g = new Ground (
+				           index: sqReader.GetInt32 (sqReader.GetOrdinal ("Index")),//读取不需要加[]括号
+				           owner: sqReader.GetInt32 (sqReader.GetOrdinal ("Owner")),
+				           level: sqReader.GetInt32 (sqReader.GetOrdinal ("Level")),
+				           price: sqReader.GetInt32 (sqReader.GetOrdinal ("Price")),
+				           type: sqReader.GetInt32 (sqReader.GetOrdinal ("Type"))
+			           );
 			pList.Add (g);
 			//			print ("读取:" + g.Name);
 		}

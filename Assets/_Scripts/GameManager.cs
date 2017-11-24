@@ -75,10 +75,16 @@ public class GameManager : MonoBehaviour
 			//棋子状态监听
 			mCarList [i].carMoveEvent += OnCarStatusChanged;
 			//摆放车子mCarList.这里逻辑目前有问题，如果是游戏再开，列表里的玩家顺序不一定是0123（有的可能已经破产了），但车子的顺序还是一样，后面要修改为每个人对应自己的车,TODO
-			print ("sssssssssssss:" + mPlayerList [i].Position);
-			mCarList [i].SetPosition (mNodeList [mPlayerList [i].Position]);//TODO
+			mCarList [i].SetPosition (mNodeList [mPlayerList [i].Position]);
 		}
 
+		//如果是中途再开，需要判断行动顺序
+		if (!Constants.FromBeginning) {
+			int index = PlayerPrefs.GetInt (Constants.CURRENT_PALYER_INDEX, 0);
+			for (int i = 0; i < index; i++) {
+				EndTurn ();
+			}
+		}
 		//游戏开始
 		StartTurn ();
 	}
@@ -97,6 +103,9 @@ public class GameManager : MonoBehaviour
 		//回合开始获取currentPlayer,定位currentGround
 		currentPlayer = TurnManager.Instance.GetCurrentPlayer ();
 		currentGround = mGroundList [currentPlayer.Position];
+
+		//保存行动顺序
+		PlayerPrefs.SetInt (Constants.CURRENT_PALYER_INDEX, currentPlayer.Index);
 
 		//回合计数
 		if (currentPlayer.Index == 0) {//新的一轮开始
@@ -169,7 +178,7 @@ public class GameManager : MonoBehaviour
 		CarLogic car = mCarList [currentPlayer.Index];
 //		yield return new WaitForSeconds (0.5f);
 		//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
-		currentPlayer.Position = targetIndex;//逻辑移动
+		currentPlayer.SetPosition (targetIndex);//逻辑移动
 		currentGround = mGroundList [targetIndex];//逻辑移动
 		car.PrepareGo (mNodeList [targetIndex], stepNum);//传入目标Node和显示步数，棋子开始移动
 	}

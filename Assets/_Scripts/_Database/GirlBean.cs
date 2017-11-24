@@ -109,27 +109,25 @@ public class GirlBean : MonoBehaviour
 		sqReader = db.ReadFullTable (tableName);
 		List<Girl> pList = new List<Girl> ();
 		while (sqReader.Read ()) {
-			Girl g = new Girl ();
-			g.Index = sqReader.GetInt32 (sqReader.GetOrdinal ("Index"));//读取不需要加[]括号
-			g.Name = sqReader.GetString (sqReader.GetOrdinal ("Name"));
-			g.Job = sqReader.GetString (sqReader.GetOrdinal ("Job"));
-			g.Type = sqReader.GetString (sqReader.GetOrdinal ("Type"));
-			g.Character = sqReader.GetString (sqReader.GetOrdinal ("Character"));
-			g.UseCustom = sqReader.GetInt32 (sqReader.GetOrdinal ("UseCustom"));
-
-			g.Love = sqReader.GetInt32 (sqReader.GetOrdinal ("Love"));
-			g.Salary = sqReader.GetInt32 (sqReader.GetOrdinal ("Salary"));
-			g.Patient = sqReader.GetInt32 (sqReader.GetOrdinal ("Patient"));
-			g.Pressure = sqReader.GetInt32 (sqReader.GetOrdinal ("Pressure"));
-			g.Grade = sqReader.GetInt32 (sqReader.GetOrdinal ("Grade"));
-			g.Owner = sqReader.GetInt32 (sqReader.GetOrdinal ("Owner"));
-			g.LastOwner = sqReader.GetInt32 (sqReader.GetOrdinal ("LastOwner"));
-
-			g.HistoryOwner [0] = sqReader.GetInt32 (sqReader.GetOrdinal ("HistoryOwner1"));
-			g.HistoryOwner [1] = sqReader.GetInt32 (sqReader.GetOrdinal ("HistoryOwner2"));
-			g.HistoryOwner [2] = sqReader.GetInt32 (sqReader.GetOrdinal ("HistoryOwner3"));
-			g.HistoryOwner [3] = sqReader.GetInt32 (sqReader.GetOrdinal ("HistoryOwner4"));
-	
+			Girl g = new Girl (
+				         index: sqReader.GetInt32 (sqReader.GetOrdinal ("Index")),//读取不需要加[]括号
+				         name: sqReader.GetString (sqReader.GetOrdinal ("Name")),
+				         job: sqReader.GetString (sqReader.GetOrdinal ("Job")),
+				         type: sqReader.GetString (sqReader.GetOrdinal ("Type")),
+				         character: sqReader.GetString (sqReader.GetOrdinal ("Character")),
+				         useCustom: sqReader.GetInt32 (sqReader.GetOrdinal ("UseCustom")),
+				         love: sqReader.GetInt32 (sqReader.GetOrdinal ("Love")),
+				         salary: sqReader.GetInt32 (sqReader.GetOrdinal ("Salary")),
+				         patient: sqReader.GetInt32 (sqReader.GetOrdinal ("Patient")),
+				         pressure: sqReader.GetInt32 (sqReader.GetOrdinal ("Pressure")),
+				         grade: sqReader.GetInt32 (sqReader.GetOrdinal ("Grade")),
+				         owner: sqReader.GetInt32 (sqReader.GetOrdinal ("Owner")),
+				         lastOwner: sqReader.GetInt32 (sqReader.GetOrdinal ("LastOwner")),
+				         historyOwner1: sqReader.GetInt32 (sqReader.GetOrdinal ("HistoryOwner1")),
+				         historyOwner2: sqReader.GetInt32 (sqReader.GetOrdinal ("HistoryOwner2")),
+				         historyOwner3: sqReader.GetInt32 (sqReader.GetOrdinal ("HistoryOwner3")),
+				         historyOwner4: sqReader.GetInt32 (sqReader.GetOrdinal ("HistoryOwner4"))
+			         );
 			pList.Add (g);
 //			print ("读取:" + g.Name);
 		}

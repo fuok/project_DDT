@@ -29,11 +29,19 @@ public class LoadingManager : MonoBehaviour
 			List<Player> pList = new List<Player> ();
 
 			for (int i = 0; i < 4; i++) {
-				Player p = new Player (i, PlayerPrefs.GetString (Constants.PLAYER_SAVE_NAME + i, "player" + i)) {
-					Money = Constants.DEFAULT_MONEY,
-					Health = Constants.DEFAULT_HEALTH,
-					Position = 0
-				};
+				Player p = new Player (
+					           index: i,
+					           name: PlayerPrefs.GetString (Constants.PLAYER_SAVE_NAME + i, "player" + i),
+					           money: Constants.DEFAULT_MONEY,
+					           health: Constants.DEFAULT_HEALTH,
+					           position: 0,
+					           item1: 0,
+					           item2: 0,
+					           item3: 0,
+					           item4: 0,
+					           item5: 0,
+					           item6: 0
+				           );
 				pList.Add (p);
 			}
 			PlayerBean.Instance.SavePlayerList2DB (pList);
