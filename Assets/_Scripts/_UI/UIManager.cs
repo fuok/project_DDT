@@ -23,7 +23,8 @@ public class UIManager : MonoBehaviour
 	public PanelMain panelMain;
 	public PanelOptionalDialog panelOptionalDialog;
 
-	ArrayList uiList = new ArrayList ();
+	//不必使用ArrayList,指定父类型传入子类元素，是可以获取各个子类类型的。
+	List<UIBase> uiList = new List<UIBase> ();
 
 	void Awake ()
 	{
@@ -114,6 +115,7 @@ public class UIManager : MonoBehaviour
 	private UIBase GetMatchUI (Type type)
 	{
 		UIBase ui = null;
+		//这里只能遍历，而不能用Collection Find方法，因为Find必须指定类型，而用UIBase父类不能实例化子类对象
 		foreach (var item in uiList) {
 			if (item.GetType ().Equals (type)) {
 				ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
