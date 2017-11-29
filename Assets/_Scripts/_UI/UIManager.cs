@@ -51,58 +51,52 @@ public class UIManager : MonoBehaviour
 
 	}
 
-	void Update ()
-	{
-		
-	}
+	//	void Update ()
+	//	{
+	//
+	//	}
 
 	/// <summary>
 	/// 打开对应界面,引用参数是修改主缓存数据，只包括Player、Girl、Ground三种
 	/// </summary>
 	/// <param name="type">对应的UI类型.</param>
-	/// <param name="arg">主缓存</param>
+	/// <param name="arg">主缓存,这里传ref的必要性值得商榷，因为通过单例也可以获取主缓存</param>
 	/// <param name="args">其他参数.</param>
 	public void Open<T> (Type type, ref T arg, params object[] args)
 	{
-		foreach (var item in uiList) {
-			if (item.GetType ().Equals (type)) {
-//				print ("对比成功");
-				UIBase ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
-				ui.SetParams (ref arg, args);
-				break;
-			} else {
-//				print ("对比失败");
-			}
+		try {
+			GetMatchUI (type).SetParams (ref arg, args);
+		} catch (Exception ex) {
+			print (ex.Message);
 		}
 	}
 
 	/// <summary>
-	/// Dialog专用的方法，区别在于没有返回的Action，直接委托传入方法
+	/// Dialog专用的方法，区别在于不需要从额外Action返回，直接委托传入方法
 	/// </summary>
 	/// <param name="type">Type.</param>
 	/// <param name="func">Func.</param>
-	/// <param name="args">Arguments.</param>
+	/// <param name="args">其他参数.</param>
 	public void Open (Type type, UIBase.ConfirmDelegate func, params object[] args)
 	{
-		foreach (var item in uiList) {
-			if (item.GetType ().Equals (type)) {
-				UIBase ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
-				ui.SetParams (func, args);
-				break;
-			} else {
-			}
+		try {
+			GetMatchUI (type).SetParams (func, args);
+		} catch (Exception ex) {
+			print (ex.Message);
 		}
 	}
 
+	/// <summary>
+	/// 最基础的方法
+	/// </summary>
+	/// <param name="type">Type.</param>
+	/// <param name="args">其他参数.</param>
 	public void Open (Type type, params object[] args)
 	{
-		foreach (var item in uiList) {
-			if (item.GetType ().Equals (type)) {
-				UIBase ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
-				ui.SetParams (args);
-				break;
-			} else {
-			}
+		try {
+			GetMatchUI (type).SetParams (args);
+		} catch (Exception ex) {
+			print (ex.Message);
 		}
 	}
 
@@ -112,10 +106,25 @@ public class UIManager : MonoBehaviour
 	/// <param name="type">Type.</param>
 	public void Close (Type type)
 	{
-
 		foreach (var item in transCanvas.GetComponentsInChildren(type)) {
 			GameObject.Destroy (item.gameObject);
 		}
+	}
 
+	private UIBase GetMatchUI (Type type)
+	{
+		UIBase ui = null;
+		foreach (var item in uiList) {
+			if (item.GetType ().Equals (type)) {
+				ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
+				break;
+			}
+		}
+		if (ui) {
+			print ("对比成功");
+		} else {
+			print ("对比失败");
+		}
+		return ui;
 	}
 }

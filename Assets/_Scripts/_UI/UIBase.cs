@@ -11,10 +11,10 @@ public class UIBase : MonoBehaviour
 		
 	}
 
-	void Update ()
-	{
-		
-	}
+	//	void Update ()
+	//	{
+	//
+	//	}
 
 	/// <summary>
 	/// Sets the parameters.
