@@ -451,7 +451,7 @@ public class GameManager : MonoBehaviour
 	{
 		currentPlayer.AddMoney (-currentGround.Price);
 		currentGround.SetGround (currentPlayer.Index, 1);//TODO,简单处理给个建筑
-		mNodeList [currentGround.Index].mBuilding.SetPlayerBuilding (currentPlayer.Index);//目前的Ground操作和基于Node的Building操作其实是逻辑分离的
+		mNodeList [currentGround.Index].mBuilding.SetPlayerBuilding (currentPlayer.Index, currentGround.Level);//目前的Ground操作和基于Node的Building操作其实是逻辑分离的
 	}
 
 	private void BreakDown ()

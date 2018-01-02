@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//本类型只负责建筑外观的表现，不关联其他逻辑
 public class Building : MonoBehaviour
 {
 
-	public GameObject[] mPlayerBuildingList;
+	//	public GameObject[] mPlayerBuildingList;
 
-	public GameObject[] mNeutralBuildingList;
+	//	public GameObject[] mNeutralBuildingList;
 
 	public GameObject mCurrent;
 
@@ -21,34 +22,44 @@ public class Building : MonoBehaviour
 	//
 	//	}
 
-	public void SetPlayerBuilding (int owner)//除了所有者，还要扩展建筑等级
+	/// <summary>
+	/// 摆放玩家建筑
+	/// </summary>
+	/// <param name="owner">Owner.</param>
+	public void SetPlayerBuilding (int owner, int level)//除了所有者，还要扩展建筑等级
 	{
-		if (mCurrent) {
-			GameObject.Destroy (mCurrent);
+		if (owner >= 0 && owner <= 3) {
+			if (mCurrent) {
+				GameObject.Destroy (mCurrent);
+			}
+
+			string path = string.Format ("prefabs/buildings/building_player_{0}_level_{1}", owner, level);
+			print (path);
+
+			GameObject newBuilding = GameObject.Instantiate (Resources.Load<GameObject> (path), transform.position, transform.rotation);
+			mCurrent = newBuilding;
 		}
-		GameObject newBuilding = GameObject.Instantiate (mPlayerBuildingList [owner], transform, false);
-		mCurrent = newBuilding;
 	}
 
 	/// <summary>
-	/// 摆放中立建筑，测试代码
+	/// 摆放中立建筑
 	/// </summary>
 	/// <param name="type">Type.</param>
 	public void SetNeutralBuilding (int type)
 	{
-		if (mCurrent) {
-			GameObject.Destroy (mCurrent);
-		}
-
-		switch (type) {
-		case 1://临时处理,TODO
-			GameObject newBuilding = GameObject.Instantiate (mNeutralBuildingList [type], transform, false);
+		if (type != 0) {
+			if (mCurrent) {
+				GameObject.Destroy (mCurrent);
+			}
+			
+			string path = string.Format ("prefabs/buildings/building_neutral_type_{0}", type);
+//			print (path);
+			
+			GameObject newBuilding = GameObject.Instantiate (Resources.Load<GameObject> (path), transform.position, transform.rotation);
 			mCurrent = newBuilding;
-			break;
-		default:
-			break;
+		} else {
+			print ("中立建筑不存在");
 		}
-
 	}
 
 	void OnDrawGizmos ()
