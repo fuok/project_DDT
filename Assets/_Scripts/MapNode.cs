@@ -13,15 +13,15 @@ public class MapNode : MonoBehaviour
 	//建筑
 	public Building mBuilding;
 
-	void Start ()
-	{
-	
-	}
+	//	void Start ()
+	//	{
+	//
+	//	}
 
-	void Update ()
-	{
-	
-	}
+	//	void Update ()
+	//	{
+	//
+	//	}
 
 	void OnDrawGizmos ()
 	{

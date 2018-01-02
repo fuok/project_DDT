@@ -71,6 +71,7 @@ public class CarLogic : MonoBehaviour
 		print ("SetPosition:" + node.gameObject.name);
 		mCurrentNode = node;
 		transform.position = mCurrentNode.transform.position;
+		transform.rotation = mCurrentNode.transform.rotation;
 	}
 
 	public void PrepareGo (MapNode target, int stepNum)
