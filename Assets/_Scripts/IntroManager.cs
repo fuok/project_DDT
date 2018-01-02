@@ -10,6 +10,7 @@ public class IntroManager : MonoBehaviour
 
 	public Button btnNewGame;
 	public Button btnContinue;
+	public InputField inputFieldPlayerNumber;
 
 	void Awake ()
 	{
@@ -25,6 +26,7 @@ public class IntroManager : MonoBehaviour
 	{
 		btnNewGame.onClick.AddListener (() => {
 			Constants.FromBeginning = true;
+			Constants.PlayerNumber = int.Parse (inputFieldPlayerNumber.text);
 			SceneManager.LoadScene ("[LoadingScene]");
 		});
 		btnContinue.onClick.AddListener (() => {

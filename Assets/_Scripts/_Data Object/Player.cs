@@ -29,6 +29,10 @@ public class Player:GameData
 	public int Health{ private set; get; }
 	//当游戏中断，记录玩家的位置
 	public int Position { private set; get; }
+	//玩家是否破产
+	public int Breakdown{ private set; get; }
+	//玩家是否存在
+	//	public int Exist{ private set; get; }
 	//持有的道具列表，长度为6的数组，用不同数字代表道具编号，0表示空道具栏
 	private int[] mDrugList;
 

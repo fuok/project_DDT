@@ -57,6 +57,8 @@ public class GameManager : MonoBehaviour
 		for (int i = 0; i < mGroundList.Count; i++) {
 			if (mGroundList [i].Owner == -2) {
 				mNodeList [i].mBuilding.SetNeutralBuilding (mGroundList [i].Type);
+			} else if (mGroundList [i].Owner >= 0 && mGroundList [i].Owner <= 3) {
+				mNodeList [i].mBuilding.SetPlayerBuilding (mGroundList [i].Owner, mGroundList [i].Level);
 			}
 		}
 
@@ -71,11 +73,18 @@ public class GameManager : MonoBehaviour
 
 	void Start ()
 	{
-		for (int i = 0; i < mCarList.Length; i++) {
-			//棋子状态监听
-			mCarList [i].carMoveEvent += OnCarStatusChanged;
-			//摆放车子mCarList.这里逻辑目前有问题，如果是游戏再开，列表里的玩家顺序不一定是0123（有的可能已经破产了），但车子的顺序还是一样，后面要修改为每个人对应自己的车,TODO
-			mCarList [i].SetPosition (mNodeList [mPlayerList [i].Position]);
+		for (int i = 0; i < mCarList.Length; i++) {//场景中始终有四部车子，根据玩家数显示或隐藏
+			if (i < mPlayerList.Count) {
+				if (true) {//这里判断是否存在玩家破产的情况，破产玩家不能行动，但仍然存在PlayerList当中，这样就不会出现玩家顺序和车子顺序错位的情况。
+					//棋子状态监听
+					mCarList [i].carMoveEvent += OnCarStatusChanged;
+					mCarList [i].SetPosition (mNodeList [mPlayerList [i].Position]);
+				} else {
+					mCarList [i].gameObject.SetActive (false);
+				}
+			} else {
+				mCarList [i].gameObject.SetActive (false);
+			}
 		}
 
 		//如果是中途再开，需要判断行动顺序

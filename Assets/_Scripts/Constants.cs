@@ -14,6 +14,9 @@ public class Constants
 {
 
 	public static bool FromBeginning = true;
+	//控制玩家数量，如果是再开的，就不会给赋值，所以游戏过程中不要访问.
+	//而且玩家数并不等于游戏中的玩家数，游戏中的玩家可以出局，一旦出局玩家数量减少但index不变，这里index就不等于Number
+	public static int PlayerNumber;
 
 	public const int DEFAULT_MONEY = 10000;
 	public const int DEFAULT_HEALTH = 100;
