@@ -12,7 +12,7 @@ public class DiceManager : MonoBehaviour
 	public event DiceHandler diceEvent;
 
 	public Transform spawnPoint;
-	private string galleryDie = "d6-green";
+	private string galleryDie = "d6-red-dots";
 
 	void Awake ()
 	{
