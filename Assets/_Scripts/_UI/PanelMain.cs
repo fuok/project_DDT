@@ -13,7 +13,7 @@ public class PanelMain : UIBase
 	public Text txtCurrentPlayer;
 	//	public Text[] txtPlayerInfo;
 
-	public Transform[] mPlayerInfoField;
+	//	public Transform[] mPlayerInfoField;
 
 	void Awake ()
 	{
@@ -37,7 +37,7 @@ public class PanelMain : UIBase
 			btnRoll.onClick.RemoveAllListeners ();//避免重复点
 		});
 
-		StartCoroutine (RefreshCoroutine ());
+//		StartCoroutine (RefreshCoroutine ());
 	}
 
 	void Update ()
@@ -50,27 +50,27 @@ public class PanelMain : UIBase
 //		}
 	}
 
-	private IEnumerator RefreshCoroutine ()
-	{
-		Refrsh ();
-		yield return new WaitForSeconds (0.2f);
-		StartCoroutine (RefreshCoroutine ());
-	}
-
-	public void Refrsh ()
-	{
-		//玩家信息展示
-		for (int i = 0; i < mPlayerInfoField.Length; i++) {
-			if (i < GameManager.Instance.GetAllPlayer ().Count) {
-				mPlayerInfoField [i].gameObject.SetActive (true);
-				//角色属性
-				mPlayerInfoField [i].Find ("Text Name").GetComponent<Text> ().text = GameManager.Instance.GetAllPlayer () [i].Name;
-				mPlayerInfoField [i].Find ("Text Money").GetComponent<Text> ().text = GameManager.Instance.GetAllPlayer () [i].Money.ToString ();
-				mPlayerInfoField [i].Find ("Text Girl").GetComponent<Text> ().text = GameManager.Instance.GetPlayerGirl (i).Count.ToString ();
-				mPlayerInfoField [i].Find ("Text Health").GetComponent<Text> ().text = GameManager.Instance.GetAllPlayer () [i].Health.ToString ();
-			} else {
-				mPlayerInfoField [i].gameObject.SetActive (false);
-			}
-		}
-	}
+	//	private IEnumerator RefreshCoroutine ()
+	//	{
+	//		Refrsh ();
+	//		yield return new WaitForSeconds (0.2f);
+	//		StartCoroutine (RefreshCoroutine ());
+	//	}
+	//
+	//	public void Refrsh ()
+	//	{
+	//		//玩家信息展示
+	//		for (int i = 0; i < mPlayerInfoField.Length; i++) {
+	//			if (i < GameManager.Instance.GetAllPlayer ().Count) {
+	//				mPlayerInfoField [i].gameObject.SetActive (true);
+	//				//角色属性
+	//				mPlayerInfoField [i].Find ("Text Name").GetComponent<Text> ().text = GameManager.Instance.GetAllPlayer () [i].Name;
+	//				mPlayerInfoField [i].Find ("Text Money").GetComponent<Text> ().text = GameManager.Instance.GetAllPlayer () [i].Money.ToString ();
+	//				mPlayerInfoField [i].Find ("Text Girl").GetComponent<Text> ().text = GameManager.Instance.GetPlayerGirl (i).Count.ToString ();
+	//				mPlayerInfoField [i].Find ("Text Health").GetComponent<Text> ().text = GameManager.Instance.GetAllPlayer () [i].Health.ToString ();
+	//			} else {
+	//				mPlayerInfoField [i].gameObject.SetActive (false);
+	//			}
+	//		}
+	//	}
 }

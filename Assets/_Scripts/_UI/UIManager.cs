@@ -119,6 +119,7 @@ public class UIManager : MonoBehaviour
 		foreach (var item in uiList) {
 			if (item.GetType ().Equals (type)) {
 				ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
+				ui.name = item.name;
 				break;
 			}
 		}

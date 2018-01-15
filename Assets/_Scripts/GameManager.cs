@@ -96,13 +96,24 @@ public class GameManager : MonoBehaviour
 		}
 		//游戏开始
 		StartTurn ();
+		//刷新UI
+		StartCoroutine (RefreshUiCoroutine ());
 	}
 
 	void Update ()
 	{
+		//TODO
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			SetAction (Constants.ACTION_GAME_OVER);
 		}
+	}
+
+	//刷新UI(仅显示基础属性的部分)
+	private IEnumerator RefreshUiCoroutine ()
+	{
+		PanelUiContainer.Instance.RefrshUI ();
+		yield return new WaitForSeconds (0.2f);
+		StartCoroutine (RefreshUiCoroutine ());
 	}
 
 	//---------------------------------------------------------------------------------------------------------
