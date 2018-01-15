@@ -9,11 +9,8 @@ public class PanelMain : UIBase
 
 	public Button btnPackage;
 	public Button btnRoll;
-	public Text txtDiceResult;
-	public Text txtCurrentPlayer;
-	//	public Text[] txtPlayerInfo;
-
-	//	public Transform[] mPlayerInfoField;
+	//	public Text txtDiceResult;
+	//	public Text txtCurrentPlayer;
 
 	void Awake ()
 	{
@@ -26,8 +23,8 @@ public class PanelMain : UIBase
 
 	void Start ()
 	{
-		txtCurrentPlayer.text = GameManager.Instance.GetCurrentPlayer ().Name + ",回合开始！";
-		txtDiceResult.text = "";
+//		txtCurrentPlayer.text = GameManager.Instance.GetCurrentPlayer ().Name + ",回合开始！";
+		PanelUiContainer.Instance.setTopMessage (GameManager.Instance.GetCurrentPlayer ().Name + ",回合开始！");
 
 		btnPackage.onClick.AddListener (() => {
 			UIManager.Instance.Open (typeof(PanelDrugPackage));
@@ -37,40 +34,10 @@ public class PanelMain : UIBase
 			btnRoll.onClick.RemoveAllListeners ();//避免重复点
 		});
 
-//		StartCoroutine (RefreshCoroutine ());
 	}
 
-	void Update ()
-	{
-
-//		txtDiceResult.text = currentPlayer.Name + "掷出" + num + ",前进到" + target;
-
-//		if (Input.GetKeyDown (KeyCode.P)) {
-//			Refrsh ();
-//		}
-	}
-
-	//	private IEnumerator RefreshCoroutine ()
+	//	void Update ()
 	//	{
-	//		Refrsh ();
-	//		yield return new WaitForSeconds (0.2f);
-	//		StartCoroutine (RefreshCoroutine ());
-	//	}
 	//
-	//	public void Refrsh ()
-	//	{
-	//		//玩家信息展示
-	//		for (int i = 0; i < mPlayerInfoField.Length; i++) {
-	//			if (i < GameManager.Instance.GetAllPlayer ().Count) {
-	//				mPlayerInfoField [i].gameObject.SetActive (true);
-	//				//角色属性
-	//				mPlayerInfoField [i].Find ("Text Name").GetComponent<Text> ().text = GameManager.Instance.GetAllPlayer () [i].Name;
-	//				mPlayerInfoField [i].Find ("Text Money").GetComponent<Text> ().text = GameManager.Instance.GetAllPlayer () [i].Money.ToString ();
-	//				mPlayerInfoField [i].Find ("Text Girl").GetComponent<Text> ().text = GameManager.Instance.GetPlayerGirl (i).Count.ToString ();
-	//				mPlayerInfoField [i].Find ("Text Health").GetComponent<Text> ().text = GameManager.Instance.GetAllPlayer () [i].Health.ToString ();
-	//			} else {
-	//				mPlayerInfoField [i].gameObject.SetActive (false);
-	//			}
-	//		}
 	//	}
 }

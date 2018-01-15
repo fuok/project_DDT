@@ -174,7 +174,10 @@ public class GameManager : MonoBehaviour
 
 				//计算移动后所处的Node序列
 				int target = (currentGround.Index + rslt) % mNodeList.Length;
+
 				print (currentPlayer.Name + "掷出" + rslt + ",前进到" + target);
+				PanelUiContainer.Instance.setTopMessage (currentPlayer.Name + "掷出" + rslt + ",前进到" + target);//置顶显示
+
 				//隐藏骰子
 				mDiceCameraContainer.SetActive (false);
 				//显示目标箭头

@@ -9,6 +9,8 @@ public class PanelUiContainer : MonoBehaviour
 
 	public Transform[] mPlayerInfoField;
 
+	public Text txtTopMessage;
+
 	void Awake ()
 	{
 		if (Instance == null) {
@@ -43,5 +45,10 @@ public class PanelUiContainer : MonoBehaviour
 				mPlayerInfoField [i].gameObject.SetActive (false);
 			}
 		}
+	}
+
+	public void setTopMessage (string str)
+	{
+		txtTopMessage.text = str;
 	}
 }
