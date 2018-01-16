@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIBase : MonoBehaviour
+public class UIBase : UnitySigleton<UIBase>//所有UI都是从预设克隆或是现成的游戏对象，也就是类型全都已经确定的，并不是用UIBase实例出的，所以这里指定继承UnitySigleton<UIBase>对实例不产生影响
 {
 	public delegate void ConfirmDelegate ();
 
@@ -10,11 +10,6 @@ public class UIBase : MonoBehaviour
 	{
 		
 	}
-
-	//	void Update ()
-	//	{
-	//
-	//	}
 
 	/// <summary>
 	/// Sets the parameters.
