@@ -7,10 +7,12 @@ public class PanelMain : UIBase
 {
 	public static PanelMain Instance{ private set; get; }
 
+	public Text txtPlayerName;
+	public Text txtPlayerHealth;
+	public Text txtPlayerMoney;
+
 	public Button btnPackage;
 	public Button btnRoll;
-	//	public Text txtDiceResult;
-	//	public Text txtCurrentPlayer;
 
 	void Awake ()
 	{
@@ -23,7 +25,6 @@ public class PanelMain : UIBase
 
 	void Start ()
 	{
-//		txtCurrentPlayer.text = GameManager.Instance.GetCurrentPlayer ().Name + ",回合开始！";
 		PanelUiContainer.Instance.setTopMessage (GameManager.Instance.GetCurrentPlayer ().Name + ",回合开始！");
 
 		btnPackage.onClick.AddListener (() => {
@@ -34,10 +35,18 @@ public class PanelMain : UIBase
 			btnRoll.onClick.RemoveAllListeners ();//避免重复点
 		});
 
+		Refresh ();
 	}
 
 	//	void Update ()
 	//	{
 	//
 	//	}
+
+	public void Refresh ()
+	{
+		txtPlayerName.text = GameManager.Instance.GetCurrentPlayer ().Name;
+		txtPlayerHealth.text = GameManager.Instance.GetCurrentPlayer ().Health.ToString ();
+		txtPlayerMoney.text = GameManager.Instance.GetCurrentPlayer ().Money.ToString ();
+	}
 }
