@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using UnityStandardAssets.Utility;
 using DG.Tweening;
 
-public class GameManager : MonoBehaviour
+public class GameManager : UnitySigleton<GameManager>
 {
-	public static GameManager Instance{ get; private set; }
+	//	public static GameManager Instance{ get; private set; }
 
 	//棋子移动
 	[Header ("棋子移动")]
@@ -32,11 +32,12 @@ public class GameManager : MonoBehaviour
 
 	void Awake ()
 	{
-		if (Instance == null) {
-			Instance = this;
-		} else if (Instance != this) {
-			Destroy (gameObject);
-		}
+		base.Awake ();
+//		if (Instance == null) {
+//			Instance = this;
+//		} else if (Instance != this) {
+//			Destroy (gameObject);
+//		}
 
 		//以下读取数据.一存一取是多余，为了好维护先这样
 

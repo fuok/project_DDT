@@ -108,7 +108,7 @@ public class UIManager : MonoBehaviour
 	public void Close (Type type)
 	{
 		foreach (var item in transCanvas.GetComponentsInChildren(type)) {
-			GameObject.Destroy (item.gameObject);
+			GameObject.DestroyImmediate (item.gameObject);
 		}
 	}
 

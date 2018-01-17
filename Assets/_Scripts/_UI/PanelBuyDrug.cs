@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PanelBuyDrug : UIBase
 {
-	public static PanelBuyDrug Instance{ private set; get; }
+	//	public static PanelBuyDrug Instance{ private set; get; }
 
 	public Transform[] mDrugField;
 
@@ -17,11 +17,12 @@ public class PanelBuyDrug : UIBase
 
 	void Awake ()
 	{
-		if (Instance == null) {
-			Instance = this;
-		} else if (Instance != this) {
-			Destroy (gameObject);
-		}
+		base.Awake ();
+//		if (Instance == null) {
+//			Instance = this;
+//		} else if (Instance != this) {
+//			Destroy (gameObject);
+//		}
 
 		//测试数据
 		mGoodsList.SetValue (Drug.GetDrug (1), 0);
