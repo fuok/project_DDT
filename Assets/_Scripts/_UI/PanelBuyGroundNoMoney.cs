@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class PanelBuyGroundNoMoney : UIBase
 {
-	public static PanelBuyGroundNoMoney Instance{ private set; get; }
+//	public static PanelBuyGroundNoMoney Instance{ private set; get; }
 
 	public Button btnBuyGroundNoMoney;
 
-	void Awake ()
-	{
-		if (Instance == null) {
-			Instance = this;
-		} else if (Instance != this) {
-			Destroy (gameObject);
-		}
-	}
+//	void Awake ()
+//	{
+//		if (Instance == null) {
+//			Instance = this;
+//		} else if (Instance != this) {
+//			Destroy (gameObject);
+//		}
+//	}
 
 	void Start ()
 	{

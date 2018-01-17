@@ -5,19 +5,19 @@ using UnityEngine.UI;
 
 public class PanelStartTurn : UIBase
 {
-	public static PanelStartTurn Instance{ private set; get; }
+//	public static PanelStartTurn Instance{ private set; get; }
 
 	public Text txtRoundNumber;
 	public Text txtPlayerName;
 
-	void Awake ()
-	{
-		if (Instance == null) {
-			Instance = this;
-		} else if (Instance != this) {
-			Destroy (gameObject);
-		}
-	}
+//	void Awake ()
+//	{
+//		if (Instance == null) {
+//			Instance = this;
+//		} else if (Instance != this) {
+//			Destroy (gameObject);
+//		}
+//	}
 
 	// Use this for initialization
 	void Start ()

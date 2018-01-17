@@ -5,10 +5,10 @@ using System;
 
 //using System.Reflection;
 
-public class UIManager : MonoBehaviour
+public class UIManager : UnitySigleton<UIManager>
 {
 
-	public static UIManager Instance{ private set; get; }
+	//	public static UIManager Instance{ private set; get; }
 
 	public Transform transCanvas;
 	//所有panel都要注册在此
@@ -28,11 +28,12 @@ public class UIManager : MonoBehaviour
 
 	void Awake ()
 	{
-		if (Instance == null) {
-			Instance = this;
-		} else if (Instance != this) {
-			Destroy (gameObject);
-		}
+		base.Awake ();
+//		if (Instance == null) {
+//			Instance = this;
+//		} else if (Instance != this) {
+//			Destroy (gameObject);
+//		}
 
 		//把全部界面添加进来
 		uiList.Add (panelStartTurn);

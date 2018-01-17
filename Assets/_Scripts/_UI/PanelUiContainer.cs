@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PanelUiContainer : MonoBehaviour
+public class PanelUiContainer : UnitySigleton<PanelUiContainer>
 {
-	public static PanelUiContainer Instance{ get; private set; }
+//	public static PanelUiContainer Instance{ get; private set; }
 
 	public Transform[] mPlayerInfoField;
 
 	public Text txtTopMessage;
 
-	void Awake ()
-	{
-		if (Instance == null) {
-			Instance = this;
-		} else if (Instance != this) {
-			Destroy (gameObject);
-		}
-	}
+//	void Awake ()
+//	{
+//		if (Instance == null) {
+//			Instance = this;
+//		} else if (Instance != this) {
+//			Destroy (gameObject);
+//		}
+//	}
 
 	//	void Start ()
 	//	{

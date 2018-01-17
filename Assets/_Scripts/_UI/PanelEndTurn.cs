@@ -7,16 +7,16 @@ public class PanelEndTurn : UIBase
 {
 	public Button btnEndTurn;
 
-	public static PanelEndTurn Instance{ private set; get; }
+//	public static PanelEndTurn Instance{ private set; get; }
 
-	void Awake ()
-	{
-		if (Instance == null) {
-			Instance = this;
-		} else if (Instance != this) {
-			Destroy (gameObject);
-		}
-	}
+//	void Awake ()
+//	{
+//		if (Instance == null) {
+//			Instance = this;
+//		} else if (Instance != this) {
+//			Destroy (gameObject);
+//		}
+//	}
 
 
 	void Start ()

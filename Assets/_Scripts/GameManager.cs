@@ -146,7 +146,7 @@ public class GameManager : UnitySigleton<GameManager>
 		resultChecked = false;
 		DiceManager.Instance.diceEvent += OnDiceResult;//这个方法常驻监听，不是太好，但如果不这样数值会不准，因为骰子的状态不稳定,除非确定稳定后再回调
 		mDiceCameraContainer.SetActive (true);
-		GameObject[] dices = DiceManager.Instance.RollDice ();
+		GameObject[] dices = DiceManager.Instance.RollDice (currentPlayer.Index);
 		for (int i = 0; i < dices.Length; i++) {
 			dices [i].layer = 8 + i;//两个骰子对应的layer是8、9
 			mDiceCams [i].GetComponent<SmoothFollow> ().target = dices [i].transform;	
@@ -216,10 +216,10 @@ public class GameManager : UnitySigleton<GameManager>
 			if (mStepTarget) {
 				mStepTarget.SetActive (false);
 			}
+
 			//角色停住后进入交互阶段
-			SetAction (Constants.ACTION_MEET_GIRL);
-			//TEST
-//			SetAction (Constants.ACTION_END_TURN);
+			SetAction (Constants.ACTION_STOP_MOVE);
+
 			break;
 		default:
 			break;
@@ -240,6 +240,12 @@ public class GameManager : UnitySigleton<GameManager>
 	{
 		//开始玩家交互
 		switch (action) {
+		case Constants.ACTION_STOP_MOVE:
+			UIManager.Instance.Close (typeof(PanelMain));
+			SetAction (Constants.ACTION_MEET_GIRL);
+			//TEST
+			//			SetAction (Constants.ACTION_END_TURN);
+			break;
 		//
 		case Constants.ACTION_MEET_GIRL:
 			//尝试获取新女友
@@ -293,6 +299,7 @@ public class GameManager : UnitySigleton<GameManager>
 			break;
 		//
 		case Constants.ACTION_BUY_GROUND:
+			
 			UIManager.Instance.Open (typeof(PanelBuyGround));
 			break;
 		case Constants.ACTION_BUY_GROUND_YES:
@@ -348,7 +355,6 @@ public class GameManager : UnitySigleton<GameManager>
 		//
 		case Constants.ACTION_END_TURN:
 			print ("回合结束");
-			UIManager.Instance.Close (typeof(PanelMain));
 			UIManager.Instance.Open (typeof(PanelEndTurn));
 
 			//保存本回合数据
@@ -366,8 +372,7 @@ public class GameManager : UnitySigleton<GameManager>
 			StartTurn ();
 			break;
 		case Constants.ACTION_START_TURN_IN:
-			//TODO,表现形式//			
-//			UIManager.Instance.Close (typeof(PanelMain));
+			//TODO,表现形式
 			UIManager.Instance.Open (typeof(PanelStartTurn));
 			break;
 		case Constants.ACTION_START_TURN_OUT:

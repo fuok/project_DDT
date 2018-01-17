@@ -5,19 +5,19 @@ using UnityEngine.UI;
 
 public class PanelPayToll : UIBase
 {
-	public static PanelPayToll Instance{ private set; get; }
+//	public static PanelPayToll Instance{ private set; get; }
 
 	public Text txtPayToll;
 	public Button btnPayToll;
 
-	void Awake ()
-	{
-		if (Instance == null) {
-			Instance = this;
-		} else if (Instance != this) {
-			Destroy (gameObject);
-		}
-	}
+//	void Awake ()
+//	{
+//		if (Instance == null) {
+//			Instance = this;
+//		} else if (Instance != this) {
+//			Destroy (gameObject);
+//		}
+//	}
 
 	void Start ()
 	{

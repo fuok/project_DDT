@@ -5,19 +5,19 @@ using UnityEngine.UI;
 
 public class PanelBuyGround : UIBase
 {
-	public static PanelBuyGround Instance{ private set; get; }
+//	public static PanelBuyGround Instance{ private set; get; }
 
 	public Button btnBuyGroundYes;
 	public Button btnBuyGroundNo;
 
-	void Awake ()
-	{
-		if (Instance == null) {
-			Instance = this;
-		} else if (Instance != this) {
-			Destroy (gameObject);
-		}
-	}
+//	void Awake ()
+//	{
+//		if (Instance == null) {
+//			Instance = this;
+//		} else if (Instance != this) {
+//			Destroy (gameObject);
+//		}
+//	}
 
 	// Use this for initialization
 	void Start ()

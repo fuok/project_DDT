@@ -12,7 +12,7 @@ public class DiceManager : MonoBehaviour
 	public event DiceHandler diceEvent;
 
 	public Transform spawnPoint;
-	private string galleryDie = "d6-red-dots";
+	//	private string galleryDie = "d6-red-dots";
 
 	void Awake ()
 	{
@@ -49,12 +49,30 @@ public class DiceManager : MonoBehaviour
 		goto restart;
 	}
 
-	//控制骰子的数量和种类
-	public GameObject[] RollDice ()
+	//控制骰子的数量和种类,这里写死是2个，种类也是写死d6、dots，但颜色可以改变
+	public GameObject[] RollDice (int color)
 	{
 		Dice.Clear ();
-		string[] a = galleryDie.Split ('-');
-		return Dice.Roll ("2" + a [0], galleryDie, spawnPoint.transform.position, Force ());
+//		string[] a = galleryDie.Split ('-');
+		string colorStr;
+		switch (color) {
+		case 0:
+			colorStr = "red";
+			break;
+		case 1:
+			colorStr = "yellow";
+			break;
+		case 2:
+			colorStr = "blue";
+			break;
+		case 3:
+			colorStr = "green";
+			break;
+		default:
+			colorStr = "red";
+			break;
+		}
+		return Dice.Roll ("2" + "d6", "d6-" + colorStr + "-dots", spawnPoint.transform.position, Force ());
 	}
 
 	private Vector3 Force ()

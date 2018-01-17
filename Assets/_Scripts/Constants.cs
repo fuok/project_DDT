@@ -62,6 +62,8 @@ public class Constants
 	public const string ACTION_START_TURN_IN = "action_start_turn_in";
 	public const string ACTION_START_TURN_OUT = "action_start_turn_out";
 
+	public const string ACTION_STOP_MOVE = "action_stop_move";
+
 	public const string ACTION_ARRIVE_GROUND = "action_arrive_ground";
 
 	public const string ACTION_MEET_GIRL = "action_meet_girl";
