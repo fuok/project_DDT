@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657707, g: 0.49641085, b: 0.5748172, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -16145,6 +16145,8 @@ MonoBehaviour:
   panelEndTurn: {fileID: 114740606197573008, guid: f8912daa69fd74900a0f9fcb20a353cf,
     type: 2}
   panelMain: {fileID: 114397723290021598, guid: 68fb313fa57c94804a2f2002dd7a6489,
+    type: 2}
+  panelRollDice: {fileID: 114790209473653468, guid: 8bfaca3589dec482cbb44ab4f9f0cb03,
     type: 2}
   panelOptionalDialog: {fileID: 114976604199090554, guid: e62091bc8893948eaa3a53c2be04e5f6,
     type: 2}

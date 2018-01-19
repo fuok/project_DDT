@@ -103,7 +103,7 @@ public class GameManager : UnitySigleton<GameManager>
 
 	void Update ()
 	{
-		//TODO
+		//TEST,TODO
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			SetAction (Constants.ACTION_GAME_OVER);
 		}
@@ -217,7 +217,7 @@ public class GameManager : UnitySigleton<GameManager>
 				mStepTarget.SetActive (false);
 			}
 
-			//角色停住后进入交互阶段
+			//角色停住后进入交互后半段
 			SetAction (Constants.ACTION_STOP_MOVE);
 
 			break;
@@ -240,6 +240,22 @@ public class GameManager : UnitySigleton<GameManager>
 	{
 		//开始玩家交互
 		switch (action) {
+		case Constants.ACTION_START_TURN_IN:
+			//TODO,表现形式
+			UIManager.Instance.Open (typeof(PanelStartTurn));
+			break;
+		case Constants.ACTION_START_TURN_OUT:
+			UIManager.Instance.Close (typeof(PanelStartTurn));
+			SetAction (Constants.ACTION_GET_MESSAGE);
+			break;
+		case Constants.ACTION_GET_MESSAGE:
+			UIManager.Instance.Open (typeof(PanelMain));
+			//这里先直接跳过，开始掷骰
+			SetAction (Constants.ACTION_START_MOVE);
+			break;
+		case Constants.ACTION_START_MOVE:
+			UIManager.Instance.Open (typeof(PanelRollDice));
+			break;
 		case Constants.ACTION_STOP_MOVE:
 			UIManager.Instance.Close (typeof(PanelMain));
 			SetAction (Constants.ACTION_MEET_GIRL);
@@ -370,14 +386,6 @@ public class GameManager : UnitySigleton<GameManager>
 			UIManager.Instance.Close (typeof(PanelEndTurn));
 			EndTurn ();
 			StartTurn ();
-			break;
-		case Constants.ACTION_START_TURN_IN:
-			//TODO,表现形式
-			UIManager.Instance.Open (typeof(PanelStartTurn));
-			break;
-		case Constants.ACTION_START_TURN_OUT:
-			UIManager.Instance.Close (typeof(PanelStartTurn));
-			UIManager.Instance.Open (typeof(PanelMain));
 			break;
 		case Constants.ACTION_GAME_OVER://游戏结束，主要目的是清空对局数据
 			//TODO

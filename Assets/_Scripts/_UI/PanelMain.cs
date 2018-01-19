@@ -12,7 +12,7 @@ public class PanelMain : UIBase
 	public Text txtPlayerMoney;
 
 	public Button btnPackage;
-	public Button btnRoll;
+//	public Button btnRoll;
 
 	void Awake ()
 	{
@@ -31,10 +31,10 @@ public class PanelMain : UIBase
 			UIManager.Instance.Close (this.GetType ());
 			UIManager.Instance.Open (typeof(PanelDrugPackage));
 		});
-		btnRoll.onClick.AddListener (delegate() {
-			GameManager.Instance.RollDice ();
-			btnRoll.onClick.RemoveAllListeners ();//避免重复点
-		});
+//		btnRoll.onClick.AddListener (delegate() {
+//			GameManager.Instance.RollDice ();
+//			btnRoll.onClick.RemoveAllListeners ();//避免重复点
+//		});
 
 		Refresh ();
 	}

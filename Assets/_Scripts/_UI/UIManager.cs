@@ -21,6 +21,7 @@ public class UIManager : UnitySigleton<UIManager>
 	public PanelDrugPackage panelDrugPackage;
 	public PanelEndTurn panelEndTurn;
 	public PanelMain panelMain;
+	public PanelRollDice panelRollDice;
 	public PanelOptionalDialog panelOptionalDialog;
 
 	//不必使用ArrayList,指定父类型传入子类元素，是可以获取各个子类类型的。
@@ -38,6 +39,7 @@ public class UIManager : UnitySigleton<UIManager>
 		//把全部界面添加进来
 		uiList.Add (panelStartTurn);
 		uiList.Add (panelMain);
+		uiList.Add (panelRollDice);
 		uiList.Add (panelMeetGirl);
 		uiList.Add (panelBuyGround);
 		uiList.Add (panelBuyGroundNoMoney);
