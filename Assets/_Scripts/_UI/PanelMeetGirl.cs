@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PanelMeetGirl : UIBase
 {
-//	public static PanelMeetGirl Instance{ private set; get; }
+	public static PanelMeetGirl Instance{ private set; get; }
 
 	public RawImage imgGirlPortrait;
 	public Text txtGirlName;
@@ -13,15 +13,14 @@ public class PanelMeetGirl : UIBase
 	public Button btnMeetGirlYes;
 	public Button btnMeetGirlNo;
 
-//	void Awake ()
-//	{
-//		if (Instance == null) {
-//			Instance = this;
-//		} else if (Instance != this) {
-//			Destroy (gameObject);
-//		}
-//	}
-
+	void Awake ()
+	{
+		if (Instance == null) {
+			Instance = this;
+		} else if (Instance != this) {
+			Destroy (gameObject);
+		}
+	}
 
 	void Start ()
 	{

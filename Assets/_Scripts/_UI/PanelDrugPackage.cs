@@ -5,20 +5,20 @@ using UnityEngine.UI;
 
 public class PanelDrugPackage : UIBase
 {
-	//	public static PanelDrugPackage Instance{ private set; get; }
+	public static PanelDrugPackage Instance{ private set; get; }
 
 	public Button btnBack;
 	public Transform[] mPackageField;
 
-	//	void Awake ()
-	//	{
-	//		if (Instance == null) {
-	//			Instance = this;
-	//		} else if (Instance != this) {
-	//			Destroy (gameObject);
-	//		}
-	//
-	//	}
+	void Awake ()
+	{
+		if (Instance == null) {
+			Instance = this;
+		} else if (Instance != this) {
+			Destroy (gameObject);
+		}
+	
+	}
 
 	void Start ()
 	{

@@ -5,22 +5,22 @@ using UnityEngine.UI;
 
 public class PanelOptionalDialog : UIBase
 {
-//	public static PanelOptionalDialog Instance{ private set; get; }
+	public static PanelOptionalDialog Instance{ private set; get; }
 
 	public Text txtTitle;
 	public Text txtContent;
 	public Button btnCancel;
 	public Button btnConfirm;
 
-//	void Awake ()
-//	{
-//		if (Instance == null) {
-//			Instance = this;
-//		} else if (Instance != this) {
-//			Destroy (gameObject);
-//		}
-//
-//	}
+	void Awake ()
+	{
+		if (Instance == null) {
+			Instance = this;
+		} else if (Instance != this) {
+			Destroy (gameObject);
+		}
+
+	}
 
 	void Start ()
 	{
