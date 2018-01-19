@@ -173,38 +173,42 @@ public class GameManager : UnitySigleton<GameManager>
 			if (resultChecked == false) {
 				resultChecked = true;
 
-				//计算移动后所处的Node序列
-				int target = (currentGround.Index + rslt) % mNodeList.Length;
+				//这里就得出了掷骰结果，接下来需要区分是移动还是挖角
+				//TODO
 
-				print (currentPlayer.Name + "掷出" + rslt + ",前进到" + target);
-				PanelUiContainer.Instance.setTopMessage (currentPlayer.Name + "掷出" + rslt + ",前进到" + target);//置顶显示
-
-				//隐藏骰子
-				mDiceCameraContainer.SetActive (false);
-				//显示目标箭头
-				if (mStepTarget) {
-					Vector3 vScreen = Camera.main.WorldToScreenPoint (mNodeList [target].transform.position);
-					float canvasX = vScreen.x - Camera.main.pixelWidth / 2;
-					float canvasY = vScreen.y - Camera.main.pixelHeight / 2;
-					float deltaY = Camera.main.pixelHeight / 20;//显示高度抬高一点
-					mStepTarget.transform.localPosition = new Vector3 (canvasX, canvasY + deltaY, 0f);
-					mStepTarget.SetActive (true);
-				}
 				//移动
-				CarStep (target, rslt);
+				CarStep (rslt);
 			}
 		}
 	}
 
 	//获得点数后，开始移动棋子
-	private void CarStep (int targetIndex, int stepNum)
+	private void CarStep (int stepNum)
 	{
+		//计算移动后所处的Node序列
+		int target = (currentGround.Index + stepNum) % mNodeList.Length;
+
+		print (currentPlayer.Name + "掷出" + stepNum + ",前进到" + target);
+		PanelUiContainer.Instance.setTopMessage (currentPlayer.Name + "掷出" + stepNum + ",前进到" + target);//置顶显示
+
+		//隐藏骰子
+		mDiceCameraContainer.SetActive (false);
+		//显示目标箭头
+		if (mStepTarget) {
+			Vector3 vScreen = Camera.main.WorldToScreenPoint (mNodeList [target].transform.position);
+			float canvasX = vScreen.x - Camera.main.pixelWidth / 2;
+			float canvasY = vScreen.y - Camera.main.pixelHeight / 2;
+			float deltaY = Camera.main.pixelHeight / 20;//显示高度抬高一点
+			mStepTarget.transform.localPosition = new Vector3 (canvasX, canvasY + deltaY, 0f);
+			mStepTarget.SetActive (true);
+		}
+
 		CarLogic car = mCarList [currentPlayer.Index];
 //		yield return new WaitForSeconds (0.5f);
 		//每个玩家能取得的数据包括，当前的Player、当前的Ground，以及全体的Player、Ground列表
-		currentPlayer.SetPosition (targetIndex);//逻辑移动
-		currentGround = mGroundList [targetIndex];//逻辑移动
-		car.PrepareGo (mNodeList [targetIndex], stepNum);//传入目标Node和显示步数，棋子开始移动
+		currentPlayer.SetPosition (target);//逻辑移动
+		currentGround = mGroundList [target];//逻辑移动
+		car.PrepareGo (mNodeList [target], stepNum);//传入目标Node和显示步数，棋子开始移动
 	}
 
 	//棋子移动后的响应函数

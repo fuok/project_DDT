@@ -33,12 +33,6 @@ public class PanelRollDice : UIBase
 	//
 	//	}
 
-	//需要区分roll点的情况，移动或是挖角,TODO
-	public override void SetParams (params object[] args)
-	{
-		base.SetParams (args);
-	}
-
 	void Close ()
 	{
 		GameObject.DestroyImmediate (gameObject);
