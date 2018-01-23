@@ -29,6 +29,7 @@ public class GameManager : UnitySigleton<GameManager>
 	private List<Player> mPlayerList = new List<Player> ();
 	private List<Ground> mGroundList;
 	private List<Girl> mGirlList = new List<Girl> ();
+	private List<GirlMessage> mMessageList = new List<GirlMessage> ();
 
 	void Awake ()
 	{
@@ -245,17 +246,31 @@ public class GameManager : UnitySigleton<GameManager>
 		//开始玩家交互
 		switch (action) {
 		case Constants.ACTION_START_TURN_IN:
-			//TODO,表现形式
+			UIManager.Instance.Open (typeof(PanelMain));//TODO,暂时放这
 			UIManager.Instance.Open (typeof(PanelStartTurn));
 			break;
 		case Constants.ACTION_START_TURN_OUT:
 			UIManager.Instance.Close (typeof(PanelStartTurn));
-			SetAction (Constants.ACTION_GET_MESSAGE);
+			SetAction (Constants.ACTION_SHOW_MESSAGE_IN);
 			break;
-		case Constants.ACTION_GET_MESSAGE:
-			UIManager.Instance.Open (typeof(PanelMain));
+		case Constants.ACTION_SHOW_MESSAGE_IN:
+			//女生的压力大于忍耐值则离去，就弹出通知界面
+			List<Girl> girl2Leave = GetPlayerGirl (currentPlayer.Index).FindAll ((Girl g) => {
+				return g.Pressure >= g.Patient;
+			});
+			if (girl2Leave.Count > 0) {
+				print ("有通知");
+				UIManager.Instance.Open (typeof(PanelShowMessage), ref girl2Leave);
+			} else {
+				print ("无通知");
+				SetAction (Constants.ACTION_SHOW_MESSAGE_OUT);
+			}
+			break;
+		case Constants.ACTION_SHOW_MESSAGE_OUT:
+			UIManager.Instance.Close (typeof(PanelShowMessage));
 			//这里先直接跳过，开始掷骰
 			SetAction (Constants.ACTION_START_MOVE);
+
 			break;
 		case Constants.ACTION_START_MOVE:
 			UIManager.Instance.Open (typeof(PanelRollDice));
@@ -263,7 +278,7 @@ public class GameManager : UnitySigleton<GameManager>
 		case Constants.ACTION_STOP_MOVE:
 			UIManager.Instance.Close (typeof(PanelMain));
 			SetAction (Constants.ACTION_MEET_GIRL);
-			//TEST
+			//TEST,快速结束
 			//			SetAction (Constants.ACTION_END_TURN);
 			break;
 		//
@@ -292,6 +307,11 @@ public class GameManager : UnitySigleton<GameManager>
 				//中立区域
 				print ("中立区域");
 				switch (currentGround.Type) {
+				case 0:
+					//起点
+					print ("回到了起点");
+					SetAction (Constants.ACTION_END_TURN);//TODO
+					break;
 				case 1:
 					//商店
 					SetAction (Constants.ACTION_BUY_DRUG);
@@ -377,7 +397,12 @@ public class GameManager : UnitySigleton<GameManager>
 			print ("回合结束");
 			UIManager.Instance.Open (typeof(PanelEndTurn));
 
-			//保存本回合数据
+			//TODO,便与测试，有主的女生在玩家行动后压力加40
+			foreach (var item in GetPlayerGirl(currentPlayer.Index)) {
+				item.SetPressure (Mathf.Clamp (item.Pressure + 90, item.Pressure, 100));
+			} 
+
+			//保存本回合数据,所有主缓存数据,TODO
 			currentPlayer.DataSave ();
 			for (int i = 0; i < mGirlList.Count; i++) {
 				mGirlList [i].DataSave ();
@@ -488,11 +513,16 @@ public class GameManager : UnitySigleton<GameManager>
 
 	//------ 游戏玩法相关的函数,函数主题都是CurrentPlayer ---------------------------------
 
-	private void BuyGround ()
+	private void BuyGround ()//但一定是当前玩家、当前地
 	{
 		currentPlayer.AddMoney (-currentGround.Price);
 		currentGround.SetGround (currentPlayer.Index, 1);//TODO,简单处理给个建筑
 		mNodeList [currentGround.Index].mBuilding.SetPlayerBuilding (currentPlayer.Index, currentGround.Level);//目前的Ground操作和基于Node的Building操作其实是逻辑分离的
+	}
+
+	private void SellGround (int playerId, int groundId)//不一定是当前玩家、也不一定是当前地，主缓存就需要这样来操作
+	{
+		
 	}
 
 	private void BreakDown ()

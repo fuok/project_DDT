@@ -69,6 +69,13 @@ public class Girl:GameData
 		NotifyDataChanged (true);
 	}
 
+	public void SetPressure (int value)
+	{
+		this.Pressure = value;
+
+		NotifyDataChanged (true);
+	}
+
 	//----父类操作----------------------------------------
 
 	public override	void DataSave ()

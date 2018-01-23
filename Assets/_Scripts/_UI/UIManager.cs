@@ -13,6 +13,7 @@ public class UIManager : UnitySigleton<UIManager>
 	public Transform transCanvas;
 	//所有panel都要注册在此
 	public PanelStartTurn panelStartTurn;
+	public PanelShowMessage panelShowMessage;
 	public PanelMeetGirl panelMeetGirl;
 	public PanelBuyGround panelBuyGround;
 	public PanelBuyGroundNoMoney panelBuyGroundNoMoney;
@@ -39,6 +40,7 @@ public class UIManager : UnitySigleton<UIManager>
 		//把全部界面添加进来
 		uiList.Add (panelStartTurn);
 		uiList.Add (panelMain);
+		uiList.Add (panelShowMessage);
 		uiList.Add (panelRollDice);
 		uiList.Add (panelMeetGirl);
 		uiList.Add (panelBuyGround);

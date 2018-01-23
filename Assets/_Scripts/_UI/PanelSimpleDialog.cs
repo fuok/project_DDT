@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//双按钮确认对话框
-public class PanelOptionalDialog : UIBase
+//单按钮确认对话框
+public class PanelSimpleDialog : UIBase
 {
-	public static PanelOptionalDialog Instance{ private set; get; }
+	public static PanelSimpleDialog Instance{ private set; get; }
 
 	public Text txtTitle;
 	public Text txtContent;
-	public Button btnCancel;
 	public Button btnConfirm;
 
 	void Awake ()
@@ -25,15 +24,13 @@ public class PanelOptionalDialog : UIBase
 
 	void Start ()
 	{
-		btnCancel.onClick.AddListener (delegate() {
-			UIManager.Instance.Close (this.GetType ());
-		});
+
 	}
 
-	void Update ()
-	{
-		
-	}
+	//	void Update ()
+	//	{
+	//
+	//	}
 
 	public override void SetParams (UIBase.ConfirmDelegate func, params object[] args)
 	{
