@@ -29,7 +29,7 @@ public class GameManager : UnitySigleton<GameManager>
 	private List<Player> mPlayerList = new List<Player> ();
 	private List<Ground> mGroundList;
 	private List<Girl> mGirlList = new List<Girl> ();
-	private List<GirlMessage> mMessageList = new List<GirlMessage> ();
+//	private List<GirlMessage> mMessageList = new List<GirlMessage> ();
 
 	void Awake ()
 	{
@@ -397,9 +397,9 @@ public class GameManager : UnitySigleton<GameManager>
 			print ("回合结束");
 			UIManager.Instance.Open (typeof(PanelEndTurn));
 
-			//TODO,便与测试，有主的女生在玩家行动后压力加40
+			//TODO,便与测试，有主的女生在玩家行动后压力加80
 			foreach (var item in GetPlayerGirl(currentPlayer.Index)) {
-				item.SetPressure (Mathf.Clamp (item.Pressure + 90, item.Pressure, 100));
+				item.SetPressure (Mathf.Clamp (item.Pressure + 80, item.Pressure, 100));
 			} 
 
 			//保存本回合数据,所有主缓存数据,TODO

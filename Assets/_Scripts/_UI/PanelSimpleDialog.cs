@@ -43,8 +43,8 @@ public class PanelSimpleDialog : UIBase
 
 		if (func != null) {
 			btnConfirm.onClick.AddListener (delegate() {
-				func ();
 				UIManager.Instance.Close (this.GetType ());
+				func ();
 			});
 		}
 	}

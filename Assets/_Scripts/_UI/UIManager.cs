@@ -7,9 +7,6 @@ using System;
 
 public class UIManager : UnitySigleton<UIManager>
 {
-
-	//	public static UIManager Instance{ private set; get; }
-
 	public Transform transCanvas;
 	//所有panel都要注册在此
 	public PanelStartTurn panelStartTurn;
@@ -23,6 +20,7 @@ public class UIManager : UnitySigleton<UIManager>
 	public PanelEndTurn panelEndTurn;
 	public PanelMain panelMain;
 	public PanelRollDice panelRollDice;
+	public PanelSimpleDialog panelSimpleDialog;
 	public PanelOptionalDialog panelOptionalDialog;
 
 	//不必使用ArrayList,指定父类型传入子类元素，是可以获取各个子类类型的。
@@ -31,11 +29,6 @@ public class UIManager : UnitySigleton<UIManager>
 	void Awake ()
 	{
 		base.Awake ();
-//		if (Instance == null) {
-//			Instance = this;
-//		} else if (Instance != this) {
-//			Destroy (gameObject);
-//		}
 
 		//把全部界面添加进来
 		uiList.Add (panelStartTurn);
@@ -49,6 +42,7 @@ public class UIManager : UnitySigleton<UIManager>
 		uiList.Add (panelBuyDrug);
 		uiList.Add (panelDrugPackage);
 		uiList.Add (panelEndTurn);
+		uiList.Add (panelSimpleDialog);
 		uiList.Add (panelOptionalDialog);
 	}
 

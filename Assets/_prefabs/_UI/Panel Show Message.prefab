@@ -43,7 +43,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1253546600532862
 GameObject:
   m_ObjectHideFlags: 1
@@ -167,6 +167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc7bf7988bfc419bb762b29a59ae5af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelGirlDialog: {fileID: 1217333773036346}
+  imgGirlPortrait: {fileID: 114974600597224390}
+  txtGirlName: {fileID: 114746662809405988}
+  txtContent: {fileID: 114743407657536034}
 --- !u!114 &114441636928814262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -226,7 +230,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u8981\u5979\u505A\u5973\u670B\u53CB\u5417\uFF1F"
+  m_Text: null
 --- !u!114 &114746662809405988
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -259,7 +263,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Textddd
+  m_Text: null
 --- !u!114 &114974600597224390
 MonoBehaviour:
   m_ObjectHideFlags: 1

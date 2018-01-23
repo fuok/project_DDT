@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//暂时废弃
 public class GirlMessage
 {
 	//------------ 数据结构 -----------------------------------

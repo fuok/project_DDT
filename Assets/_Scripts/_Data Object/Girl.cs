@@ -54,7 +54,9 @@ public class Girl:GameData
 		this.Pressure = pressure;
 		this.Grade = grade;
 		this.Owner = owner;
+		//上一个玩家，一旦女友离开，不会马上回来
 		this.LastOwner = lastOwner;
+		//标记女生交往过的玩家，可能会出现不同的对白
 		this.HistoryOwner = new int[]{ historyOwner1, historyOwner2, historyOwner3, historyOwner4 };
 	}
 
@@ -64,7 +66,14 @@ public class Girl:GameData
 	public void SetOwner (int owner)
 	{
 		this.Owner = owner;
+		this.LastOwner = owner;
+		//通知
+		NotifyDataChanged (true);
+	}
 
+	public void SetFree ()
+	{
+		this.Owner = -1;
 		//通知
 		NotifyDataChanged (true);
 	}

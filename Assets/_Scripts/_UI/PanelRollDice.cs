@@ -24,7 +24,7 @@ public class PanelRollDice : UIBase
 			GameManager.Instance.RollDice ();
 			btnRoll.onClick.RemoveAllListeners ();//避免重复点
 
-			Invoke ("Close", 0.5f);
+			Invoke ("Close", 0.3f);
 		});
 	}
 
