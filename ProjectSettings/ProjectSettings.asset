@@ -533,7 +533,7 @@ PlayerSettings:
     20: MOBILE_INPUT
     22: MOBILE_INPUT
   platformArchitecture:
-    iOS: 2
+    iOS: 0
   scriptingBackend:
     Metro: 2
     WP8: 2
