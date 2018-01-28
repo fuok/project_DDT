@@ -22,6 +22,7 @@ public class UIManager : UnitySigleton<UIManager>
 	public PanelRollDice panelRollDice;
 	public PanelSimpleDialog panelSimpleDialog;
 	public PanelOptionalDialog panelOptionalDialog;
+	public PanelCustomGirl panelCustomGirl;
 
 	//不必使用ArrayList,指定父类型传入子类元素，是可以获取各个子类类型的。
 	List<UIBase> uiList = new List<UIBase> ();
@@ -44,6 +45,7 @@ public class UIManager : UnitySigleton<UIManager>
 		uiList.Add (panelEndTurn);
 		uiList.Add (panelSimpleDialog);
 		uiList.Add (panelOptionalDialog);
+		uiList.Add (panelCustomGirl);
 	}
 
 	void Start ()
@@ -116,10 +118,12 @@ public class UIManager : UnitySigleton<UIManager>
 		UIBase ui = null;
 		//这里只能遍历，而不能用Collection Find方法，因为Find必须指定类型，而用UIBase父类不能实例化子类对象
 		foreach (var item in uiList) {
-			if (item.GetType ().Equals (type)) {
-				ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
-				ui.name = item.name;
-				break;
+			if (item) {
+				if (item.GetType ().Equals (type)) {
+					ui = GameObject.Instantiate<UIBase> ((UIBase)item, transCanvas);
+					ui.name = item.name;
+					break;
+				}
 			}
 		}
 		if (ui) {

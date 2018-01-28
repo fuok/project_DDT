@@ -10,6 +10,7 @@ public class IntroManager : MonoBehaviour
 
 	public Button btnNewGame;
 	public Button btnContinue;
+	public Button btnCustomGirl;
 	public InputField inputFieldPlayerNumber;
 
 	void Awake ()
@@ -32,6 +33,9 @@ public class IntroManager : MonoBehaviour
 		btnContinue.onClick.AddListener (() => {
 			Constants.FromBeginning = false;
 			SceneManager.LoadScene ("[LoadingScene]");
+		});
+		btnCustomGirl.onClick.AddListener (() => {
+			UIManager.Instance.Open (typeof(PanelCustomGirl));
 		});
 	}
 	
