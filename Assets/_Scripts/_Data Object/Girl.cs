@@ -17,7 +17,7 @@ public class Girl:GameData
 	//性格,不明
 	public string Character{ private set; get; }
 	//是否使用自定义内容
-	public int UseCustom{ private set; get; }
+	//	public int UseCustom{ private set; get; }
 
 	//爱情度
 	public int Love{ private set; get; }
@@ -47,7 +47,7 @@ public class Girl:GameData
 		this.Job = job;
 		this.Type = type;
 		this.Character = character;
-		this.UseCustom = useCustom;
+//		this.UseCustom = useCustom;
 		this.Love = love;
 		this.Salary = salary;
 		this.Patient = patient;

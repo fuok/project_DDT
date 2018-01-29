@@ -45,8 +45,8 @@ public class PanelShowMessage : UIBase
 	{
 		if (girl2Leave.Count > 0) {
 			panelGirlDialog.SetActive (true);
-			//属性中自定义的部分
-			if (girl2Leave [0].UseCustom == 0) {
+			//属性中自定义的部分,TODO
+			if (true) {
 				txtGirlName.text = girl2Leave [0].Name;
 				imgGirlPortrait.texture = Resources.Load<Texture> (string.Format ("Girl Image Default/girl_{0}_portrait_default", girl2Leave [0].Index.ToString ()));
 			} else {
