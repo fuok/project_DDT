@@ -48,6 +48,7 @@ public class Constants
 
 
 	//------------- PlayerPrefabs Key ----------------------
+	public const string FLAG_FIRST_GAME="flag_first_game";
 	//TODO
 	public const string DATABASE_VERSION = "database version";
 	//TODO

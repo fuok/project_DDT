@@ -11,7 +11,7 @@ public class StartUp : MonoBehaviour
 	void Start ()
 	{
 		GameObject.DontDestroyOnLoad (mStaticHolder);
-		SceneManager.LoadScene ("[IntroScene]");
+		SceneManager.LoadScene ("[LoadingScene1]");
 	}
 
 }

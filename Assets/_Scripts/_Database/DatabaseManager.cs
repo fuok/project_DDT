@@ -10,19 +10,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DatabaseManager : MonoBehaviour
+public class DatabaseManager : UnitySigleton<DatabaseManager>
 {
-	public static DatabaseManager Instance{ get; private set; }
+	//	public static DatabaseManager Instance{ get; private set; }
 
 	private DbAccess db;
 
 	void Awake ()
 	{
-		if (Instance == null) {
-			Instance = this;
-		} else if (Instance != this) {
-			Destroy (gameObject);
-		}
+//		if (Instance == null) {
+//			Instance = this;
+//		} else if (Instance != this) {
+//			Destroy (gameObject);
+//		}
+		base.Awake ();
 	}
 
 	void Start ()
@@ -59,23 +60,19 @@ public class DatabaseManager : MonoBehaviour
 		if (Constants.dataBaseVersion > version) {
 			print ("database update");
 			//升级para数据库
-//			try {
-//				db.DeleteTable (Constants.TableNamePlayer);//TODO
-//			} catch (System.Exception ex) {
-//
-//			}
+			try {
+				CleanDB ();
+			} catch (System.Exception ex) {
+
+			}
 			PlayerPrefs.SetInt (Constants.DATABASE_VERSION, Constants.dataBaseVersion);
-			//初始化bean
-			PlayerBean.Instance.InitialTable (db);
-			GirlBean.Instance.InitialTable (db);
-			GroundBean.Instance.InitialTable (db);
 		} else {
 			print ("no need update");
-			//初始化bean
-			PlayerBean.Instance.InitialTable (db);
-			GirlBean.Instance.InitialTable (db);
-			GroundBean.Instance.InitialTable (db);
 		}
+		//初始化bean
+		PlayerBean.Instance.InitialTable (db);
+		GirlBean.Instance.InitialTable (db);
+		GroundBean.Instance.InitialTable (db);
 	}
 
 	/// <summary>

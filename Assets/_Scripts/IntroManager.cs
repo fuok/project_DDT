@@ -28,11 +28,11 @@ public class IntroManager : MonoBehaviour
 		btnNewGame.onClick.AddListener (() => {
 			Constants.FromBeginning = true;
 			Constants.PlayerNumber = int.Parse (inputFieldPlayerNumber.text);
-			SceneManager.LoadScene ("[LoadingScene]");
+			SceneManager.LoadScene ("[LoadingScene2]");
 		});
 		btnContinue.onClick.AddListener (() => {
 			Constants.FromBeginning = false;
-			SceneManager.LoadScene ("[LoadingScene]");
+			SceneManager.LoadScene ("[LoadingScene2]");
 		});
 		btnCustomGirl.onClick.AddListener (() => {
 			UIManager.Instance.Open (typeof(PanelCustomGirl));
