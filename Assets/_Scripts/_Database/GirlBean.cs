@@ -13,12 +13,12 @@ public class GirlBean : MonoBehaviour
 	private string tableName = Constants.TableNameGirl;
 
 	private string[] colName = new string[] {
-		"[Index]", "Name", "Job", "Type", "Character", "UseCustom",
+		"[Index]", "Name", "Job", "Type", "Character",
 		"Love", "Salary", "Patient", "Pressure", "Grade", "Owner", "LastOwner",
 		"HistoryOwner1", "HistoryOwner2", "HistoryOwner3", "HistoryOwner4"
 	};
 	private string[] colType = new string[] {
-		"integer", "text", "text", "text", "text", "integer", 
+		"integer", "text", "text", "text", "text",
 		"integer", "integer", "integer", "integer", "integer", "integer", "integer", 
 		"integer", "integer", "integer", "integer"
 	};
@@ -115,7 +115,7 @@ public class GirlBean : MonoBehaviour
 				         job: sqReader.GetString (sqReader.GetOrdinal ("Job")),
 				         type: sqReader.GetString (sqReader.GetOrdinal ("Type")),
 				         character: sqReader.GetString (sqReader.GetOrdinal ("Character")),
-				         useCustom: sqReader.GetInt32 (sqReader.GetOrdinal ("UseCustom")),
+//				         useCustom: sqReader.GetInt32 (sqReader.GetOrdinal ("UseCustom")),
 				         love: sqReader.GetInt32 (sqReader.GetOrdinal ("Love")),
 				         salary: sqReader.GetInt32 (sqReader.GetOrdinal ("Salary")),
 				         patient: sqReader.GetInt32 (sqReader.GetOrdinal ("Patient")),
@@ -138,7 +138,7 @@ public class GirlBean : MonoBehaviour
 	public void UpdateGirl2DB (Girl girl)
 	{
 		db.UpdateInto (tableName, new string[] {
-			"[Index]", "Name", "Job", "Type", "Character", "UseCustom",
+			"[Index]", "Name", "Job", "Type", "Character",
 			"Love", "Salary", "Patient", "Pressure", "Grade", "Owner", "LastOwner",
 			"HistoryOwner1", "HistoryOwner2", "HistoryOwner3", "HistoryOwner4"
 		}, new object[] {

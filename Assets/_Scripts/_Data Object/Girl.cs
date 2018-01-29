@@ -40,7 +40,7 @@ public class Girl:GameData
 
 	//------------- basic logic ----------------------------------
 
-	public Girl (int index, string name, string job, string type, string character, int useCustom, int love, int salary, int patient, int pressure, int grade, int owner, int lastOwner, int historyOwner1, int historyOwner2, int historyOwner3, int historyOwner4) : base ()
+	public Girl (int index, string name, string job, string type, string character, int love, int salary, int patient, int pressure, int grade, int owner, int lastOwner, int historyOwner1, int historyOwner2, int historyOwner3, int historyOwner4) : base ()
 	{
 		this.Index = index;
 		this.Name = name;

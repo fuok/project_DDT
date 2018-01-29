@@ -10,8 +10,10 @@ public class PanelCustomGirl : UIBase
 	public Button btnBack;
 	public Toggle toggleCustom;
 	public RawImage rawPortrait;
+	public Text txtIndex;
 	public Text txtName;
 	public Button btnEditName;
+	public Button btnSetDefault;
 
 	private List<Girl> mGirlList = new List<Girl> ();
 
@@ -42,9 +44,11 @@ public class PanelCustomGirl : UIBase
 			if (select) {
 				print ("check");
 				PlayerPrefs.SetInt (Constants.FLAG_CUSTOM_TOGGLE, 1);
+				Refresh ();
 			} else {
 				print ("no check");
 				PlayerPrefs.SetInt (Constants.FLAG_CUSTOM_TOGGLE, 0);
+				Refresh ();
 			}
 		});
 
@@ -55,7 +59,8 @@ public class PanelCustomGirl : UIBase
 	{
 		print ("Refresh ()");
 
-		rawPortrait.texture = Resources.Load<Texture> (string.Format ("Girl Image Default/girl_{0}_portrait_default", mGirlList [0].Index.ToString ()));
+//		rawPortrait.texture = Resources.Load<Texture> (string.Format ("Girl Image Default/girl_{0}_portrait_default", mGirlList [0].Index.ToString ()));
+		CustomHelper.Instance.SetGirlPortrait (rawPortrait, mGirlList [0]);
 		txtName.text = mGirlList [0].Name;
 	}
 }
