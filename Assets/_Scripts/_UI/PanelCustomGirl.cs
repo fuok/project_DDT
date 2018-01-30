@@ -10,6 +10,7 @@ public class PanelCustomGirl : UIBase
 	public Button btnBack;
 	public Toggle toggleCustom;
 	public RawImage rawPortrait;
+	public Button btnPickImage;
 	public Text txtIndex;
 	public Text txtName;
 	public Button btnEditName;
@@ -39,6 +40,11 @@ public class PanelCustomGirl : UIBase
 			UIManager.Instance.Close (this.GetType ());
 		});
 
+		btnPickImage.onClick.AddListener (() => {
+			print ("OnImage");
+			GetComponent<ImagePicker> ().OpenImage (OnImageLoaded);
+		});
+
 //		btnEditName.onClick.AddListener (new UnityEngine.Events.UnityAction ());
 		toggleCustom.onValueChanged.AddListener ((bool select) => {
 			if (select) {
@@ -61,6 +67,12 @@ public class PanelCustomGirl : UIBase
 
 //		rawPortrait.texture = Resources.Load<Texture> (string.Format ("Girl Image Default/girl_{0}_portrait_default", mGirlList [0].Index.ToString ()));
 		CustomHelper.Instance.SetGirlPortrait (rawPortrait, mGirlList [0]);
+		txtIndex.text = mGirlList [0].Index.ToString ();
 		txtName.text = mGirlList [0].Name;
+	}
+
+	void OnImageLoaded (int index, Texture2D tex)
+	{
+		
 	}
 }

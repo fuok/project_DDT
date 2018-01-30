@@ -38,10 +38,14 @@ public class IntroManager : MonoBehaviour
 			UIManager.Instance.Open (typeof(PanelCustomGirl));
 		});
 	}
-	
-	// Update is called once per frame
+
 	void Update ()
 	{
-		
+		#if UNITY_EDITOR
+		if (Input.GetKeyDown (KeyCode.P)) {
+			DatabaseManager.Instance.CleanDB ();
+			PlayerPrefs.SetInt (Constants.FLAG_FIRST_GAME, 0);
+		}
+		#endif
 	}
 }
