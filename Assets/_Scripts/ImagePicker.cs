@@ -9,7 +9,7 @@ public class ImagePicker : MonoBehaviour
 	//	public Button btnPickImg;
 	//	public RawImage imgMain;
 
-	public delegate void ImageLoadedHandler (int index,Texture2D rsltTexture);
+	public delegate void ImageLoadedHandler (Texture2D rsltTexture);
 
 	event ImageLoadedHandler ImageLoaded;
 
@@ -72,7 +72,7 @@ public class ImagePicker : MonoBehaviour
 		Debug.Log ("Image Location : " + imgPath);
 //		imgMain.texture = tex;//这里图片是拉伸显示，最好是有crop功能。
 		//替换进来的图片本地保存,默认图和替换图的存储机制相同,通过标记判断读取哪个,TODO
-		ImageLoaded (0, tex);
+		ImageLoaded (tex);
 	}
 
 	void OnVideoSelect (string vidPath)

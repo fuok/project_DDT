@@ -42,6 +42,18 @@ public class Utils
 		return path;
 	}
 
+	public static string WriteTexture2D2File (Texture2D tex2D, string savePath)
+	{
+//		RenderTexture.active = rt;
+//		Texture2D tex2D = new Texture2D (rt.width, rt.height, TextureFormat.RGB24, false);
+//		tex2D.ReadPixels (new Rect (0, 0, rt.width, rt.height), 0, 0);
+//		tex2D.Apply ();
+//		RenderTexture.active = null;
+//		string path = savePath + ".png";
+		File.WriteAllBytes (savePath, tex2D.EncodeToPNG ());
+		return savePath;
+	}
+
 	public static void DeleteFile (string path)
 	{
 		if (File.Exists (path)) {

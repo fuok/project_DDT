@@ -17,6 +17,8 @@ public class PanelCustomGirl : UIBase
 	public Button btnSetDefault;
 
 	private List<Girl> mGirlList = new List<Girl> ();
+	//每次选择时，标记要自定义的照片位置
+	private int selectedIndex;
 
 	void Awake ()
 	{
@@ -41,11 +43,19 @@ public class PanelCustomGirl : UIBase
 		});
 
 		btnPickImage.onClick.AddListener (() => {
-			print ("OnImage");
-			GetComponent<ImagePicker> ().OpenImage (OnImageLoaded);
+			if (PlayerPrefs.GetInt (Constants.FLAG_CUSTOM_TOGGLE, 0) == 1) {
+				selectedIndex = mGirlList [0].Index;
+				GetComponent<ImagePicker> ().OpenImage (OnImageLoaded);
+			}
 		});
 
 //		btnEditName.onClick.AddListener (new UnityEngine.Events.UnityAction ());
+
+		btnSetDefault.onClick.AddListener (() => {
+			SetItemDefault (mGirlList [0].Index);
+		});
+
+		toggleCustom.isOn = PlayerPrefs.GetInt (Constants.FLAG_CUSTOM_TOGGLE, 0) == 1 ? true : false;
 		toggleCustom.onValueChanged.AddListener ((bool select) => {
 			if (select) {
 				print ("check");
@@ -67,12 +77,21 @@ public class PanelCustomGirl : UIBase
 
 //		rawPortrait.texture = Resources.Load<Texture> (string.Format ("Girl Image Default/girl_{0}_portrait_default", mGirlList [0].Index.ToString ()));
 		CustomHelper.Instance.SetGirlPortrait (rawPortrait, mGirlList [0]);
-		txtIndex.text = mGirlList [0].Index.ToString ();
+		txtIndex.text = (mGirlList [0].Index + 1).ToString ();
 		txtName.text = mGirlList [0].Name;
 	}
 
-	void OnImageLoaded (int index, Texture2D tex)
+	void OnImageLoaded (Texture2D tex)
 	{
-		
+		string localPath = Constants.SAVE_PATH + string.Format ("girl_{0}_portrait_custom.png", selectedIndex.ToString ());
+		Utils.WriteTexture2D2File (tex, localPath);
+		Refresh ();
+	}
+
+	void SetItemDefault (int index)
+	{
+		string localPath = Constants.SAVE_PATH + string.Format ("girl_{0}_portrait_custom.png", index.ToString ());
+		Utils.DeleteFile (localPath);
+		Refresh ();
 	}
 }
