@@ -1312,6 +1312,10 @@ MonoBehaviour:
   girlItems:
   - {fileID: 1934751994396308}
   - {fileID: 1234643864814422}
+  panelInput: {fileID: 1562619367317958}
+  inputCustomName: {fileID: 114946743409876420}
+  btnCustomNameCancel: {fileID: 114924634473894706}
+  btnCustomNameConfirm: {fileID: 114324969179689744}
 --- !u!114 &114500545170635620
 MonoBehaviour:
   m_ObjectHideFlags: 1
