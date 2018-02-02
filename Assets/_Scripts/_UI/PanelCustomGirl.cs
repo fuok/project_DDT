@@ -9,16 +9,10 @@ public class PanelCustomGirl : UIBase
 
 	public Button btnBack;
 	public Toggle toggleCustom;
-	public RawImage rawPortrait;
-	public Button btnPickImage;
-	public Text txtIndex;
-	public Text txtName;
-	public Button btnEditName;
-	public Button btnSetDefault;
+	//列表item容器
+	public GameObject[] girlItems;
 
 	private List<Girl> mGirlList = new List<Girl> ();
-	//每次选择时，标记要自定义的照片位置
-	private int selectedIndex;
 
 	void Awake ()
 	{
@@ -38,60 +32,78 @@ public class PanelCustomGirl : UIBase
 
 	void Start ()
 	{
+		//返回
 		btnBack.onClick.AddListener (() => {
 			UIManager.Instance.Close (this.GetType ());
 		});
-
-		btnPickImage.onClick.AddListener (() => {
-			if (PlayerPrefs.GetInt (Constants.FLAG_CUSTOM_TOGGLE, 0) == 1) {
-				selectedIndex = mGirlList [0].Index;
-				GetComponent<ImagePicker> ().OpenImage (OnImageLoaded);
-			}
-		});
-
-//		btnEditName.onClick.AddListener (new UnityEngine.Events.UnityAction ());
-
-		btnSetDefault.onClick.AddListener (() => {
-			SetItemDefault (mGirlList [0].Index);
-		});
-
+		//自定义开关
 		toggleCustom.isOn = PlayerPrefs.GetInt (Constants.FLAG_CUSTOM_TOGGLE, 0) == 1 ? true : false;
 		toggleCustom.onValueChanged.AddListener ((bool select) => {
 			if (select) {
-				print ("check");
+//				print ("check");
 				PlayerPrefs.SetInt (Constants.FLAG_CUSTOM_TOGGLE, 1);
-				Refresh ();
+				RefreshAll ();
 			} else {
-				print ("no check");
+//				print ("no check");
 				PlayerPrefs.SetInt (Constants.FLAG_CUSTOM_TOGGLE, 0);
-				Refresh ();
+				RefreshAll ();
 			}
 		});
 
-		Refresh ();
+		//列表中的按钮
+		for (int i = 0; i < girlItems.Length; i++) {
+			int tempIndex = i;
+			girlItems [i].transform.Find ("Raw Portrait/Button Picker").GetComponent<Button> ().onClick.AddListener (() => {
+				if (PlayerPrefs.GetInt (Constants.FLAG_CUSTOM_TOGGLE, 0) == 1) {
+					GetComponent<ImagePicker> ().OpenImage (OnImageLoaded, tempIndex);
+				}
+			});
+			
+			//		btnEditName.onClick.AddListener (new UnityEngine.Events.UnityAction ());
+			
+			girlItems [i].transform.Find ("Button Set Default").GetComponent<Button> ().onClick.AddListener (() => {
+				SetItemDefault (tempIndex);
+			});
+
+			Refresh (i);
+		}
+
 	}
 
-	void Refresh ()
+	void Refresh (int index)
 	{
-		print ("Refresh ()");
-
-//		rawPortrait.texture = Resources.Load<Texture> (string.Format ("Girl Image Default/girl_{0}_portrait_default", mGirlList [0].Index.ToString ()));
-		CustomHelper.Instance.SetGirlPortrait (rawPortrait, mGirlList [0]);
-		txtIndex.text = (mGirlList [0].Index + 1).ToString ();
-		txtName.text = mGirlList [0].Name;
+		print ("Refresh:" + index);
+		CustomHelper.Instance.SetGirlPortrait (girlItems [index].transform.Find ("Raw Portrait").GetComponent<RawImage> (), mGirlList [index]);
+		girlItems [index].transform.Find ("Text Index").GetComponent<Text> ().text = (index + 1).ToString ();
+		girlItems [index].transform.Find ("Text Name").GetComponent<Text> ().text = CustomHelper.Instance.GetGirlName (mGirlList [index]);
 	}
 
-	void OnImageLoaded (Texture2D tex)
+	void RefreshAll ()
 	{
-		string localPath = Constants.SAVE_PATH + string.Format ("girl_{0}_portrait_custom.png", selectedIndex.ToString ());
+		for (int i = 0; i < girlItems.Length; i++) {
+			Refresh (i);
+		}
+	}
+
+	/// <summary>
+	/// 导入图片后保存本地
+	/// </summary>
+	/// <param name="tex">Tex.</param>
+	void OnImageLoaded (Texture2D tex, int index)
+	{
+		string localPath = Constants.SAVE_PATH + string.Format (Constants.CUSTOM_GIRL_PORTRAIT_PATH, index);
 		Utils.WriteTexture2D2File (tex, localPath);
-		Refresh ();
+		Refresh (index);
 	}
 
+	/// <summary>
+	/// 清除本地保存的图片
+	/// </summary>
+	/// <param name="index">Index.</param>
 	void SetItemDefault (int index)
 	{
-		string localPath = Constants.SAVE_PATH + string.Format ("girl_{0}_portrait_custom.png", index.ToString ());
+		string localPath = Constants.SAVE_PATH + string.Format (Constants.CUSTOM_GIRL_PORTRAIT_PATH, index.ToString ());
 		Utils.DeleteFile (localPath);
-		Refresh ();
+		Refresh (index);
 	}
 }

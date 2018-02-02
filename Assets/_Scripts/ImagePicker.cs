@@ -6,10 +6,9 @@ using ImageAndVideoPicker;
 
 public class ImagePicker : MonoBehaviour
 {
-	//	public Button btnPickImg;
-	//	public RawImage imgMain;
+	private int selectImageIndex;
 
-	public delegate void ImageLoadedHandler (Texture2D rsltTexture);
+	public delegate void ImageLoadedHandler (Texture2D rsltTexture,int index);
 
 	event ImageLoadedHandler ImageLoaded;
 
@@ -24,15 +23,10 @@ public class ImagePicker : MonoBehaviour
 	//		});
 	//	}
 
-	//	void Update ()
-	//	{
-	//
-	//	}
-
-	public void OpenImage (ImageLoadedHandler handler)
+	public void OpenImage (ImageLoadedHandler handler, int index)
 	{
 		ImageLoaded -= handler;
-
+		selectImageIndex = index;
 		#if UNITY_ANDROID
 		AndroidPicker.BrowseImage (true);
 		#elif UNITY_IPHONE
@@ -72,7 +66,7 @@ public class ImagePicker : MonoBehaviour
 		Debug.Log ("Image Location : " + imgPath);
 //		imgMain.texture = tex;//这里图片是拉伸显示，最好是有crop功能。
 		//替换进来的图片本地保存,默认图和替换图的存储机制相同,通过标记判断读取哪个,TODO
-		ImageLoaded (tex);
+		ImageLoaded (tex, selectImageIndex);
 	}
 
 	void OnVideoSelect (string vidPath)

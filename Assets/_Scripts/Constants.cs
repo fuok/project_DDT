@@ -28,6 +28,15 @@ public class Constants
 	public static string SAVE_PATH = Application.dataPath + "/_save/";
 	#endif
 
+	//默认图片保存位置
+	public const string DEFAULT_GIRL_PORTRAIT_PATH = "Girl Image Default/girl_{0}_portrait_default";
+	public const string DEFAULT_GIRL_HSCENE_1_PATH = "Girl Image Default/girl_{0}_hscene1_default";
+	public const string DEFAULT_GIRL_HSCENE_2_PATH = "Girl Image Default/girl_{0}_hscene2_default";
+	//自定义图片保存位置
+	public const string CUSTOM_GIRL_PORTRAIT_PATH = "girl_{0}_portrait_custom.png";
+	public const string CUSTOM_GIRL_HSCENE_1_PATH = "girl_{0}_hscene1_custom.png";
+	public const string CUSTOM_GIRL_HSCENE_2_PATH = "girl_{0}_hscene2_custom.png";
+
 	//数据库名
 	public const string DbName = "ddt.db";
 	//表名
@@ -60,8 +69,8 @@ public class Constants
 	public const string GAME_ROUND_NUMBER = "game_round_number";
 	//记录当前行动的玩家
 	public const string CURRENT_PALYER_INDEX = "current_player_index";
-
-
+	//自定义女生名字的前缀
+	public const string CUSTOM_GIRL_NAME = "c_g_n_{0}";
 
 	//------------- Action Key ----------------------
 	public const string ACTION_START_TURN_IN = "action_start_turn_in";

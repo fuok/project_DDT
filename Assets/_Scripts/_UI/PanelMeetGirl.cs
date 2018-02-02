@@ -33,14 +33,10 @@ public class PanelMeetGirl : UIBase
 		//Unboxing,回合制决定了主缓存中的Player和Ground是可以随意获取的，
 		//但Girl并不具备固定位置，虽然也可以通过GetLeisureGirl函数获取，但这里还是选择直接传引用参数
 		Girl leisureGirl = arg as Girl;
-		//属性中自定义的部分,TODO
-		if (true) {
-			txtGirlName.text = leisureGirl.Name;
-			imgGirlPortrait.texture = Resources.Load<Texture> (string.Format ("Girl Image Default/girl_{0}_portrait_default", leisureGirl.Index.ToString ()));
-		} else {
-			
-		}
-		//不需要自定义的部分
+		//属性中自定义的部分使用CustomHelper获取
+		txtGirlName.text = CustomHelper.Instance.GetGirlName (leisureGirl);
+		CustomHelper.Instance.SetGirlPortrait (imgGirlPortrait, leisureGirl);
+		//不需要自定义的部分直接获取
 		txtGirlSalary.text = "薪水:" + leisureGirl.Salary;
 
 		btnMeetGirlYes.onClick.AddListener (() => {
