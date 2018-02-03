@@ -96,9 +96,10 @@ public class CarLogic : MonoBehaviour
 	{
 		if (mStepPop) {
 			Vector3 vScreen = Camera.main.WorldToScreenPoint (transform.position);
-			float canvasX = vScreen.x - Camera.main.pixelWidth / 2;
-			float canvasY = vScreen.y - Camera.main.pixelHeight / 2;
-			float deltaY = Camera.main.pixelHeight / 20;//显示高度抬高一点
+			float canvasX = vScreen.x * 1080 / Camera.main.pixelWidth - 1080 / 2;
+			float canvasY = vScreen.y * 1920 / Camera.main.pixelHeight - 1920 / 2;
+			float deltaY = 1920 / 20;//显示高度抬高一点//
+//			print (vScreen.x + "," + vScreen.y);
 			mStepPop.transform.localPosition = new Vector3 (canvasX, canvasY + deltaY, 0f);
 		}
 	}
