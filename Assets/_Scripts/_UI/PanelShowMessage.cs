@@ -60,7 +60,7 @@ public class PanelShowMessage : UIBase
 				girl2Leave [0].SetFree ();
 				girl2Leave.Remove (girl2Leave [0]);
 				ShowMessage ();
-			}, girl2Leave [0].Name, "和你分手了。。。");
+			}, "", girl2Leave [0].Name + "和你分手了");
 		} else {
 			GameManager.Instance.SetAction (Constants.ACTION_SHOW_MESSAGE_OUT);
 		}
