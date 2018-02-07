@@ -562,7 +562,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   delay: 0
-  duration: 0.5
+  duration: 0.2
   easeType: 6
   easeCurve:
     serializedVersion: 2
