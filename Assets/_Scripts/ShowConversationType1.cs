@@ -5,11 +5,13 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 //用于对话框writeType形式展示文字，以及文字展示完成后调用后续方法
-public class ShowConversation : MonoBehaviour
+public class ShowConversationType1 : MonoBehaviour
 {
 	//要现实的文字内容
 	public string[] contents;
 	//显示控件
+	//	RawImage imgGirlPortrait;
+	//	public Text txtGirlName;
 	public Text txtContent;
 	private Tweener tweenerText;
 	//跳过文字显示过程
@@ -23,7 +25,7 @@ public class ShowConversation : MonoBehaviour
 
 	void Start ()
 	{
-		
+		InitTweener ();
 	}
 
 	//	void Update ()
@@ -43,7 +45,21 @@ public class ShowConversation : MonoBehaviour
 			//				tweener.Kill (true);
 			print ("text done");
 			isTextShowing = false;
+
+			TextComplete ();
 		});
 		tweenerText.Pause ();//这里必须先暂停，否则后面restart重设duration也没用,而是会继续使用这里的0f
+	}
+
+	public void ShowWriteTypeStr (string str, ShowTextHandler handler)
+	{
+		TextComplete -= handler;
+		print (str);
+//		txtContent.text = str;
+		tweenerText.ChangeValues ("", str, str.Length / 20f);//直接使用ChangeValues//使用富文本后出字速度明显慢了//注意最后的参数是float时间才是正常的
+		tweenerText.Restart ();
+		isTextShowing = true;
+
+		TextComplete += handler;
 	}
 }

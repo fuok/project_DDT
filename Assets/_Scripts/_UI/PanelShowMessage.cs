@@ -10,7 +10,8 @@ public class PanelShowMessage : UIBase
 	public GameObject panelGirlDialog;
 	public RawImage imgGirlPortrait;
 	public Text txtGirlName;
-	public Text txtContent;
+	//	public Text txtContent;
+	public ShowConversationType1 showConversation;
 
 	List<Girl> girl2Leave = new List<Girl> ();
 	string[] contentStr;
@@ -28,6 +29,10 @@ public class PanelShowMessage : UIBase
 	{
 		//对话框数组翻页,TODO
 		contentStr = new string[]{ };
+
+		panelGirlDialog.SetActive (true);
+//		ShowMessage ();
+		Invoke ("ShowMessage", 0.1f);
 	}
 
 	public override void SetParams<T> (ref T arg, params object[] args)
@@ -38,35 +43,40 @@ public class PanelShowMessage : UIBase
 			print (girl2Leave [i].Name + "_" + girl2Leave [i].Patient + "_" + girl2Leave [i].Pressure);
 		}
 
-		ShowMessage ();
+//		ShowMessage ();
 	}
 
 	private void ShowMessage ()//循环出现
 	{
 		if (girl2Leave.Count > 0) {
-			panelGirlDialog.SetActive (true);
-			//属性中自定义的部分,TODO
-			if (true) {
-				txtGirlName.text = girl2Leave [0].Name;
-				imgGirlPortrait.texture = Resources.Load<Texture> (string.Format ("Girl Image Default/girl_{0}_portrait_default", girl2Leave [0].Index.ToString ()));
-			} else {
-				
-			}
-			//不需要自定义的部分
-			txtContent.text = "受不了了，我要和你分手！！！";
-			//弹框提示
-			UIManager.Instance.Open (typeof(PanelSimpleDialog), () => {
-				//分手的具体逻辑
-				girl2Leave [0].SetFree ();
-				girl2Leave.Remove (girl2Leave [0]);
-				ShowMessage ();
-			}, "", girl2Leave [0].Name + "和你分手了");
+			//属性中自定义的部分使用CustomHelper获取
+			txtGirlName.text = CustomHelper.Instance.GetGirlName (girl2Leave [0]);
+			CustomHelper.Instance.SetGirlPortrait (imgGirlPortrait, girl2Leave [0]);
+			//不需要自定义的部分直接获取
+			//...
+
+			showConversation.ShowWriteTypeStr ("受不了了，我要和你分手！！！", OnStrContentDisplayed);
+
+//			txtContent.text = "受不了了，我要和你分手！！！";
+	
 		} else {
 			GameManager.Instance.SetAction (Constants.ACTION_SHOW_MESSAGE_OUT);
 		}
 	}
 
-	private void SetBuilding ()//循环出现
+	//文字滚动结束
+	void OnStrContentDisplayed ()
+	{
+		//弹框提示
+		UIManager.Instance.Open (typeof(PanelSimpleDialog), () => {
+			//分手的具体逻辑
+			girl2Leave [0].SetFree ();
+			girl2Leave.Remove (girl2Leave [0]);
+			ShowMessage ();
+		}, "", girl2Leave [0].Name + "和你分手了");
+	}
+
+	private void SetWorkingMenber ()//循环出现
 	{
 		
 	}
