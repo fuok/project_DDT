@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+//废弃！！！！
 //用于对话框writeType形式展示文字，以及文字展示完成后调用后续方法
 public class ShowConversationType1 : MonoBehaviour
 {
