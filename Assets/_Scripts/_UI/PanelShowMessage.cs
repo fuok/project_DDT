@@ -82,7 +82,7 @@ public class PanelShowMessage : UIBase
 
 //			showConversation.ShowWriteTypeStr ("受不了了，我要和你分手！！！", OnStrContentDisplayed);
 
-			string str = "受不了了，我要和你分手！！！";
+			string str = LocalizationManager.Instance.GetWord ("shoubuliao");
 			print (str);
 			//		txtContent.text = str;
 			tweenerText.ChangeValues ("", str, str.Length / 20f);//直接使用ChangeValues//使用富文本后出字速度明显慢了//注意最后的参数是float时间才是正常的
@@ -103,7 +103,7 @@ public class PanelShowMessage : UIBase
 			girl2Leave [0].SetFree ();
 			girl2Leave.Remove (girl2Leave [0]);
 			ShowMessage ();
-		}, "", girl2Leave [0].Name + "和你分手了");
+		}, "", girl2Leave [0].Name + LocalizationManager.Instance.GetWord ("fenshoule"));
 	}
 
 	private void SetWorkingMenber ()//循环出现

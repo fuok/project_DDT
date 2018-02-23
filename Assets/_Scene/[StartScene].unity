@@ -254,6 +254,7 @@ GameObject:
   - component: {fileID: 1411898852}
   - component: {fileID: 1411898853}
   - component: {fileID: 1411898854}
+  - component: {fileID: 1411898855}
   m_Layer: 0
   m_Name: StaticHolder
   m_TagString: Untagged
@@ -329,3 +330,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d87cb1be090c14d9a9694debb22a80ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1411898855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1411898848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cacd07da56500d940bdd620c56774c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tags:
+  - CN
+  languageFile: {fileID: 4900000, guid: 6e4a6a308a6779d4d9d2ddefece9598b, type: 3}
