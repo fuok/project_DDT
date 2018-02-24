@@ -268,8 +268,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 100874544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 154, y: 274, z: 0}
-  m_LocalScale: {x: 0.2851852, y: 0.2851852, z: 0.2851852}
+  m_LocalPosition: {x: 540, y: 960, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1185426895}
   - {fileID: 1256965750}
@@ -1067,6 +1067,7 @@ GameObject:
   - component: {fileID: 1438560076}
   - component: {fileID: 1438560078}
   - component: {fileID: 1438560077}
+  - component: {fileID: 1438560079}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1131,6 +1132,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1438560075}
+--- !u!114 &1438560079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1438560075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630e87ac56a3c4e0ca1f111089b7346a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Start
 --- !u!1 &1465477540
 GameObject:
   m_ObjectHideFlags: 0
