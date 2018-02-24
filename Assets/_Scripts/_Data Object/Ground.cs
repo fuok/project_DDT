@@ -12,7 +12,7 @@ public class Ground:GameData
 	public int Owner{ private set; get; }
 	//地产等级
 	public int Level{ private set; get; }
-	//土地售价
+	//土地售价，暂时保留，没什么用处。购买和升级费用完全可以用建筑等级来决定
 	public int Price{ private set; get; }
 	//中立地区的种类，各种中立建筑
 	public int Type{ private set; get; }

@@ -16,8 +16,6 @@ public class Girl:GameData
 	public string Type{ private set; get; }
 	//性格,不明
 	public string Character{ private set; get; }
-	//是否使用自定义内容
-	//	public int UseCustom{ private set; get; }
 
 	//爱情度
 	public int Love{ private set; get; }
@@ -30,6 +28,8 @@ public class Girl:GameData
 	//稀有度，参考绿蓝紫金
 	public int Grade{ private set; get; }
 
+	//所在的工作地点,无业为-1
+	public int WorkPlace{ private set; get; }
 	//所属的玩家序号,无主为-1
 	public int Owner{ private set; get; }
 	//所属的前一个玩家，女友离开后不会连续找同一玩家

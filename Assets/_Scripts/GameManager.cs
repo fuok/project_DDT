@@ -320,14 +320,18 @@ public class GameManager : UnitySigleton<GameManager>
 				default:
 					break;
 				}
-			} else if (currentGround.Owner == -1) {
-				//空白区域
+			} else if (currentGround.Owner == -1) {//TODO
+				//空白区域。判断能否买地。条件是有钱且有员工
 				print ("空白区域");
-				if (currentPlayer.Money >= currentGround.Price) {
-					SetAction (Constants.ACTION_BUY_GROUND);
-				} else {
+
+				if (currentPlayer.Money < currentGround.Price) {//钱不够
 					SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY);
+				} else if (true) {//人不够
+					SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY);
+				} else {//都不是，可以购买
+					SetAction (Constants.ACTION_BUY_GROUND);
 				}
+
 			} else if (currentGround.Owner == currentPlayer.Index) {
 				//自己区域
 				print ("自己区域");
@@ -354,10 +358,10 @@ public class GameManager : UnitySigleton<GameManager>
 			break;
 		//
 		case Constants.ACTION_BUY_GROUND_NO_MONEY:
-			UIManager.Instance.Open (typeof(PanelBuyGroundNoMoney));
+			UIManager.Instance.Open (typeof(PanelBuyGroundFailed));
 			break;
 		case Constants.ACTION_BUY_GROUND_NO_MONEY_CONFIRM:
-			UIManager.Instance.Close (typeof(PanelBuyGroundNoMoney));
+			UIManager.Instance.Close (typeof(PanelBuyGroundFailed));
 			SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
 		//

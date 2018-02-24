@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PanelBuyGroundNoMoney : UIBase
+public class PanelBuyGroundFailed : UIBase
 {
-	public static PanelBuyGroundNoMoney Instance{ private set; get; }
+	public static PanelBuyGroundFailed Instance{ private set; get; }
 
 	public Button btnBuyGroundNoMoney;
 

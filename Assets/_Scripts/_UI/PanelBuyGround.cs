@@ -21,7 +21,6 @@ public class PanelBuyGround : UIBase
 
 	void Start ()
 	{
-
 		btnBuyGroundYes.onClick.AddListener (() => {
 			GameManager.Instance.SetAction (Constants.ACTION_BUY_GROUND_YES);
 		});

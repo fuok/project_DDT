@@ -13,7 +13,7 @@ public class UIManager : UnitySigleton<UIManager>
 	public PanelShowMessage panelShowMessage;
 	public PanelMeetGirl panelMeetGirl;
 	public PanelBuyGround panelBuyGround;
-	public PanelBuyGroundNoMoney panelBuyGroundNoMoney;
+	public PanelBuyGroundFailed panelBuyGroundFailed;
 	public PanelPayToll panelPayToll;
 	public PanelBuyDrug panelBuyDrug;
 	public PanelDrugPackage panelDrugPackage;
@@ -38,7 +38,7 @@ public class UIManager : UnitySigleton<UIManager>
 		uiList.Add (panelRollDice);
 		uiList.Add (panelMeetGirl);
 		uiList.Add (panelBuyGround);
-		uiList.Add (panelBuyGroundNoMoney);
+		uiList.Add (panelBuyGroundFailed);
 		uiList.Add (panelPayToll);
 		uiList.Add (panelBuyDrug);
 		uiList.Add (panelDrugPackage);

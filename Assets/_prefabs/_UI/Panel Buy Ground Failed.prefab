@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 114510973629213174}
   - component: {fileID: 114298747549043876}
   m_Layer: 5
-  m_Name: Panel Buy Ground No Money
+  m_Name: Panel Buy Ground Failed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1760331776213928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c05e28fe92e8a4c789244a5b2e0ad0a6, type: 3}
+  m_Script: {fileID: 11500000, guid: b91a7c01eed88460ba5687de9ffc9545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   btnBuyGroundNoMoney: {fileID: 114599956280281124}
