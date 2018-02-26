@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657707, g: 0.49641085, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -14668,6 +14668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transCanvas: {fileID: 534377691}
+  panelCustomGirl: {fileID: 0}
   panelStartTurn: {fileID: 114611132873664508, guid: 5fc83868c4a1d8347a270f316119b114,
     type: 2}
   panelShowMessage: {fileID: 114204929858188570, guid: a1b993974d92c48c494e44b3006d1791,
@@ -14676,7 +14677,8 @@ MonoBehaviour:
     type: 2}
   panelBuyGround: {fileID: 114049511312182394, guid: 04d4607b758444c61aace997d67c1aca,
     type: 2}
-  panelBuyGroundFailed: {fileID: 0}
+  panelBuyGroundFailed: {fileID: 114298747549043876, guid: aabee3f1b68a2424fa9a78c1ee88180f,
+    type: 2}
   panelPayToll: {fileID: 114872115204831464, guid: 640318c3d6bc24b259174360b46179f6,
     type: 2}
   panelBuyDrug: {fileID: 114235155115515100, guid: 408dd9981dd715a479286f26f8fda34c,
@@ -14693,7 +14695,6 @@ MonoBehaviour:
     type: 2}
   panelOptionalDialog: {fileID: 114976604199090554, guid: e62091bc8893948eaa3a53c2be04e5f6,
     type: 2}
-  panelCustomGirl: {fileID: 0}
 --- !u!1001 &1881399814
 Prefab:
   m_ObjectHideFlags: 0

@@ -91,8 +91,8 @@ public class Constants
 	public const string ACTION_BUY_GROUND = "action_buy_ground";
 	public const string ACTION_BUY_GROUND_YES = "action_buy_ground_yes";
 	public const string ACTION_BUY_GROUND_NO = "action_buy_ground_no";
-	public const string ACTION_BUY_GROUND_NO_MONEY = "action_buy_ground_no_money";
-	public const string ACTION_BUY_GROUND_NO_MONEY_CONFIRM = "action_buy_ground_no_money_confirm";
+	public const string ACTION_BUY_GROUND_FAILED = "action_buy_ground_no_money";
+	public const string ACTION_BUY_GROUND_FAILED_CONFIRM = "action_buy_ground_no_money_confirm";
 	public const string ACTION_PAY_TOLL = "action_pay_toll";
 	public const string ACTION_PAY_TOLL_CONFIRM = "action_pay_toll_confirm";
 	public const string ACTION_BUY_DRUG = "action_buy_drug";

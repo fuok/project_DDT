@@ -21,7 +21,7 @@ public class PanelBuyGroundFailed : UIBase
 	void Start ()
 	{
 		btnBuyGroundNoMoney.onClick.AddListener (() => {
-			GameManager.Instance.SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY_CONFIRM);
+			GameManager.Instance.SetAction (Constants.ACTION_BUY_GROUND_FAILED_CONFIRM);
 		});
 	}
 

@@ -17,6 +17,7 @@ public class LocalizationText : MonoBehaviour
 
 	void OnEnable ()
 	{
+		print ("OnEnable ()");
 		if (!string.IsNullOrEmpty (key)) {
 			GetComponent<Text> ().text = LocalizationManager.Instance.GetWord (key);
 		}

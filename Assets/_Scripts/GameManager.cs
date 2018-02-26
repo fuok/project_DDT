@@ -325,9 +325,11 @@ public class GameManager : UnitySigleton<GameManager>
 				print ("空白区域");
 
 				if (currentPlayer.Money < currentGround.Price) {//钱不够
-					SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY);
-				} else if (true) {//人不够
-					SetAction (Constants.ACTION_BUY_GROUND_NO_MONEY);
+					print ("钱不够");
+					SetAction (Constants.ACTION_BUY_GROUND_FAILED);
+				} else if (GetPlayerGirlNotWorking (currentPlayer.Index).Count < 1) {//人不够
+					print ("没女人:" + GetPlayerGirlNotWorking (currentPlayer.Index).Count);
+					SetAction (Constants.ACTION_BUY_GROUND_FAILED);
 				} else {//都不是，可以购买
 					SetAction (Constants.ACTION_BUY_GROUND);
 				}
@@ -357,10 +359,12 @@ public class GameManager : UnitySigleton<GameManager>
 			SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
 		//
-		case Constants.ACTION_BUY_GROUND_NO_MONEY:
+
+		//
+		case Constants.ACTION_BUY_GROUND_FAILED:
 			UIManager.Instance.Open (typeof(PanelBuyGroundFailed));
 			break;
-		case Constants.ACTION_BUY_GROUND_NO_MONEY_CONFIRM:
+		case Constants.ACTION_BUY_GROUND_FAILED_CONFIRM:
 			UIManager.Instance.Close (typeof(PanelBuyGroundFailed));
 			SetAction (Constants.ACTION_END_TURN);//活动结束
 			break;
@@ -560,14 +564,21 @@ public class GameManager : UnitySigleton<GameManager>
 			return g.Owner == pIndex;
 		});
 	}
-
+	//获取指定玩家女友
 	public List<Girl> GetPlayerGirl (int pIndex)
 	{
 		return mGirlList.FindAll ((Girl g) => {
 			return g.Owner == pIndex;
 		});
 	}
-
+	//获取指定玩家没有工作的女友
+	public List<Girl> GetPlayerGirlNotWorking (int pIndex)
+	{
+		return mGirlList.FindAll ((Girl g) => {
+			return g.Owner == pIndex && g.WorkPlace == -1;
+		});
+	}
+	//获取没有从属任何玩家的女子
 	public Girl GetLeisureGirl ()
 	{
 		return mGirlList.Find ((Girl g) => {

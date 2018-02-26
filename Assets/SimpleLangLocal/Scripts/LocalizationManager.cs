@@ -33,7 +33,8 @@ public class LocalizationManager : UnitySigleton<LocalizationManager>
 
 	public void SetLang (string lan)
 	{
-		PlayerPrefs.SetString ("SLanguageL", lan);
+//		PlayerPrefs.SetString ("SLanguageL", lan);//set里已经调用了，重复。直接复制set就可以了
+		Lang = lan;
 	}
 
 	private Dictionary<string, Dictionary<string, string>> languages;

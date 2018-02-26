@@ -25,7 +25,7 @@ public class Utils
 	//遇到新女友
 	public static bool RandomMeetGirl ()
 	{
-		return GetRandomResult (100f);
+		return GetRandomResult (50f);
 	}
 
 	//------------------------------------------------------------------------------------------------------

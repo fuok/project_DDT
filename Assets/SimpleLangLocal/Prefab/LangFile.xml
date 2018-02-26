@@ -2,6 +2,7 @@
 	<EN Key = "Hello"	Word = "Hello"/>
 	<EN Key = "Start"	Word = "Start New Game"/>
 	<EN Key = "Options"	Word = "Options"/>
+	<EN Key = "yuyan"	Word = "Language"/>
 	<EN Key = "Back"	Word = "Back"/>
 	<EN Key = "Last Score"	Word = "Last Score"/>
 	<EN Key = "High Score"	Word = "High Score"/>
@@ -13,6 +14,7 @@
 
 	<CN Key = "Start"	Word = "开始新游戏"/>
 	<CN Key = "Options"	Word = "选项"/>
+	<CN Key = "yuyan"	Word = "语言"/>
 	<CN Key = "shoubuliao"	Word = "受不了了，我要和你分手！！！"/>
 	<CN Key = "fenshoule"	Word = "和你分手了"/>
 

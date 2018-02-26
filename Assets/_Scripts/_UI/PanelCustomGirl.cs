@@ -45,6 +45,7 @@ public class PanelCustomGirl : UIBase
 		//返回
 		btnBack.onClick.AddListener (() => {
 			UIManager.Instance.Close (this.GetType ());
+			IntroManager.Instance.panelIntroMain.SetActive (true);
 		});
 		//自定义开关
 		toggleCustom.isOn = PlayerPrefs.GetInt (Constants.FLAG_CUSTOM_TOGGLE, 0) == 1 ? true : false;

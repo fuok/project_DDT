@@ -8,6 +8,10 @@ using System;
 public class UIManager : UnitySigleton<UIManager>
 {
 	public Transform transCanvas;
+	[Header ("IntroScene")]
+	public PanelCustomGirl panelCustomGirl;
+	public PanelSetting panelSetting;
+	[Header ("PlayScene")]
 	//所有panel都要注册在此
 	public PanelStartTurn panelStartTurn;
 	public PanelShowMessage panelShowMessage;
@@ -22,7 +26,6 @@ public class UIManager : UnitySigleton<UIManager>
 	public PanelRollDice panelRollDice;
 	public PanelSimpleDialog panelSimpleDialog;
 	public PanelOptionalDialog panelOptionalDialog;
-	public PanelCustomGirl panelCustomGirl;
 
 	//不必使用ArrayList,指定父类型传入子类元素，是可以获取各个子类类型的。
 	List<UIBase> uiList = new List<UIBase> ();
@@ -46,6 +49,7 @@ public class UIManager : UnitySigleton<UIManager>
 		uiList.Add (panelSimpleDialog);
 		uiList.Add (panelOptionalDialog);
 		uiList.Add (panelCustomGirl);
+		uiList.Add (panelSetting);
 	}
 
 	void Start ()
