@@ -25,5 +25,6 @@ public class PanelBuyGroundFailed : UIBase
 		});
 	}
 
+	//TODO,需要传参数，区分没钱的情况和美女人的情况，区别只是在于文字描述不同。
 
 }

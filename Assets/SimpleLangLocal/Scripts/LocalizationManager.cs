@@ -50,7 +50,7 @@ public class LocalizationManager : UnitySigleton<LocalizationManager>
 	void Start ()
 	{
 		if (!PlayerPrefs.HasKey ("SLanguageL")) {
-			Lang = tags [0];
+			Lang = tags [0];//默认语言是第一个Tag
 		} else {
 			Lang = PlayerPrefs.GetString ("SLanguageL");
 		}
